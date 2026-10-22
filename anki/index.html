@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Anki — Nader vositalari</title>
+<title>Anki — Vositalar</title>
 <meta name="theme-color" content="#1f6f4a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -18,30 +18,36 @@
 <main id="anki-ilova">
   <a class="tugma orqaga" href="../index.html">← Bosh sahifa</a>
   <h1>🃏 Anki</h1>
-  <p class="xira">Tab bilan ajratilgan faylni tekshiradi va tozalaydi. Ustunlar: Deck · Front · Back · Tags.</p>
+  <p class="izoh">Anki'ga import qilinadigan faylni tekshiradi va tozalaydi. Har qatorda 4 ta ustun tab bilan ajratilgan bo'lsin: Deck · Front · Back · Tags.</p>
 
   <div class="karta">
     <label class="tugma keng">📄 .txt / .tsv faylni tanlash<input type="file" id="fayl" accept=".txt,.tsv,text/plain,text/tab-separated-values" class="yashirin"></label>
     <p class="kichik xira" style="margin-top:12px">yoki matnni joylashtiring:</p>
-    <textarea id="matn" dir="auto" placeholder="najron 6::النحو ٤::الباب الأول::Lugat	كتاب	kitob	nahv"></textarea>
+    <textarea id="matn" dir="auto" placeholder="Arab tili::1-dars::Lugat	كتاب	kitob	lugat"></textarea>
     <h3>Takrorlarni solishtirish</h3>
     <label class="tanlov"><input type="radio" name="rejim" value="aniq"> Aniq (harfma-harf)</label>
-    <label class="tanlov"><input type="radio" name="rejim" value="harakatsiz"> Harakatlarsiz</label>
-    <label class="tanlov"><input type="checkbox" id="alif"> أ إ آ ٱ → ا, ى = ي, ة = ه deb hisoblash</label>
+    <label class="tanlov"><input type="radio" name="rejim" value="harakatsiz"> Harakatlarsiz (arabcha harakatlarga qaramay)</label>
+    <label class="tanlov"><input type="checkbox" id="alif"> <span>أ إ آ ٱ → ا, ى = ي, ة = ه deb hisoblash</span></label>
     <button class="asosiy keng" id="tekshir" style="margin-top:12px">Tekshirish</button>
   </div>
   <div id="natija"></div>
 
   <h2>Oldingi kartalarim</h2>
   <div class="karta">
+    <p class="kichik xira">Oldingi darslar fayllarini bir marta qo'shib qo'ying — yangi faylda allaqachon bor so'zlar ko'rsatiladi.</p>
     <p>Bazada: <b id="baza-soni"></b></p>
     <ul class="royxat kichik" id="baza-royxat"></ul>
     <label class="tugma keng" style="margin-top:10px">➕ Oldingi dars fayllarini qo'shish<input type="file" id="baza-fayl" multiple accept=".txt,.tsv,text/plain" class="yashirin"></label>
     <button class="keng xavfli" id="baza-tozala" style="margin-top:10px">Bazani tozalash</button>
   </div>
-  <details>
-    <summary>Kurslar ro'yxati (deck nomini tekshirish uchun)</summary>
-    <div class="ichki"><p class="kichik xira">Har qatorda bitta kurs.</p><textarea id="kurslar" dir="rtl" lang="ar"></textarea></div>
+  <details id="qoidalar">
+    <summary>Deck qoidalari (ixtiyoriy)</summary>
+    <div class="ichki">
+      <p class="kichik xira">Bo'sh qoldirilgan qoida tekshirilmaydi. To'ldirsangiz, deck yo'li shunga mos kelmasa ogohlantirish chiqadi.</p>
+      <p><label>Deck shunday boshlansin<br><input id="deck-bosh" dir="auto" style="width:100%" placeholder="masalan: Arab tili"></label></p>
+      <p><label>Kurslar ro'yxati (har qatorda bitta)<br><textarea id="kurslar" dir="auto" placeholder="masalan:&#10;Nahv 1&#10;Sarf 1"></textarea></label></p>
+      <p><label>Deck oxiri shulardan biri bo'lsin (har qatorda bitta)<br><textarea id="oxirlar" dir="auto" placeholder="masalan:&#10;Lugat&#10;Fellar"></textarea></label></p>
+    </div>
   </details>
   <div id="zaxira"></div>
 </main>

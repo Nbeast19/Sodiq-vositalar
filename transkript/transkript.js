@@ -2,7 +2,8 @@
 // Yuqori qism — sof mantiq (Node'da sinash mumkin), pastki qism — interfeys.
 (function (global) {
   'use strict';
-  var KALIT = 'nader.transkript.v1';
+  var N = global.N || (typeof require !== 'undefined' ? require('../umumiy/yordamchi.js') : null);
+  var KALIT = 'vositalar.transkript.v1';
   var T = { KALIT: KALIT };
 
   var AR = '\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF';
@@ -169,7 +170,7 @@
 
   // Ekranda ko'rsatish uchun HTML (arabcha rangli, takrorlar belgilangan)
   T.html = function (paragraflar, usul) {
-    function e(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    var e = N.h;
     function takrorBelgila(s) {
       var oldingi = '';
       return s.split(/(\s+)/).map(function (soz) {
@@ -200,13 +201,12 @@
   // =====================================================================
   // ---------- Interfeys ----------
   if (typeof document === 'undefined' || !document.getElementById('transkript-ilova')) return;
-  var N = global.N, h = N.h;
+  var $ = N.$;
   var opt, natija = null, asliNom = '';
-  function $(id) { return document.getElementById(id); }
 
   function yuklash() {
     var r = N.yukla(KALIT);
-    opt = Object.assign(T.standart(), r.data || {});
+    opt = N.toldir(r.data, T.standart());
   }
   function formaChiz() {
     ['vaqt', 'birlashtir', 'takror', 'tozala', 'apostrof'].forEach(function (k) { $('o-' + k).checked = !!opt[k]; });
@@ -253,5 +253,15 @@
 
   yuklash();
   formaChiz();
+  N.zaxiraBolimi($('zaxira'), {
+    prefiks: 'transkript',
+    kalit: KALIT,
+    olish: function () { formaOqi(); return opt; },
+    tiklash: function (d) {
+      if (!('arab' in d) && !('pauza' in d)) return 'Bu fayl Transkript zaxira nusxasi emas. "transkript-zaxira-..." nomli faylni tanlang.';
+      opt = N.toldir(d, T.standart()); N.saqla(KALIT, opt); formaChiz();
+      return null;
+    }
+  });
   N.ishgaTush();
 })(typeof window !== 'undefined' ? window : globalThis);

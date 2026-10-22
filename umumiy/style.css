@@ -8,7 +8,8 @@
   --asosiy: #1f6f4a;
   --asosiy-matn: #ffffff;
   --asosiy-och: #e3f1e9;
-  --yashil: #2e9d5b;
+  --yashil: #237a47;
+  --yashil-matn: #ffffff;
   --sariq: #e0a800;
   --qizil: #c8372d;
   --kulrang: #cfccc4;
@@ -27,6 +28,7 @@
     --asosiy-matn: #08130d;
     --asosiy-och: #1c3328;
     --yashil: #3fbf72;
+    --yashil-matn: #08130d;
     --sariq: #e8b923;
     --qizil: #ef5d52;
     --kulrang: #3a3d3a;
@@ -35,7 +37,7 @@
   }
 }
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; touch-action: manipulation; }
 body {
   margin: 0;
   background: var(--fon);
@@ -76,6 +78,7 @@ button, .tugma {
 }
 button:active, .tugma:active { transform: scale(.98); }
 button:disabled { opacity: .5; cursor: default; }
+:focus-visible { outline: 3px solid var(--asosiy); outline-offset: 2px; }
 .asosiy { background: var(--asosiy); color: var(--asosiy-matn); border-color: var(--asosiy); font-weight: 600; }
 .xavfli { color: var(--qizil); }
 .keng { width: 100%; }
@@ -139,3 +142,10 @@ ul.royxat li:last-child { border-bottom: 0; }
 }
 #xabar.korin { opacity: 1; }
 .yashirin { display: none !important; }
+
+/* Sahifa boshidagi qisqa izoh */
+.izoh { color: var(--xira); margin: 0 0 12px; }
+/* "Yangi versiya bor" tugmasi */
+#yangilash { margin-top: 0; }
+/* Arabcha matnni aralash matnda alohida qutiga olish */
+bdi, .ar { unicode-bidi: isolate; }

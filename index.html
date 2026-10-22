@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="uz" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nader vositalari</title>
+<meta name="theme-color" content="#1f6f4a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vositalar">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./ikonkalar/apple-touch-icon.png">
+<link rel="icon" href="./ikonkalar/ikonka-192.png">
+<link rel="stylesheet" href="./umumiy/style.css">
+<style>
+  .vosita { display: flex; align-items: center; gap: 16px; text-decoration: none; color: inherit; min-height: 88px; }
+  .vosita .em { font-size: 40px; line-height: 1; }
+  .vosita b { font-size: 21px; display: block; }
+  .vosita.bosh { min-height: 130px; border: 2px solid var(--asosiy); }
+  .vosita.bosh .em { font-size: 56px; }
+  .vosita.bosh b { font-size: 26px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Nader vositalari</h1>
+  <a class="karta vosita bosh" href="./hifz/index.html">
+    <span class="em">📖</span>
+    <span><b>Hifz</b><span class="xira">Qur'on yodlash va murojaa</span>
+    <span id="hifz-eslatma" class="belgi sariq yashirin" style="margin-top:6px">Bugungi sahifa kutyapti</span></span>
+  </a>
+  <a class="karta vosita" href="./zettel/index.html"><span class="em">🗃️</span><span><b>Zettel</b><span class="xira">kartalarni tekshirish</span></span></a>
+  <a class="karta vosita" href="./anki/index.html"><span class="em">🃏</span><span><b>Anki</b><span class="xira">fayllarni tozalash</span></span></a>
+  <a class="karta vosita" href="./kutubxona/index.html"><span class="em">📚</span><span><b>Kutubxona</b><span class="xira">darslar ro'yxati</span></span></a>
+  <a class="karta vosita" href="./transkript/index.html"><span class="em">📝</span><span><b>Transkript</b><span class="xira">matnni tozalash</span></span></a>
+  <p class="xira kichik" style="text-align:center;margin-top:24px">Hamma ma'lumot faqat shu qurilmada saqlanadi.</p>
+</main>
+<script src="./umumiy/yordamchi.js"></script>
+<script src="./hifz/mushaf.js"></script>
+<script src="./hifz/hifz.js"></script>
+<script>
+  // Bugungi hifz bajarilmagan bo'lsa, eslatma ko'rsatish
+  (function () {
+    var r = N.yukla(Hifz.KALIT);
+    if (r.data && r.data.sozlama) {
+      var k = Hifz.kunKaliti(new Date(), r.data.sozlama.kunBoshi);
+      if (Hifz.bugunKutyapti(r.data, k)) document.getElementById('hifz-eslatma').classList.remove('yashirin');
+    }
+    N.ishgaTush();
+  })();
+</script>
+</body>
+</html>

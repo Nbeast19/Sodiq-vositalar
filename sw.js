@@ -6,6 +6,7 @@ var FAYLLAR = [
   './umumiy/style.css', './umumiy/yordamchi.js',
   './ikonkalar/ikonka-192.png', './ikonkalar/ikonka-512.png', './ikonkalar/apple-touch-icon.png',
   './hifz/', './hifz/index.html', './hifz/mushaf.js', './hifz/hifz.js',
+  './anki/', './anki/index.html', './anki/anki.js',
   './zettel/', './zettel/index.html', './zettel/zettel.js',
   './zettel/namuna/ZK-AQ-001%20Tavhid%20tarifi.md', './zettel/namuna/ZK-AQ-002%20Tavhid%20turlari.md',
   './zettel/namuna/ZK-AQ-004%20Iymon%20ruknlari.md', './zettel/namuna/ZK-AQ-005%20Asmo%20va%20sifat.md',

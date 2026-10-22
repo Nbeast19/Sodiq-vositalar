@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Nader vositalari</title>
+<title>Vositalar</title>
+<meta name="description" content="Telefon uchun oddiy vositalar: Qur'on yodlash, Zettel, Anki, darslar ro'yxati, transkript.">
 <meta name="theme-color" content="#1f6f4a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -23,8 +24,9 @@
 </style>
 </head>
 <body>
-<main>
-  <h1>Nader vositalari</h1>
+<main id="bosh-ilova">
+  <h1>Vositalar</h1>
+  <p class="izoh">Kerakli vositani tanlang. Hammasi internetsiz ham ishlaydi.</p>
   <a class="karta vosita bosh" href="./hifz/index.html">
     <span class="em">📖</span>
     <span><b>Hifz</b><span class="xira">Qur'on yodlash va murojaa</span>
@@ -34,6 +36,14 @@
   <a class="karta vosita" href="./anki/index.html"><span class="em">🃏</span><span><b>Anki</b><span class="xira">fayllarni tozalash</span></span></a>
   <a class="karta vosita" href="./kutubxona/index.html"><span class="em">📚</span><span><b>Kutubxona</b><span class="xira">darslar ro'yxati</span></span></a>
   <a class="karta vosita" href="./transkript/index.html"><span class="em">📝</span><span><b>Transkript</b><span class="xira">matnni tozalash</span></span></a>
+  <details>
+    <summary>💾 Hamma vositalar uchun bitta zaxira</summary>
+    <div class="ichki">
+      <p class="kichik xira">Hamma vositalardagi ma'lumot bitta faylga saqlanadi. Telefon almashtirganda yoki ilovani qayta o'rnatganda shu fayl bilan hammasini qaytarasiz.</p>
+      <button class="asosiy keng" id="hammasi-eks">⬇️ Hammasini eksport qilish</button>
+      <label class="tugma keng" style="margin-top:10px">⬆️ Hammasini tiklash<input type="file" id="hammasi-imp" accept=".json,application/json" class="yashirin"></label>
+    </div>
+  </details>
   <p class="xira kichik" style="text-align:center;margin-top:24px">Hamma ma'lumot faqat shu qurilmada saqlanadi.</p>
 </main>
 <script src="./umumiy/yordamchi.js"></script>
@@ -44,9 +54,30 @@
   (function () {
     var r = N.yukla(Hifz.KALIT);
     if (r.data && r.data.sozlama) {
-      var k = Hifz.kunKaliti(new Date(), r.data.sozlama.kunBoshi);
-      if (Hifz.bugunKutyapti(r.data, k)) document.getElementById('hifz-eslatma').classList.remove('yashirin');
+      var s = Hifz.normal(r.data);
+      if (Hifz.bugunKutyapti(s, Hifz.kunKaliti(new Date(), s.sozlama.kunBoshi))) N.$('hifz-eslatma').classList.remove('yashirin');
     }
+    N.$('hammasi-eks').onclick = function () {
+      N.yuklabOl('vositalar-zaxira-' + N.bugunSana() + '.json', JSON.stringify(N.hammasiOl(), null, 1), 'application/json');
+      try {
+        // Hifz'dagi "zaxira olinmagan" eslatmasini ham yangilaymiz
+        var h = N.yukla(Hifz.KALIT).data;
+        if (h && h.sozlama) { h.oxirgiZaxira = Hifz.kunKaliti(new Date(), h.sozlama.kunBoshi); N.saqla(Hifz.KALIT, h); }
+      } catch (e) { /* mayli */ }
+      N.xabar('Zaxira fayl yuklab olindi ✓');
+    };
+    var inp = N.$('hammasi-imp');
+    inp.onchange = function () {
+      var f = inp.files[0];
+      if (!f) return;
+      N.faylOqi(f).then(function (matn) {
+        var d;
+        try { d = JSON.parse(matn); } catch (e) { alert('Bu fayl zaxira nusxa emas yoki buzilgan.'); return; }
+        if (!confirm('Hozirgi ma\'lumot almashtiriladi, rozimisiz?')) return;
+        var xato = N.hammasiQoy(d);
+        if (xato) alert(xato); else { N.xabar('Hammasi tiklandi ✓'); setTimeout(function () { location.reload(); }, 800); }
+      }).then(function () { inp.value = ''; });
+    };
     N.ishgaTush();
   })();
 </script>

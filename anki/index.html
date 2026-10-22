@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="uz" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anki — Nader vositalari</title>
+<meta name="theme-color" content="#1f6f4a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Anki">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../ikonkalar/apple-touch-icon.png">
+<link rel="icon" href="../ikonkalar/ikonka-192.png">
+<link rel="stylesheet" href="../umumiy/style.css">
+</head>
+<body>
+<main id="anki-ilova">
+  <a class="tugma orqaga" href="../index.html">← Bosh sahifa</a>
+  <h1>🃏 Anki</h1>
+  <p class="xira">Tab bilan ajratilgan faylni tekshiradi va tozalaydi. Ustunlar: Deck · Front · Back · Tags.</p>
+
+  <div class="karta">
+    <label class="tugma keng">📄 .txt / .tsv faylni tanlash<input type="file" id="fayl" accept=".txt,.tsv,text/plain,text/tab-separated-values" class="yashirin"></label>
+    <p class="kichik xira" style="margin-top:12px">yoki matnni joylashtiring:</p>
+    <textarea id="matn" dir="auto" placeholder="najron 6::النحو ٤::الباب الأول::Lugat	كتاب	kitob	nahv"></textarea>
+    <h3>Takrorlarni solishtirish</h3>
+    <label class="tanlov"><input type="radio" name="rejim" value="aniq"> Aniq (harfma-harf)</label>
+    <label class="tanlov"><input type="radio" name="rejim" value="harakatsiz"> Harakatlarsiz</label>
+    <label class="tanlov"><input type="checkbox" id="alif"> أ إ آ ٱ → ا, ى = ي, ة = ه deb hisoblash</label>
+    <button class="asosiy keng" id="tekshir" style="margin-top:12px">Tekshirish</button>
+  </div>
+  <div id="natija"></div>
+
+  <h2>Oldingi kartalarim</h2>
+  <div class="karta">
+    <p>Bazada: <b id="baza-soni"></b></p>
+    <ul class="royxat kichik" id="baza-royxat"></ul>
+    <label class="tugma keng" style="margin-top:10px">➕ Oldingi dars fayllarini qo'shish<input type="file" id="baza-fayl" multiple accept=".txt,.tsv,text/plain" class="yashirin"></label>
+    <button class="keng xavfli" id="baza-tozala" style="margin-top:10px">Bazani tozalash</button>
+  </div>
+  <details>
+    <summary>Kurslar ro'yxati (deck nomini tekshirish uchun)</summary>
+    <div class="ichki"><p class="kichik xira">Har qatorda bitta kurs.</p><textarea id="kurslar" dir="rtl" lang="ar"></textarea></div>
+  </details>
+  <div id="zaxira"></div>
+</main>
+<script src="../umumiy/yordamchi.js"></script>
+<script src="anki.js"></script>
+</body>
+</html>

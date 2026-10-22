@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="uz" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Transkript — Nader vositalari</title>
+<meta name="theme-color" content="#1f6f4a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Transkript">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../ikonkalar/apple-touch-icon.png">
+<link rel="icon" href="../ikonkalar/ikonka-192.png">
+<link rel="stylesheet" href="../umumiy/style.css">
+<style>
+  #korinish p { margin: 0 0 14px; line-height: 1.7; }
+  .arab { color: var(--arab); font-family: "Geeza Pro", "Al Nile", "Noto Naskh Arabic", serif; font-size: 1.15em; unicode-bidi: isolate; }
+  .arab.blok { display: block; text-align: right; margin: 6px 0; }
+  mark { background: color-mix(in srgb, var(--sariq) 45%, transparent); color: inherit; border-radius: 4px; }
+</style>
+</head>
+<body>
+<main id="transkript-ilova">
+  <a class="tugma orqaga" href="../index.html">← Bosh sahifa</a>
+  <h1>📝 Transkript</h1>
+  <p class="xira">Dars transkripsiyasini tozalaydi va arabcha qismlarni ajratadi. Matn hech qayerga yuborilmaydi.</p>
+
+  <div class="karta">
+    <label class="tugma keng">📄 .txt / .srt / .vtt faylni tanlash<input type="file" id="fayl" accept=".txt,.srt,.vtt,text/plain,text/vtt" class="yashirin"></label>
+    <p class="kichik xira" style="margin-top:12px">yoki matnni joylashtiring:</p>
+    <textarea id="matn" dir="auto"></textarea>
+    <div class="qator" style="margin-top:10px">
+      <button class="keng" data-namuna="namuna.srt">🧪 Namuna (SRT)</button>
+      <button class="keng" data-namuna="namuna.txt">🧪 Namuna (TXT)</button>
+    </div>
+  </div>
+
+  <details id="sozlamalar">
+    <summary>Tozalash sozlamalari</summary>
+    <div class="ichki">
+      <label class="tanlov"><input type="checkbox" id="o-vaqt"> Vaqt belgilari va SRT raqamlarini olib tashlash</label>
+      <label class="tanlov"><input type="checkbox" id="o-birlashtir"> Uzilib qolgan qatorlarni birlashtirish</label>
+      <p><label>Paragraf: pauza shundan uzun bo'lsa (soniya)<br><input type="number" id="o-pauza" min="0" step="0.5" inputmode="decimal" style="width:100px"></label></p>
+      <p><label>Vaqt belgilari bo'lmasa: har necha gapda paragraf<br><input type="number" id="o-gaplar" min="1" max="20" inputmode="numeric" style="width:100px"></label></p>
+      <label class="tanlov"><input type="checkbox" id="o-takror"> Ketma-ket takrorlangan so'zlarni belgilash (o'chirmaydi)</label>
+      <label class="tanlov"><input type="checkbox" id="o-tozala"> Ortiqcha bo'sh joy va ikki marta tinish belgilarini tozalash</label>
+      <label class="tanlov"><input type="checkbox" id="o-apostrof"> o' / g' apostrofini bir xil qilish:</label>
+      <select id="o-belgi"><option value="'">oddiy  '</option><option value="ʻ">ʻ (o'zbek)</option></select>
+      <p><label>So'zlovchi belgilari (Speaker 1:)<br><select id="o-spiker"><option value="olib">olib tashlash</option><option value="qoldir">qoldirish</option></select></label></p>
+      <p><label>Arabcha bo'laklar<br><select id="o-arab">
+        <option value="qator">Alohida qatorda</option>
+        <option value="belgi">Belgi bilan «...»</option>
+        <option value="teg">Teg bilan [AR]...[/AR]</option>
+      </select></label></p>
+    </div>
+  </details>
+  <button class="asosiy keng" id="ishla">Tozalash</button>
+
+  <div id="natija" class="yashirin">
+    <div class="karta"><b id="stat"></b></div>
+    <div class="qator">
+      <button class="asosiy keng" id="nusxa">📋 Hammasini nusxalash</button>
+    </div>
+    <div class="qator" style="margin-top:10px">
+      <button class="keng" id="txt">⬇️ .txt</button>
+      <button class="keng" id="md">⬇️ .md</button>
+    </div>
+    <div class="karta" id="korinish"></div>
+  </div>
+</main>
+<script src="../umumiy/yordamchi.js"></script>
+<script src="transkript.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="uz" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zettel — Nader vositalari</title>
+<meta name="theme-color" content="#1f6f4a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Zettel">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../ikonkalar/apple-touch-icon.png">
+<link rel="icon" href="../ikonkalar/ikonka-192.png">
+<link rel="stylesheet" href="../umumiy/style.css">
+</head>
+<body>
+<main id="zettel-ilova">
+  <a class="tugma orqaga" href="../index.html">← Bosh sahifa</a>
+  <h1>🗃️ Zettel</h1>
+  <p class="xira">Kartalarni mexanik tekshirish: raqamlar, havolalar, bo'sh kartalar. Fayllar hech qayerga yuborilmaydi.</p>
+
+  <div class="karta">
+    <h3 style="margin-top:0">1. Fayllarni tanlash</h3>
+    <label class="tugma keng">📄 .md fayllarni tanlash<input type="file" id="fayllar" multiple accept=".md,text/markdown" class="yashirin"></label>
+    <label class="tugma keng" style="margin-top:10px">📁 Butun papkani tanlash<input type="file" id="papka" webkitdirectory multiple class="yashirin"></label>
+  </div>
+  <div class="karta">
+    <h3 style="margin-top:0">2. Yoki matnni joylashtirish</h3>
+    <p class="kichik xira">Har bir karta <code>#&nbsp;ZK-AQ-001 ...</code> sarlavhasi bilan boshlansin yoki <code>---</code> qatori bilan ajratilsin.</p>
+    <textarea id="matn" dir="auto" placeholder="# ZK-AQ-001 Tavhid ta'rifi&#10;..."></textarea>
+    <button class="asosiy keng" id="tekshir" style="margin-top:10px">Tekshirish</button>
+  </div>
+  <button class="keng" id="namuna">🧪 Namunani sinash</button>
+  <div id="natija"></div>
+</main>
+<script src="../umumiy/yordamchi.js"></script>
+<script src="zettel.js"></script>
+</body>
+</html>

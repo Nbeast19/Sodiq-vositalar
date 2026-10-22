@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kutubxona — Nader vositalari</title>
+<title>Kutubxona — Vositalar</title>
 <meta name="theme-color" content="#1f6f4a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -18,17 +18,17 @@
 <main id="kutubxona-ilova">
   <a class="tugma orqaga" href="../index.html">← Bosh sahifa</a>
   <h1>📚 Kutubxona</h1>
-  <p class="xira">YouTube'dan olingan darslar ro'yxatini tozalab, Notion'ga import qilinadigan CSV yasaydi.</p>
+  <p class="izoh">YouTube darslari ro'yxatini tozalab, Notion'ga import qilinadigan CSV fayl yasaydi. Ro'yxatni joylashtiring, ustoz va kitobni yozing, "Tozalash"ni bosing.</p>
 
   <div class="karta">
     <h3 style="margin-top:0">1. Ro'yxatni joylashtiring</h3>
     <p class="kichik xira">Har qatorda: sarlavha [tab] havola [tab] davomiylik. Faqat havolalar ham bo'ladi.</p>
-    <textarea id="matn" dir="auto" placeholder="شرح كتاب التوحيد - الدرس الأول	https://youtu.be/...	1:02:33"></textarea>
+    <textarea id="matn" dir="auto" placeholder="الدرس الأول	https://youtu.be/...	1:02:33"></textarea>
   </div>
   <div class="karta">
     <h3 style="margin-top:0">2. Umumiy ma'lumot (hamma qatorga)</h3>
-    <p><label>Ustoz<br><input id="ustoz" dir="auto" style="width:100%" placeholder="أبو إسحاق الحويني"></label></p>
-    <p><label>Kitob / dars turkumi<br><input id="kitob" dir="auto" style="width:100%" placeholder="شرح كتاب التوحيد"></label></p>
+    <p><label>Ustoz<br><input id="ustoz" dir="auto" style="width:100%" placeholder="Ustoz ismi"></label></p>
+    <p><label>Kitob / dars turkumi<br><input id="kitob" dir="auto" style="width:100%" placeholder="Kitob yoki dars turkumi nomi"></label></p>
     <p><label>Turi<br><select id="turi" style="width:100%"></select></label></p>
     <p><label>Mavzu<br><select id="mavzu" style="width:100%"></select></label></p>
   </div>
@@ -45,6 +45,7 @@
   </div>
   <button class="asosiy keng" id="ishla">Tozalash</button>
   <div id="natija"></div>
+  <div id="zaxira" style="margin-top:24px"></div>
 </main>
 <script src="../umumiy/yordamchi.js"></script>
 <script src="kutubxona.js"></script>

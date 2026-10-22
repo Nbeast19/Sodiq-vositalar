@@ -2,13 +2,25 @@
 // Yuqori qism — sof mantiq (Node'da sinash mumkin), pastki qism — interfeys.
 (function (global) {
   'use strict';
-  var KALIT = 'nader.kutubxona.v1';
+  var N = global.N || (typeof require !== 'undefined' ? require('../umumiy/yordamchi.js') : null);
+  var KALIT = 'vositalar.kutubxona.v1';
   var K = { KALIT: KALIT };
 
   K.TURLAR = ['Kitob sharhi', 'Ma\'ruza', 'Fatvo', 'Savol-javob', 'Boshqa'];
   K.MAVZULAR = ['Aqida', 'Hadis', 'Fiqh', 'Tafsir', 'Nahv', 'Odob'];
   K.SOZLAR = ['سؤال', 'جواب', 'فتوى', 'مقطع', 'مقتطفات', 'لقطة', 'shorts', '#shorts'];
   K.USTUNLAR = ['Nomi (arabcha)', 'Nomi (o\'zbekcha)', 'Ustoz', 'Kitob', 'Turi', 'Mavzu', 'Tartib', 'Havola', 'Davomiyligi', 'Eshitildi'];
+
+  K.standart = function () {
+    return { v: 1, ustoz: '', kitob: '', turi: K.TURLAR[0], mavzu: K.MAVZULAR[0], mavzular: K.MAVZULAR.slice(), sozlar: K.SOZLAR.slice(),
+      takror: true, qisqa: true, chegara: 10, shorts: true, savol: true, savolQoldir: false };
+  };
+  K.normal = function (d) {
+    d = N.toldir(d, K.standart());
+    if (!Array.isArray(d.mavzular) || !d.mavzular.length) d.mavzular = K.MAVZULAR.slice();
+    if (!Array.isArray(d.sozlar)) d.sozlar = K.SOZLAR.slice();
+    return d;
+  };
 
   // YouTube havolasidan video ID
   K.videoId = function (url) {
@@ -57,7 +69,7 @@
     // Uzunlari birinchi tekshirilsin ("الحادي عشر" "الحادي"dan oldin)
     TARTIB.sort(function (a, b) { return b[0].length - a[0].length; });
   })();
-  function harakatsiz(s) { return s.replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي'); }
+  function harakatsiz(s) { return N.harakatsiz(s, true); }
 
   // Sarlavhadan dars raqami
   K.darsRaqami = function (sarlavha) {
@@ -155,17 +167,13 @@
   // =====================================================================
   // ---------- Interfeys ----------
   if (typeof document === 'undefined' || !document.getElementById('kutubxona-ilova')) return;
-  var N = global.N, h = N.h;
+  var h = N.h, $ = N.$;
   var holat, natija = null, tartib = null, qaytarilgan = {};
-  function $(id) { return document.getElementById(id); }
 
   function yuklash() {
     var r = N.yukla(KALIT);
-    holat = r.data && r.data.sozlar ? r.data : {
-      v: 1, ustoz: '', kitob: '', turi: K.TURLAR[0], mavzu: K.MAVZULAR[0], mavzular: K.MAVZULAR.slice(), sozlar: K.SOZLAR.slice(),
-      takror: true, qisqa: true, chegara: 10, shorts: true, savol: true, savolQoldir: false
-    };
-    if (r.xato) N.buzilganXabar($('kutubxona-ilova'));
+    holat = K.normal(r.data);
+    if (r.xato) N.buzilganXabar($('kutubxona-ilova'), KALIT);
   }
   function saqlash() { N.saqla(KALIT, holat); }
 
@@ -191,6 +199,7 @@
 
   function ishla(yangi) {
     formaOqi();
+    if (!$('matn').value.trim()) { N.xabar('Ro\'yxat bo\'sh. Avval sarlavha va havolalarni joylashtiring.'); return; }
     if (yangi) qaytarilgan = {};
     var opt = JSON.parse(JSON.stringify(holat)); opt.qaytarilgan = qaytarilgan;
     natija = K.ishla($('matn').value, opt);
@@ -264,5 +273,15 @@
 
   yuklash();
   formaChiz();
+  N.zaxiraBolimi($('zaxira'), {
+    prefiks: 'kutubxona',
+    kalit: KALIT,
+    olish: function () { formaOqi(); return holat; },
+    tiklash: function (d) {
+      if (!d.sozlar && !d.mavzular) return 'Bu fayl Kutubxona zaxira nusxasi emas. "kutubxona-zaxira-..." nomli faylni tanlang.';
+      holat = K.normal(d); saqlash(); formaChiz();
+      return null;
+    }
+  });
   N.ishgaTush();
 })(typeof window !== 'undefined' ? window : globalThis);

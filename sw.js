@@ -8,6 +8,8 @@ var FAYLLAR = [
   './hifz/', './hifz/index.html', './hifz/mushaf.js', './hifz/hifz.js',
   './anki/', './anki/index.html', './anki/anki.js',
   './kutubxona/', './kutubxona/index.html', './kutubxona/kutubxona.js',
+  './transkript/', './transkript/index.html', './transkript/transkript.js',
+  './transkript/namuna/namuna.srt', './transkript/namuna/namuna.txt',
   './zettel/', './zettel/index.html', './zettel/zettel.js',
   './zettel/namuna/ZK-AQ-001%20Tavhid%20tarifi.md', './zettel/namuna/ZK-AQ-002%20Tavhid%20turlari.md',
   './zettel/namuna/ZK-AQ-004%20Iymon%20ruknlari.md', './zettel/namuna/ZK-AQ-005%20Asmo%20va%20sifat.md',

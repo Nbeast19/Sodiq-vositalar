@@ -75,6 +75,10 @@ const ASOS = 'http://localhost:8123/';
   assert(await sahifa.isVisible('[data-a="tasdiq"]'), 'internetsiz ochiladi');
   await sahifa.goto(ASOS);
   assert(await sahifa.isVisible('text=Nader vositalari'));
+  for (const v of ['zettel', 'anki', 'kutubxona', 'transkript']) {
+    await sahifa.goto(ASOS + v + '/index.html');
+    assert(await sahifa.isVisible('text=← Bosh sahifa'), v + ' internetsiz ochiladi');
+  }
   await ctx.setOffline(false);
 
   assert.deepStrictEqual(xatolar, [], 'konsolda xato yo\'q');

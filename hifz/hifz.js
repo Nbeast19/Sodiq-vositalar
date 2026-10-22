@@ -3,7 +3,8 @@
 (function (global) {
   'use strict';
   var M = global.Mushaf || (typeof require !== 'undefined' ? require('./mushaf.js') : null);
-  var KALIT = 'nader.hifz.v1';
+  var N = global.N || (typeof require !== 'undefined' ? require('../umumiy/yordamchi.js') : null);
+  var KALIT = 'vositalar.hifz.v1';
   var HAFTA = ['Yakshanba', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba'];
 
   var H = { KALIT: KALIT, HAFTA: HAFTA };
@@ -16,21 +17,16 @@
       yaratilgan: bugun || null,
       oxirgiZaxira: null,
       sozlama: {
-        bosqichlar: [{ dan: 434, gacha: 506 }, { dan: 293, gacha: 395 }, { dan: 77, gacha: 292 }],
+        bosqichlar: [],
         kunlik: 1,          // 0.5 / 1 / 2 sahifa
         takror: 20,
         murojaa: 5,         // hajmi
         murojaaBirlik: 'sahifa', // 'sahifa' yoki 'juz'
         kunBoshi: '03:00',
-        ustozKunlari: [0, 1, 2, 3, 4],
+        ustozKunlari: [],
         damKunlari: []
       },
-      oldin: [
-        { dan: 582, gacha: 604, holat: 'kuchli' },
-        { dan: 2, gacha: 76, holat: 'zaif' },
-        { dan: 396, gacha: 433, holat: 'zaif' },
-        { dan: 507, gacha: 581, holat: 'zaif' }
-      ],
+      oldin: [],       // oldin yodlangan qismlar: { dan, gacha, holat: 'kuchli' | 'zaif' }
       joriy: null,     // { p, q, sanoq } — hozir yodlanayotgan sahifa (q: 0 to'liq, 1/2 yarmi)
       yodlangan: {},   // sahifa -> yodlangan kun
       yarim: {},       // sahifa -> 1 (birinchi yarmi yodlangan, 0.5 rejimida)
@@ -40,19 +36,43 @@
     };
   };
 
+  // Eski yoki chala ma'lumotni standart qiymatlar bilan to'ldirish
+  H.normal = function (s) {
+    var st = H.standart(N.bugunSana());
+    s = N.toldir(s, st);
+    s.sozlama = N.toldir(s.sozlama, st.sozlama);
+    ['yodlangan', 'yarim', 'oxirgiTakror', 'qiyin', 'kunlar'].forEach(function (k) { if (!s[k] || typeof s[k] !== 'object') s[k] = {}; });
+    if (!Array.isArray(s.oldin)) s.oldin = [];
+    ['bosqichlar', 'ustozKunlari', 'damKunlari'].forEach(function (k) { if (!Array.isArray(s.sozlama[k])) s.sozlama[k] = []; });
+    return s;
+  };
+
+  // Tayyor shablonlar (yangi yodlash tartibi)
+  H.SHABLONLAR = [
+    ['boshidan', 'Boshidan oxirigacha', 'Fotihadan Nos surasigacha, sahifa ketidan sahifa'],
+    ['oxiridan', 'Oxiridan boshiga', '30-juzdan boshlab 1-juzgacha; har juz ichida oldinga qarab'],
+    ['ozim', 'O\'zim tanlayman', 'Bosqichlarni sura yoki sahifa raqami bilan o\'zim qo\'shaman']
+  ];
+  H.shablon = function (nom) {
+    if (nom === 'boshidan') return [{ dan: 1, gacha: 604 }];
+    if (nom === 'oxiridan') {
+      var r = [];
+      for (var j = 30; j >= 1; j--) r.push({ dan: M.JUZLAR[j - 1], gacha: j === 30 ? 604 : M.JUZLAR[j] - 1 });
+      return r;
+    }
+    return [];
+  };
+
   // ---------- Sana bilan ishlash ----------
   // "Kun boshlanishi"dan oldingi vaqt oldingi kunga hisoblanadi
   H.kunKaliti = function (sana, kunBoshi) {
     var qism = String(kunBoshi || '00:00').split(':');
-    var d = new Date(sana.getTime() - ((+qism[0] || 0) * 60 + (+qism[1] || 0)) * 60000);
-    var m = d.getMonth() + 1, k = d.getDate();
-    return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (k < 10 ? '0' : '') + k;
+    return N.sanaMatn(new Date(sana.getTime() - ((+qism[0] || 0) * 60 + (+qism[1] || 0)) * 60000));
   };
   function kalitSana(k) { var a = k.split('-'); return new Date(+a[0], +a[1] - 1, +a[2], 12); }
   H.kunQosh = function (k, n) {
     var d = kalitSana(k); d.setDate(d.getDate() + n);
-    var m = d.getMonth() + 1, kk = d.getDate();
-    return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (kk < 10 ? '0' : '') + kk;
+    return N.sanaMatn(d);
   };
   H.farq = function (a, b) { return Math.round((kalitSana(b) - kalitSana(a)) / 86400000); }; // b - a, kunlarda
   H.haftaKuni = function (k) { return kalitSana(k).getDay(); };
@@ -269,13 +289,13 @@
   // =====================================================================
   // ---------- Interfeys ----------
   if (typeof document === 'undefined' || !document.getElementById('hifz-ilova')) return;
-  var N = global.N, h = N.h;
-  var holat, buzilgan = false, ekran = 'bugun', tahrir = null;
+  var h = N.h;
+  var holat, buzilgan = false, ekran = 'bugun', tahrir = null, chizilganKun = null;
 
   function yuklash() {
     var r = N.yukla(KALIT);
     buzilgan = r.xato;
-    holat = r.data && r.data.sozlama ? r.data : H.standart(N.bugunSana());
+    holat = H.normal(r.data && r.data.sozlama ? r.data : null);
     if (!holat.yaratilgan) holat.yaratilgan = N.bugunSana();
   }
   function saqlash() { if (!buzilgan) N.saqla(KALIT, holat); }
@@ -284,7 +304,6 @@
   function sahifaMatn(p) {
     return p + '-sahifa · ' + M.suraNomi(p) + ' surasi · ' + M.juz(p) + '-juz';
   }
-  function tebran() { try { if (navigator.vibrate) navigator.vibrate(25); } catch (e) { /* yo'q */ } }
 
   var ilova = document.getElementById('hifz-ilova');
 
@@ -295,12 +314,13 @@
     });
     var f = { bugun: bugunEkran, qiyin: qiyinEkran, stat: statEkran, sozlash: sozlashEkran, zaxira: zaxiraEkran }[ekran];
     f();
-    if (buzilgan) N.buzilganXabar(ilova);
+    if (buzilgan) N.buzilganXabar(ilova, KALIT);
   }
 
   // ----- Bosh ekran -----
   function bugunEkran() {
     var k = bugun();
+    chizilganKun = k;
     var r = H.kun(holat, k);
     var j = H.joriy(holat, k);
     saqlash();
@@ -426,11 +446,19 @@
   function sozlashEkran() {
     if (!tahrir) tahrir = JSON.parse(JSON.stringify({ sozlama: holat.sozlama, oldin: holat.oldin }));
     var s = tahrir.sozlama;
-    var html = '<h2>Sozlash</h2>' + (holat.sozlandi ? '' : '<p>Raqamlarni tekshiring, kerak bo\'lsa o\'zgartiring va pastdagi <b>"Tasdiqlash"</b> tugmasini bosing.</p>') +
-      '<h3>Yangi yodlash tartibi</h3><p class="xira kichik">Har bosqichda kichik sahifadan kattasiga qarab yodlanadi. Boshlanish nuqtasi — 1-bosqichning birinchi sahifasi.</p>';
-    s.bosqichlar.forEach(function (b, i) { html += oraliqQator(b, 'b', i); });
+    var html = '<h2>Sozlash</h2>' + (holat.sozlandi ? '' : '<p>Uch qadam: yodlash tartibini tanlang, oldin yodlagan qismlaringizni qo\'shing (bo\'lsa) va <b>"Tasdiqlash"</b>ni bosing. Keyin hammasini o\'zgartirish mumkin.</p>') +
+      '<h3>1. Yangi yodlash tartibi</h3><p class="xira kichik">Tayyor shablonni tanlang yoki bosqichlarni o\'zingiz qo\'shing. Har bosqichda kichik sahifadan kattasiga qarab yodlanadi.</p>';
+    H.SHABLONLAR.forEach(function (sh) {
+      html += '<button class="keng" data-a="shablon" data-n="' + sh[0] + '" style="margin-bottom:8px;flex-direction:column;align-items:flex-start;text-align:left">' +
+        '<b>' + h(sh[1]) + '</b><span class="kichik xira">' + h(sh[2]) + '</span></button>';
+    });
+    var bosq = '';
+    s.bosqichlar.forEach(function (b, i) { bosq += oraliqQator(b, 'b', i); });
+    if (s.bosqichlar.length > 3) html += '<details id="bosqichlar"' + (tahrir.ochiq ? ' open' : '') + '><summary>' + s.bosqichlar.length + ' ta bosqich — ko\'rish va o\'zgartirish</summary><div class="ichki">' + bosq + '</div></details>';
+    else html += bosq;
+    if (!s.bosqichlar.length) html += '<div class="karta xira">Hali bosqich yo\'q. Yuqoridagi shablonlardan birini tanlang yoki pastdagi tugma bilan bosqich qo\'shing.</div>';
     html += '<button class="keng" data-a="bosqichQosh">+ Bosqich qo\'shish</button>';
-    html += '<h3>Oldin yodlangan qismlar (murojaa uchun)</h3>';
+    html += '<h3>2. Oldin yodlangan qismlar (ixtiyoriy)</h3><p class="xira kichik">Bular murojaaga qo\'shiladi. "Zaif" qismlar ikki baravar tez-tez chiqadi.</p>';
     tahrir.oldin.forEach(function (o, i) { html += oraliqQator(o, 'o', i); });
     html += '<button class="keng" data-a="qismQosh">+ Qism qo\'shish</button>';
 
@@ -439,14 +467,14 @@
         return '<label class="tanlov"><input type="checkbox" data-hafta="' + nom + '" value="' + i + '"' + (tanlangan.indexOf(i) >= 0 ? ' checked' : '') + '> ' + n + '</label>';
       }).join('');
     }
-    html += '<h3>Boshqa sozlamalar</h3><div class="karta">' +
+    html += '<h3>3. Boshqa sozlamalar</h3><div class="karta">' +
       '<label>Kunlik yangi yodlash<br><select id="s-kunlik">' + [0.5, 1, 2].map(function (v) {
         return '<option value="' + v + '"' + (s.kunlik === v ? ' selected' : '') + '>' + v + ' sahifa</option>'; }).join('') + '</select></label>' +
       '<p><label>Takror soni<br><input type="number" inputmode="numeric" min="1" max="200" id="s-takror" value="' + s.takror + '"></label></p>' +
       '<p><label>Kunlik murojaa hajmi<br><span class="qator"><input type="number" inputmode="numeric" min="0" max="604" id="s-murojaa" value="' + s.murojaa + '" style="width:100px">' +
       '<select id="s-birlik"><option value="sahifa"' + (s.murojaaBirlik === 'sahifa' ? ' selected' : '') + '>sahifa</option><option value="juz"' + (s.murojaaBirlik === 'juz' ? ' selected' : '') + '>juz</option></select></span></label></p>' +
       '<p><label>Kun boshlanishi (bu vaqtgacha qilingan ish oldingi kunga hisoblanadi)<br><input type="time" id="s-kunboshi" value="' + h(s.kunBoshi) + '"></label></p></div>' +
-      '<div class="karta"><b>Ustozga topshirish kunlari</b>' + kunlar('ustoz', s.ustozKunlari) + '</div>' +
+      '<div class="karta"><b>Ustozga topshirish kunlari</b> <span class="xira kichik">(ixtiyoriy; tanlangan kunlarda "Ustozga topshirdim" tugmasi chiqadi)</span>' + kunlar('ustoz', s.ustozKunlari) + '</div>' +
       '<div class="karta"><b>Dam olish kunlari</b> <span class="xira kichik">(yangi yodlash talab qilinmaydi, faqat murojaa)</span>' + kunlar('dam', s.damKunlari) + '</div>' +
       '<button class="asosiy keng" data-a="tasdiq">Tasdiqlash</button>' +
       (holat.sozlandi ? '<button class="keng" data-a="bekor" style="margin-top:10px">Bekor qilish</button>' : '');
@@ -454,6 +482,8 @@
   }
   function tahrirOqi() {
     // Formadagi qiymatlarni tahrir obyektiga o'qish
+    var det = document.getElementById('bosqichlar');
+    if (det) tahrir.ochiq = det.open;
     ilova.querySelectorAll('[data-tur]').forEach(function (el) {
       var ro = el.getAttribute('data-tur') === 'b' ? tahrir.sozlama.bosqichlar : tahrir.oldin;
       var o = ro[+el.getAttribute('data-i')];
@@ -477,9 +507,12 @@
     var hammasi = tahrir.sozlama.bosqichlar.concat(tahrir.oldin);
     for (var i = 0; i < hammasi.length; i++) {
       var o = hammasi[i];
-      if (!(o.dan >= 1 && o.gacha <= 604 && o.dan <= o.gacha)) return 'Sahifa raqamlari 1 dan 604 gacha bo\'lishi va "dan" ≤ "gacha" bo\'lishi kerak.';
+      if (!(o.dan >= 1 && o.gacha <= 604 && o.dan <= o.gacha)) {
+        var nom = i < tahrir.sozlama.bosqichlar.length ? (i + 1) + '-bosqich' : 'Oldin yodlangan ' + (i - tahrir.sozlama.bosqichlar.length + 1) + '-qism';
+        return nom + ': sahifa raqamlari 1 dan 604 gacha bo\'lsin va "dan" raqami "gacha"dan katta bo\'lmasin.';
+      }
     }
-    if (!tahrir.sozlama.bosqichlar.length) return 'Kamida bitta bosqich kerak.';
+    if (!tahrir.sozlama.bosqichlar.length) return 'Kamida bitta bosqich kerak. Shablonlardan birini tanlang yoki "+ Bosqich qo\'shish"ni bosing.';
     return null;
   }
 
@@ -488,9 +521,11 @@
     N.zaxiraBolimi(document.getElementById('zaxira-joy'), {
       prefiks: 'hifz',
       olish: function () { holat.oxirgiZaxira = bugun(); saqlash(); return holat; },
+      kalit: KALIT,
       tiklash: function (d) {
-        if (!d || !d.sozlama || !d.kunlar) { alert('Bu fayl hifz zaxira nusxasi emas.'); return; }
-        holat = d; buzilgan = false; tahrir = null; saqlash(); ekran = 'bugun'; chiz();
+        if (!d.sozlama || !d.kunlar) return 'Bu fayl Hifz zaxira nusxasi emas. "hifz-zaxira-..." nomli faylni tanlang.';
+        holat = H.normal(d); buzilgan = false; tahrir = null; saqlash(); ekran = 'bugun'; chiz();
+        return null;
       }
     });
   }
@@ -500,9 +535,11 @@
     var b = e.target.closest('[data-a]');
     if (!b) return;
     var a = b.getAttribute('data-a'), k = bugun();
+    // Ilova ochiq turganda yangi kun boshlangan bo'lsa — avval ekranni yangilaymiz
+    if (ekran === 'bugun' && chizilganKun && k !== chizilganKun) { N.xabar('Yangi kun boshlandi'); chiz(); return; }
     if (a === 'zaxiraga') { e.preventDefault(); ekran = 'zaxira'; chiz(); return; }
     if (a === 'plus') {
-      tebran();
+      N.tebran();
       var natija = H.qoshBir(holat, k);
       saqlash();
       if (natija) N.xabar('Barakalloh! ' + birlikNomi(natija.tugadi) + ' yodlandi ✓');
@@ -513,7 +550,7 @@
       var r = H.kun(holat, k);
       var tayyor = g.every(function (p) { return r.bajar.indexOf(p) >= 0; });
       g.forEach(function (p) { H.murojaaBelgila(holat, k, p, !tayyor); });
-      if (!tayyor) tebran();
+      if (!tayyor) N.tebran();
       saqlash();
     } else if (a === 'qiyin') {
       var p = +b.getAttribute('data-p');
@@ -527,7 +564,11 @@
       var up = Math.round(+document.getElementById('ustoz-p').value) || null;
       H.kun(holat, k).ustoz = { p: up, vaqt: new Date().toISOString() }; saqlash();
     } else if (a === 'ustozBekor') { H.kun(holat, k).ustoz = null; saqlash(); }
-    else if (a === 'bosqichQosh' || a === 'qismQosh') {
+    else if (a === 'shablon') {
+      tahrirOqi();
+      tahrir.sozlama.bosqichlar = H.shablon(b.getAttribute('data-n'));
+      N.xabar(tahrir.sozlama.bosqichlar.length ? 'Shablon tanlandi: ' + tahrir.sozlama.bosqichlar.length + ' ta bosqich' : 'Endi "+ Bosqich qo\'shish" tugmasi bilan bosqich qo\'shing');
+    } else if (a === 'bosqichQosh' || a === 'qismQosh') {
       tahrirOqi();
       if (a === 'bosqichQosh') tahrir.sozlama.bosqichlar.push({ dan: 1, gacha: 1 });
       else tahrir.oldin.push({ dan: 1, gacha: 1, holat: 'kuchli' });

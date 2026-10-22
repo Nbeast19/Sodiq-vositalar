@@ -14,5 +14,18 @@ module.exports = async (sahifa, ASOS) => {
   await sahifa.click('[data-namuna="namuna.txt"]');
   await sahifa.waitForTimeout(200);
   assert((await sahifa.innerText('#korinish')).includes('Umar'));
-  await sahifa.evaluate(() => localStorage.removeItem('nader.transkript.v1'));
+  // 15 000 so'zli matn qotmasdan ishlaydi
+  const uzun = await sahifa.evaluate(() => {
+    let s = '';
+    for (let i = 0; i < 1500; i++) s += 'Bu yerda o\u2018zbekcha gap bor va va قال الله تعالى بسم الله. ';
+    return s;
+  });
+  await sahifa.fill('#matn', uzun);
+  const t0 = Date.now();
+  await sahifa.click('#ishla');
+  await sahifa.waitForFunction(() => /Jami so'z: 1\d \d{3}/.test(document.getElementById('stat').textContent));
+  const vaqt = Date.now() - t0;
+  console.log('  Transkript 15 000 so\'z ekranda:', vaqt, 'ms');
+  assert(vaqt < 2000);
+  await sahifa.evaluate(() => localStorage.removeItem('vositalar.transkript.v1'));
 };

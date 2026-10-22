@@ -46,10 +46,18 @@ assert(n.kirdi.some(x => x.id === 'ddd'));
 // Savol-javoblarni qoldirish
 assert(K.ishla(matn, Object.assign({}, opt, { savolQoldir: true })).kirdi.some(x => x.id === 'eee'));
 // CSV
-const csv = K.csv(K.ishla(matn, opt).kirdi, { ustoz: 'أبو إسحاق الحويني', kitob: 'كتاب, "التوحيد"', turi: 'Kitob sharhi', mavzu: 'Aqida' });
+const csv = K.csv(K.ishla(matn, opt).kirdi, { ustoz: 'الشيخ فلان', kitob: 'كتاب, "التوحيد"', turi: 'Kitob sharhi', mavzu: 'Aqida' });
 const q2 = csv.split('\r\n');
 assert.strictEqual(q2[0], '"Nomi (arabcha)","Nomi (o\'zbekcha)","Ustoz","Kitob","Turi","Mavzu","Tartib","Havola","Davomiyligi","Eshitildi"');
-assert.strictEqual(q2[1], '"الدرس الأول","","أبو إسحاق الحويني","كتاب, ""التوحيد""","Kitob sharhi","Aqida","1","https://www.youtube.com/watch?v=aaa","1:00:00","No"');
+assert.strictEqual(q2[1], '"الدرس الأول","","الشيخ فلان","كتاب, ""التوحيد""","Kitob sharhi","Aqida","1","https://www.youtube.com/watch?v=aaa","1:00:00","No"');
 assert(q2[2].startsWith('"الدرس ٢، ""مهم"""'));
-assert.strictEqual(K.faylNomi('أبو إسحاق الحويني', 'كتاب التوحيد'), 'أبو-إسحاق-الحويني_كتاب-التوحيد_darslar.csv');
+assert.strictEqual(K.faylNomi('الشيخ فلان', 'كتاب التوحيد'), 'الشيخ-فلان_كتاب-التوحيد_darslar.csv');
 console.log('Kutubxona: hamma sinovlar o\'tdi ✓');
+// Standart sozlamalar va eski ma'lumotni to'ldirish
+assert.strictEqual(K.normal(null).ustoz, '');
+assert.deepStrictEqual(K.normal({ ustoz: 'X' }).mavzular, K.MAVZULAR);
+assert.strictEqual(K.normal({ ustoz: 'X' }).ustoz, 'X');
+// Bo'sh va g'alati kirish qulamaydi
+assert.deepStrictEqual(K.ishla('', opt), { kirdi: [], chiqdi: [] });
+assert.strictEqual(K.ishla('salom\n\n   \nhttps://example.com/x', opt).kirdi.length, 2);
+console.log('Kutubxona (qo\'shimcha): o\'tdi ✓');

@@ -106,7 +106,7 @@ Ish davomida qabul qilingan qarorlar — tekshirib chiqing:
 
 **Umumiy**
 - GitHub branch nomi: topshiriqda `vositalar` deyilgan edi, lekin bu sessiya uchun ajratilgan `claude/new-session-kfrlsz` branchi ishlatildi (natija bir xil — bitta Pull Request).
-- Repo nomi `desktop-tutorial`, shuning uchun sayt manzili `https://nbeast19.github.io/desktop-tutorial/` bo'ladi. Hamma yo'llar nisbiy, shuning uchun repo nomini `nader-vositalar` ga o'zgartirsangiz ham ishlayveradi.
+- Repo nomi `nader-vositalar` ga o'zgartiriladi, sayt manzili: `https://nbeast19.github.io/nader-vositalar/`. Hamma yo'llar nisbiy, shuning uchun repo nomi o'zgarsa ham sayt ishlayveradi.
 - Ikonka: yashil fonda ochiq kitob va "NV" yozuvi.
 - Service worker avval keshdan beradi va orqa fonda yangilaydi: yangi versiya chiqqanda o'zgarish ikkinchi ochilishda ko'rinadi. Fayllar o'zgarsa `sw.js` dagi `nader-v1` raqamini oshirish kerak.
 

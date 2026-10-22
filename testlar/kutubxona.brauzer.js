@@ -1,0 +1,24 @@
+const assert = require('assert');
+const fs = require('fs');
+module.exports = async (sahifa, ASOS) => {
+  await sahifa.goto(ASOS + 'kutubxona/index.html');
+  await sahifa.fill('#matn', 'الدرس الثالث\thttps://youtu.be/ccc\t45:00\nالدرس ١\thttps://youtu.be/aaa\t1:00:00\nمقطع\thttps://youtu.be/ddd\t5:00\nالدرس 2\thttps://youtube.com/watch?v=bbb&t=3\t50:00');
+  await sahifa.fill('#ustoz', 'أبو إسحاق الحويني');
+  await sahifa.fill('#kitob', 'كتاب التوحيد');
+  await sahifa.click('#ishla');
+  let t = await sahifa.innerText('#natija');
+  assert(t.includes('3 ta dars kiritildi · 1 ta chiqarildi'), t.slice(0, 200));
+  await sahifa.click('summary:has-text("Chiqarilganlar")');
+  assert((await sahifa.innerText('#natija')).includes('qisqa video'));
+  await sahifa.click('[data-a="qaytar"]');
+  t = await sahifa.innerText('#natija');
+  assert(t.includes('4 ta dars kiritildi · 0 ta chiqarildi'));
+  await sahifa.click('[data-a="past"][data-i="0"]');
+  const [yuk] = await Promise.all([sahifa.waitForEvent('download'), sahifa.click('[data-a="csv"]')]);
+  const csv = fs.readFileSync(await yuk.path(), 'utf8');
+  assert(csv.charCodeAt(0) === 0xFEFF, 'BOM bor');
+  const q = csv.slice(1).split('\r\n');
+  assert(q[1].startsWith('"الدرس 2","","أبو إسحاق الحويني","كتاب التوحيد"'), q[1]);
+  assert(q[2].includes('https://www.youtube.com/watch?v=aaa'));
+  await sahifa.evaluate(() => localStorage.removeItem('nader.kutubxona.v1'));
+};

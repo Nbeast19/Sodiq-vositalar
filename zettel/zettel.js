@@ -22,7 +22,7 @@
 
   // YAML frontmatter'ni ajratish
   function frontmatter(matn) {
-    var m = /^﻿?---\r?\n([\s\S]*?)\r?\n---[ \t]*(\r?\n|$)/.exec(matn);
+    var m = /^\uFEFF?---\r?\n([\s\S]*?)\r?\n---[ \t]*(\r?\n|$)/.exec(matn);
     if (!m) return { yaml: '', tana: matn };
     return { yaml: m[1], tana: matn.slice(m[0].length) };
   }

@@ -33,7 +33,7 @@
 
   // Faylni yuklab olish
   N.yuklabOl = function (nom, matn, turi, bom) {
-    var blob = new Blob([(bom ? '﻿' : '') + matn], { type: (turi || 'text/plain') + ';charset=utf-8' });
+    var blob = new Blob([(bom ? '\uFEFF' : '') + matn], { type: (turi || 'text/plain') + ';charset=utf-8' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = nom;

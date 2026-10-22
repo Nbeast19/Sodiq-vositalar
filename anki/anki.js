@@ -11,13 +11,13 @@
   A.SARLAVHA = ['#separator:tab', '#html:true', '#deck column:1', '#tags column:4'];
 
   // Ko'rinmaydigan belgilar: nol kenglikdagi belgilar, yo'nalish belgilari, BOM, yumshoq defis
-  var KORINMAS = /[​-‏‪-‮⁠-⁤﻿­]/g;
+  var KORINMAS = /[\u200B-\u200F\u202A-\u202E\u2060-\u2064\uFEFF\u00AD]/g;
 
   // Solishtirish uchun kalit
   A.kalit = function (matn, rejim, alif) {
     var s = String(matn || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
     if (rejim === 'harakatsiz') {
-      s = s.replace(/[ً-ْٰـ]/g, '');
+      s = s.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
       if (alif) s = s.replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
     }
     return s;

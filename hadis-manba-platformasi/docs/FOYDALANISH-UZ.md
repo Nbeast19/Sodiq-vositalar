@@ -1,7 +1,7 @@
 # Qanday o'rnataman, qidiraman va AIga ulayman? (1 sahifa)
 
 ## 1. Dasturni ochish
-- **Telefon (iPhone/Android) va kompyuter brauzeri:** Hadis Manba saytini oching. Sayt manzili GitHub Pages'da nashr qilingach shu yerga yoziladi (hozircha nashr qilinmagan — `VALIDATION-REPORT.md`).
+- **Telefon (iPhone/Android) va kompyuter brauzeri:** <https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/> ni oching. Paket fayllari: [GitHub Release](https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1).
 - **iPhone:** Safari → Ulashish (↑) → "Add to Home Screen" → "Add".
 - **Android:** Chrome → ⋮ → "Ilovani o'rnatish" / "Add to Home screen".
 - **Windows/Mac:** Chrome yoki Edge → manzil satridagi "O'rnatish" belgisi.

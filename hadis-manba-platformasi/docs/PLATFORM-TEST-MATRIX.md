@@ -10,6 +10,7 @@ Sana: 2026-10-23. Muhit: bulut konteyneri (Linux), Python 3.13.16, SQLite 3.45.1
 | Linux (konteyner) | Chromium headless 1194 | — | **English** UI, 390×844 | **o‘tdi (16/16)** | xuddi shu |
 | Linux (konteyner) | Chromium headless 1194 | — | **العربية** UI (RTL), 1280×860 | **o‘tdi (16/16)** | xuddi shu |
 | Linux (konteyner) | Chromium headless 1194 | — | **العربية** UI (RTL), 390×844, gorizontal siljish yo‘q | **o‘tdi (16/16)** | xuddi shu |
+| GitHub Actions (ubuntu) → **jonli sayt** | Chromium headless (Playwright 1.56.1) | — | haqiqiy URL: en 1280 px (Buxoriy + Fath al-Bari), ar 390 px (Muvatto + at-Tamhid): katalogdan o‘rnatish → hadis → sharh → qaytish → oflayn qidiruv; SEO 136 sahifa | **o‘tdi (14/14)** | [run](https://github.com/Nbeast19/vositalar/actions/runs/39980216816) |
 | Linux | Python 3.13 CLI/xizmat/MCP | Python 3.10 | pytest 65 o‘tdi, 10 skip (real korpus testlari alohida: 10/10) | **o‘tdi** | `tests/` |
 | Windows 10/11 | Edge/Chrome | Chrome/Edge 103+ (`DecompressionStream deflate-raw`) | en + ar: tanlash/o‘rnatish/qidirish/sharh/iqtibos | **sinalmagan** | real qurilma kerak |
 | macOS | Safari 17+ / Chrome | Safari 16.4+ | en + ar | **sinalmagan** | real qurilma kerak |

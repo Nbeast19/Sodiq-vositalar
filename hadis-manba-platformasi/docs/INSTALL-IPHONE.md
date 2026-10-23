@@ -2,7 +2,7 @@
 
 **Talab:** iOS/iPadOS 16.4+ (paket ochish uchun `DecompressionStream` kerak), Safari.
 
-1. Safari'da Hadis Manba saytini oching (HTTPS manzil; nashr qilingach README'ga yoziladi).
+1. Safari'da Hadith Library saytini oching (HTTPS manzil; nashr qilingach README'ga yoziladi).
 2. Ulashish (↑) → **Add to Home Screen** → **Add**. Bosh ekrandagi belgidan oching.
 3. **Kitoblar** → kerakli kitob yoki sharhni **O'rnatish**. "Oflayn tayyor" chiqishini kuting.
    - Ekran qulflansa yoki aloqa uzilsa yuklash to'xtashi mumkin — fon rejimida tugashi kafolatlanmaydi. Qayta **O'rnatish** ni bosing; eski kutubxona buzilmaydi.

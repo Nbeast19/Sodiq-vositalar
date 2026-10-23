@@ -79,7 +79,7 @@ async function seo() {
 async function go(page, hash) {
   await page.evaluate(h => { location.hash = h; }, hash);
   await page.waitForTimeout(150);
-  await page.waitForFunction(() => !document.querySelector('#asosiy').textContent.match(/Loading…|جارٍ التحميل/));
+  await page.waitForFunction(() => document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
 }
 async function poll(page, fn, arg, timeout) {
   const end = Date.now() + (timeout || 120000);
@@ -109,10 +109,11 @@ async function pwa(browser, lang, viewport, work, comm, unit, phrase) {
     await page.waitForFunction(() => !!navigator.serviceWorker.controller, null, { timeout: 30000 });
     const d = await page.evaluate(() => [document.documentElement.lang, document.documentElement.dir]);
     assert.deepStrictEqual(d, [lang, lang === 'ar' ? 'rtl' : 'ltr']);
+    await go(page, '#/books');
     assert.ok(await page.locator('[data-act=open-book]').count() >= 17);
   });
   await step(L + ': install book + selected commentary from the catalogue', async () => {
-    await go(page, '#/w/' + work);
+    await go(page, '#/w/' + work + '?tab=comms');
     await page.locator(`[data-act=pick-commentary][data-id="${comm}"]`).check();
     await page.click('[data-act=install-with]');
     await poll(page, ids => Promise.all(ids.map(id => Lib.getPackage(id))).then(ps => ps.every(p => p && p.offline_ready)), [work.replace(/^w-/, 'hm-') + '-hj120', comm]);
@@ -121,14 +122,32 @@ async function pwa(browser, lang, viewport, work, comm, unit, phrase) {
   });
   await step(L + ': hadith → this commentary → back to hadith', async () => {
     await go(page, '#/h/' + unit);
-    assert.strictEqual(await page.locator('p.ar.matn').getAttribute('dir'), 'rtl');
-    const n = await page.locator('#sharh-panel [data-act=open-commentary]').count();
+    assert.strictEqual(await page.locator('.text-card p.src').getAttribute('dir'), 'rtl');
+    await page.waitForSelector('#sharh-panel[data-tayyor="1"]');
+    const n = await page.locator('#sharh-panel [data-act=passage]').count();
     assert.ok(n >= 1, 'sharh havolasi yo\'q');
-    await page.locator('#sharh-panel [data-act=open-commentary]').first().click();
-    await page.waitForSelector('.segmentlar');
+    await page.locator('#sharh-panel [data-act=passage]').first().click();
+    await page.locator('#sharh-panel .c-preview [data-act=open-commentary]').click();
+    await page.waitForSelector('main[data-route="s"] .text-card');
     await page.locator(`[data-act=to-hadith][href="#/h/${encodeURIComponent(unit)}"]`).first().click();
-    await page.waitForSelector('p.ar.matn');
+    await page.waitForSelector('.text-card p.src');
     assert.ok(decodeURIComponent(page.url()).endsWith('#/h/' + unit));
+  });
+  await step(L + ': previous / next follow the edition order; narrator panel keeps the hadith open', async () => {
+    await go(page, '#/h/' + unit);
+    const nextHref = await page.locator('[data-act=next-unit]').first().getAttribute('href');
+    assert.ok(nextHref && nextHref.startsWith('#/h/'), 'next: ' + nextHref);
+    await page.locator('[data-act=next-unit]').first().click();
+    await page.waitForFunction(h => decodeURIComponent(location.hash) === decodeURIComponent(h) && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1', nextHref);
+    await page.locator('[data-act=prev-unit]').first().click();
+    await page.waitForFunction(u => decodeURIComponent(location.hash).endsWith(u) && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1', unit);
+    const nb = page.locator('[data-act=narrator]');
+    if (await nb.count()) {
+      await nb.click();
+      await page.waitForSelector('[data-act=narrator-panel] .res-list li');
+      assert.ok(decodeURIComponent(page.url()).endsWith('#/h/' + unit), 'roviy paneli sahifani almashtirdi');
+      assert.ok(await page.locator('.text-card p.src').isVisible());
+    }
   });
   await step(L + ': search online, then offline after reload', async () => {
     const on = await searchCount(page, phrase);
@@ -139,7 +158,8 @@ async function pwa(browser, lang, viewport, work, comm, unit, phrase) {
     const off = await searchCount(page, phrase);
     assert.strictEqual(off, on);
     await go(page, '#/h/' + unit);
-    assert.ok(await page.locator('#sharh-panel [data-act=open-commentary]').count() >= 1);
+    await page.waitForSelector('#sharh-panel[data-tayyor="1"]');
+    assert.ok(await page.locator('#sharh-panel [data-act=passage]').count() >= 1);
     await ctx.setOffline(false);
   });
   await step(L + ': no horizontal scroll, no console errors', async () => {

@@ -1,7 +1,7 @@
 # Quick start (one page)
 
 ## 1. Open the app
-- **iPhone / iPad:** open the Hadis Manba address in **Safari** → Share (↑) → **Add to Home Screen** → Add.
+- **iPhone / iPad:** open the Hadith Library address in **Safari** → Share (↑) → **Add to Home Screen** → Add.
 - **Android:** open it in **Chrome** → ⋮ → **Install app**.
 - **Windows / Mac:** open it in **Chrome or Edge** → click the **install** icon in the address bar (Mac Safari 17+: File → Add to Dock).
 

@@ -1,13 +1,14 @@
 {
-  "name": "Hadis Manba",
-  "short_name": "Hadis Manba",
-  "description": "Hadis manbalari va sharhlari — qurilmada, internetsiz",
-  "lang": "uz",
+  "name": "Hadith Library | مكتبة الحديث",
+  "short_name": "Hadith Library",
+  "description": "Read hadith collections and their commentaries offline, with sources. اقرأ كتب الحديث وشروحها بلا إنترنت.",
+  "lang": "en",
+  "dir": "auto",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f7f6f2",
-  "theme_color": "#1d5c4a",
+  "background_color": "#f6f4ef",
+  "theme_color": "#1e5d4e",
   "icons": [
     { "src": "ikonkalar/ikonka-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
     { "src": "ikonkalar/ikonka-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }

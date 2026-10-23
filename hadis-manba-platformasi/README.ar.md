@@ -1,6 +1,6 @@
 <div dir="rtl" lang="ar">
 
-# Hadis Manba
+# مكتبة الحديث | Hadith Library
 
 [English](README.md) · [O‘zbekcha](README.uz.md)
 
@@ -16,7 +16,9 @@
 
 ← [docs/QUICKSTART.ar.md](docs/QUICKSTART.ar.md) (صفحة واحدة) · [docs/ar/INSTALL.md](docs/ar/INSTALL.md) (ويندوز، ماك، آيفون، أندرويد، لينكس)
 
-**افتح التطبيق:** <https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/> · الفهرس: [العربية](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/ar/) · [English](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/en/)
+<img src="docs/img/readme-reader-ar-mobile.png" alt="الواجهة العربية على الهاتف" width="260">
+
+### ▶ **افتح التطبيق:** <https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/> · الفهرس: [العربية](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/ar/) · [English](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/en/)
 
 **الحزم:** ١٧ كتابًا أصليًا (Sunnah.com، منشورة بإذن) و١٥ شرحًا (OpenITI، بترخيص CC BY-NC-SA 4.0 — غير تجاري، مع النسبة والمشاركة بالمثل)، كلٌّ منها تنزيل مستقل في إصدار GitHub ‏[hadis-manba-paketlar-v1](https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1) مع `SHA256SUMS` و`RIGHTS-PAKETLAR.md` (الترخيص والمؤلف والطبعة والنسبة لكل حزمة). الحزم مجهولة الحقوق لا تُنشر وتبقى محلية ([docs/RIGHTS.md](docs/RIGHTS.md)).
 

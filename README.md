@@ -1,5 +1,8 @@
 # Vositalar
 
+> **Hadith Library | مكتبة الحديث** — hadith collections and their commentaries, offline, with sources.
+> **[Open the app](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/)** · [Guide (English)](hadis-manba-platformasi/README.md) · [الدليل (العربية)](hadis-manba-platformasi/README.ar.md) · [Downloads](https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1)
+
 ## 1. Bu nima
 
 Telefonda (iPhone) va kompyuterda ishlaydigan 5 ta oddiy veb-vosita: Qur'on yodlash va murojaa, Zettel kartalarini tekshirish, Anki fayllarini tozalash, YouTube darslar ro'yxatidan Notion uchun CSV yasash va dars transkripsiyasini tozalash. Hamma ma'lumot faqat sizning qurilmangizda saqlanadi, hech qayerga yuborilmaydi. Bir marta ochilgandan keyin internetsiz ham ishlaydi.

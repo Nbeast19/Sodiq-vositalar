@@ -1,0 +1,36 @@
+# Release sahifasini tushunarli qiladi: tavsif (guruhlangan jadval) va asset label'lari.
+# Fayllar qayta yuklanmaydi — yuklab olish URL'lari va SHA256SUMS o'zgarmaydi.
+# Manba: hadis-manba-platformasi/release/ (scripts/publish_release.py meta bilan yasaladi).
+name: hadis-manba-release-meta
+on:
+  push:
+    branches: [main]
+    paths: ["hadis-manba-platformasi/release/**", ".github/workflows/hadis-manba-release-meta.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tavsif va label'lar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          repo = os.environ["GITHUB_REPOSITORY"]
+          d = json.load(open("hadis-manba-platformasi/release/asset-labels.json"))
+          tag = d["tag"]
+          subprocess.run(["gh", "release", "edit", tag, "--repo", repo, "--title", "Hadith Library | مكتبة الحديث — 17 books + 15 commentaries",
+                          "--notes-file", "hadis-manba-platformasi/release/RELEASE-NOTES.md"], check=True)
+          rel = json.loads(subprocess.run(["gh", "api", f"repos/{repo}/releases/tags/{tag}"], check=True, capture_output=True, text=True).stdout)
+          n = 0
+          for a in rel["assets"]:
+              lbl = d["labels"].get(a["name"])
+              if lbl and a.get("label") != lbl:
+                  subprocess.run(["gh", "api", "-X", "PATCH", f"repos/{repo}/releases/assets/{a['id']}", "-f", f"label={lbl}"], check=True, capture_output=True)
+                  n += 1
+          print(f"{n} asset label yangilandi; jami {len(rel['assets'])}")
+          PY

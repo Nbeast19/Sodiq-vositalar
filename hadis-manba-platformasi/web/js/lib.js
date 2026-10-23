@@ -178,6 +178,7 @@
         await done(t3);
       }
     }
+    tocCache = {};
     onState('tayyorlik', 'Mahalliy qidiruv tayyorligi tekshirilmoqda');
     var ok = await verifyReady(rec, pkg);
     rec.offline_ready = ok;
@@ -216,6 +217,7 @@
     });
     await done(tx);
     await deleteRows(p.active_pkgv);
+    tocCache = {};
     return { package_id: id, action: 'removed' };
   }
 
@@ -256,6 +258,60 @@
   async function occurrence(id) { return (await activeFilter(await getAll('occ', 'occurrence_id', id)))[0] || null; }
   async function unitsOf(pkgv) { return (await getAll('units', 'pkgv', pkgv)).sort(function (a, b) { return a.seq - b.seq; }); }
   async function occOf(pkgv) { return (await getAll('occ', 'pkgv', pkgv)).sort(function (a, b) { return a.seq - b.seq; }); }
+
+  // Mundarija indeksi: butun matnni DOMga yuklamasdan, kursor bilan yengil qatorlar (seq tartibida).
+  // Bob almashuvi chapter_ar bo'yicha; har o'rnatilgan birlik indeksga kiradi (cheklov yo'q).
+  var tocCache = {};
+  function cursorEach(store, pkgv, fn) {
+    return openDb().then(function (db) {
+      return new Promise(function (res, rej) {
+        var r = db.transaction(store).objectStore(store).index('pkgv').openCursor(IDBKeyRange.only(pkgv));
+        r.onsuccess = function () { var c = r.result; if (!c) return res(); fn(c.value); c.continue(); };
+        r.onerror = function () { rej(r.error); };
+      });
+    });
+  }
+  async function toc(pkgv) {
+    if (tocCache[pkgv]) return tocCache[pkgv];
+    var rows = [];
+    await cursorEach('units', pkgv, function (u) {
+      var n0 = (u.numbers || []).find(function (n) { return n.number_text != null; });
+      var nr = (u.narrators || [])[0] || {};
+      rows.push({ id: u.unit_id, seq: u.seq, ch: u.chapter_ar || '', num: n0 ? String(n0.number_text) : null, vol: n0 ? n0.volume : null,
+        type: u.unit_type, tp: nr.narrator_identity_status === 'verified' ? (nr.terminal_person_id || null) : null, ex: Array.from(u.text_ar || '').slice(0, 160).join('') });
+    });
+    rows.sort(function (a, b) { return a.seq - b.seq; });
+    var chapters = [], index = {};
+    rows.forEach(function (r, i) {
+      index[r.id] = i;
+      var last = chapters[chapters.length - 1];
+      if (!last || last.title !== r.ch) chapters.push({ title: r.ch, start: i, count: 0, first: r.num });
+      chapters[chapters.length - 1].count++;
+      r.c = chapters.length - 1;
+    });
+    tocCache[pkgv] = { units: rows, chapters: chapters, index: index, kind: 'base_book' };
+    return tocCache[pkgv];
+  }
+  async function occToc(pkgv) {
+    if (tocCache[pkgv]) return tocCache[pkgv];
+    var rows = [];
+    await cursorEach('occ', pkgv, function (o) {
+      rows.push({ id: o.occurrence_id, seq: o.seq, vol: o.volume, page: o.page, ex: Array.from(o.text_ar || '').slice(0, 160).join('') });
+    });
+    rows.sort(function (a, b) { return a.seq - b.seq; });
+    var chapters = [], index = {};
+    rows.forEach(function (r, i) {
+      index[r.id] = i;
+      var key = r.vol != null ? String(r.vol) : '';
+      var last = chapters[chapters.length - 1];
+      if (!last || last.key !== key) chapters.push({ key: key, title: key, start: i, count: 0 });
+      chapters[chapters.length - 1].count++;
+      r.c = chapters.length - 1;
+    });
+    tocCache[pkgv] = { units: rows, chapters: chapters, index: index, kind: 'commentary' };
+    return tocCache[pkgv];
+  }
+  function dropToc() { tocCache = {}; }
 
   function versionOk(v, patterns) {
     return (patterns || []).some(function (p) {
@@ -323,6 +379,6 @@
   root.Lib = { openDb: openDb, packages: packages, getPackage: getPackage, activeSet: activeSet, cleanup: cleanup,
     install: install, uninstall: uninstall, rollback: rollback, exportPackage: exportPackage, estimateFree: estimateFree,
     unit: unit, occurrence: occurrence, unitsOf: unitsOf, occOf: occOf, ent: ent, ents: ents,
-    commentariesFor: commentariesFor, linksOfOccurrence: linksOfOccurrence, linkActivation: linkActivation,
+    commentariesFor: commentariesFor, toc: toc, occToc: occToc, dropToc: dropToc, linksOfOccurrence: linksOfOccurrence, linkActivation: linkActivation,
     resolve: resolve, versionOk: versionOk, fmtBytes: fmtBytes, DB_NAME: DB_NAME };
 })(self);

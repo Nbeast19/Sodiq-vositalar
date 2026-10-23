@@ -11,6 +11,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# GitHub Pages manzili (repo: Nbeast19/vositalar, Pages main'dan). Boshqa hostingda --base-url bilan o'zgartiring.
+SITE_BASE_URL = "https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/"
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "examples")]
 
 import namuna_manba  # noqa: E402
@@ -35,6 +37,8 @@ def main():
     rep = build_public(pkgs, web)
     print(json.dumps({k: [x.get("package_id", x) for x in v] for k, v in rep.items()}, ensure_ascii=False))
     print("selection:", sel.name)
+    from hadis_manba.site import build_site
+    print("site:", build_site([web / "catalog.json"], web, SITE_BASE_URL))
     # E2E sinovi uchun 1.1.0 yangilanish (ommaviy katalogga kirmaydi)
     v2 = ROOT / "build" / "namuna-asos-a-v110"
     shutil.rmtree(v2, ignore_errors=True)

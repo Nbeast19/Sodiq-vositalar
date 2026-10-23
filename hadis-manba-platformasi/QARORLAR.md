@@ -24,3 +24,8 @@ Oddiy texnik tanlovlar shu yerda yoziladi. Muallif, nashr, roviy yoki huquq bo'y
 | 18 | Kumulyativ paket oilalari (UMDAT/MIRQAT/TIBI/TUHFA/FATH) auditda `needs_semantic_comparison`; nomdagi son ustuvorlik emas | MIRQAT 380→480 da birinchi 380 qator baytma-bayt bir xil ekani tekshirildi — joriy qatlam 480, 380 tarixiy. |
 | 19 | Mahalliy xizmat faqat 127.0.0.1, Host/Origin tekshiruvi, CORS sarlavhasi yo'q | DNS rebinding va begona sayt so'rovlaridan himoya. |
 | 20 | Import jurnali SQLite'da UPDATE/DELETE trigger bilan taqiqlangan + `import-journal.jsonl` | Append-only talab. |
+| 21 | UI tillari: en, ar (ommaviy) + uz; tanlov `localStorage`; ar → `dir=rtl`; arabcha manba doim RTL; `t()` ga qo‘yilgan qiymatlar FSI/PDI bilan izolyatsiya | 26-bo‘lim; aralash matnda raqam/ID/URL tartibi buzilmasin. Hadis/sharh tarjima qilinmaydi. |
+| 22 | Bosh sahifa = Kutubxona; kitob sahifasi `#/w/<work>` da “faqat kitob” va “kitob + tanlangan sharhlar”; AI/MCP — Yordam ichidagi alohida bo‘lim | Dasturlashni bilmaydigan foydalanuvchi uchun eng qisqa yo‘l. |
+| 23 | SEO: statik `/en/`, `/ar/` sahifalar Python generator bilan (JS’siz), x-default = en; PWA qobig‘i `noindex` | Google localized-versions va JS SEO tavsiyalari; katalogni ko‘rish uchun IndexedDB/paket kerak emas. |
+| 24 | Manbada sarlavhasi yo‘q 12 kitob uchun inglizcha/arabcha nomlar — tahririy (`names_origin: editorial`); hadith-json kitoblarida — manbadan (`source`); sharhlarda inglizcha nom papka nomidan (`slug`) | Kitob/muallif qidiruvi uchun; manba ma’lumoti sifatida ko‘rsatilmaydi. |
+| 25 | Haqiqiy paketlar public repoga hali joylanmagan | Repo public, git tarixi qaytmaydi — foydalanuvchining aniq roziligi kutiladi. |

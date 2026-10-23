@@ -27,15 +27,15 @@ Bu fayl keyingi sessiya/agent uchun: nima qilingan, nima qolgan, qayerda nima tu
 | PWA: IndexedDB paket ombori (staging → faollashtirish), Worker qidiruv, alohida qaydlar bazasi, service worker | ✓ | `web/` |
 | **Haqiqiy importerlar**: `raqamlar.sqlite`+hadith-json → 33 asos paket (29 kitob); sharhlar → 17 sharh paketi | ✓ | `src/hadis_manba/importers/`, `scripts/import_real.py`, `docs/IMPORT-RUN04.md` |
 | Qidiruv tezligi (filtr → sahifa): «طلب العلم» 7,9 s → 67 ms | ✓ | `core.search_hadith` |
-| i18n (en/ar/uz) PWA interfeysi, yangi oddiy yo‘l (#/ kutubxona → #/w/<work> → install), `data-act` test belgilari | **yozildi, E2E hali yangilanmagan** | `web/js/i18n.js`, `web/js/app.js`, `web/index.html`, `web/style.css` |
-| Katalogda nomlar/mualliflar (`names`, `authors`, `names_origin`), importerlarda inglizcha/tahririy nomlar | ✓ (real paketlar hali qayta yasalmagan) | `publish.py`, importerlar |
+| i18n (en/ar/uz) PWA interfeysi, yangi oddiy yo‘l (#/ kutubxona → #/w/<work> → install), `data-act` test belgilari | ✓ (E2E 64/64) | `web/js/i18n.js`, `web/js/app.js`, `web/index.html`, `web/style.css` |
+| Katalogda nomlar/mualliflar (`names`, `authors`, `names_origin`), importerlarda inglizcha/tahririy nomlar | ✓ (real paketlar 1.0.1 qayta yasaldi) | `publish.py`, importerlar |
+| SEO statik sayt `/en/`, `/ar/` (canonical, hreflang, x-default, sitemap) | ✓ | `site.py`, `hadis-manba build-site`, `docs/SEO.md`, `tests/test_site.py` |
+| Ikki tilli hujjatlar: `README.md` (en), `README.ar.md`, `README.uz.md`, `docs/QUICKSTART.{en,ar}.md`, `docs/{en,ar}/INSTALL.md` | ✓ | |
 
 ## 4. Test natijalari (oxirgi ishga tushirish)
 
-- `pytest`: **64 passed**, 10 skipped (skip = haqiqiy korpus testlari env bo‘lmasa).
-- Haqiqiy korpus: `HADIS_MANBA_REAL_HOME=/home/user/hadis-manba-kirish/library-run04 pytest tests/test_real_corpus.py` → **10/10 passed** (Muslim 1233→591, Muvatto uzluksiz vs kitob:hadis, 125 hash qatlami, Shamoil Julaymiy/Sunnah, Tabaroniy 565 jildlari, row:N, Fath ikki nashri, Buxoriy 1 ↔ Umdat, qidiruv, legacy).
-- Node (`tests/web/core.node.test.js`): 6/6 (eski UI bilan).
-- Playwright (`tests/web/e2e.pw.js`): **eski uzbekcha UI uchun 26/26 edi; yangi i18n UI uchun QAYTA YOZILISHI KERAK** (selektorlar `data-act` ga, en va ar tillarida, 390px va 1280px).
+- `sh scripts/verify.sh`: pytest **65 passed**, 10 skipped; Node **7/7**; Playwright **64/64** (en/ar × 1280/390, oflayn).
+- Haqiqiy korpus: `HADIS_MANBA_REAL_HOME=/home/user/hadis-manba-kirish/library-run04 pytest tests/test_real_corpus.py` → **10/10**.
 - Real iPhone/Android/Windows/Mac: **sinalmagan**.
 
 ## 5. Haqiqiy manba (repo TASHQARISIDA, faqat o‘qish)
@@ -61,12 +61,10 @@ Bulut konteyneri vaqtinchalik: bu papkalar sessiya tugasa yo‘qoladi (qayta yet
 
 ## 7. Qolgan vazifalar (tartib bilan)
 
-1. **E2E qayta yozish** yangi i18n UI uchun (en + ar, 390/1280, oflayn, 12 ssenariy) va o‘tkazish; Node testiga i18n kalitlari to‘liqligi tekshiruvi.
-2. **SEO statik sayt generatori** (`scripts/build_site.py`): `web/en/`, `web/ar/` — bosh, katalog, kitob/sharh kartalari, mualliflar, yordam, o‘rnatish; canonical, hreflang en/ar/x-default, `sitemap.xml`; base URL parametr (taxminan `https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/`); robots: project path’da `robots.txt` crawlerlar uchun ishlamaydi (host ildizi) — hujjatlash; testlar.
-3. **Ikki tilli hujjatlar**: `README.md` (English, asosiy), `README.ar.md`, `docs/QUICKSTART.en.md` / `QUICKSTART.ar.md`, platforma qo‘llanmalari en/ar; o‘zbekcha hujjatlar saqlanadi; `PLATFORM-TEST-MATRIX` en/ar oqimlari bilan.
-4. Real paketlarni yangi nomlar bilan qayta yasash (`python3 scripts/import_real.py --manba …/hadis-input-run04/0-Manba --out …/output-run04 --commentaries`) va public/conditional katalogni lokal sinash.
-5. Foydalanuvchiga savol: ruxsatli real paketlarni (hadith-json kitoblari; OpenITI sharhlari shartli kanal) public Pages/Release’ga joylashga ruxsatmi? Keyin `main` ga merge va jonli URL/hreflang/sitemap tekshiruvi; Search Console uchun foydalanuvchi qadami.
-6. `VALIDATION-REPORT.md`, `COVERAGE.md`, `QARORLAR.md` ni yuqoridagilar bilan yangilash.
+1. Foydalanuvchiga savol: ruxsatli real paketlarni (hadith-json kitoblari; OpenITI sharhlari shartli kanal) public Pages/Release’ga joylashga ruxsatmi? Mahalliy real sayt: `/home/user/hadis-manba-kirish/site-run04/`.
+2. Ruxsatdan keyin: `main` ga merge, jonli URL/hreflang/canonical/sitemap tekshiruvi; Search Console — foydalanuvchi qadami (`docs/SEO.md`).
+3. Real qurilmalarda en/ar matritsasi (`PLATFORM-TEST-MATRIX.md`) — foydalanuvchi natija yuborsa yoziladi.
+4. Katta paketlarni jild bo‘yicha bo‘lish (telefon xotirasi), yuklashni davom ettirish (resume).
 
 ## 8. Buyruqlar
 
@@ -75,6 +73,7 @@ cd hadis-manba-platformasi
 python3 scripts/build_demo.py              # sinov paketlari + web/catalog.json
 python3 -m pytest -q                       # (venv: mcp==2.3.0, pytest, jsonschema)
 node tests/web/core.node.test.js
-NODE_PATH=$(npm root -g) node tests/web/e2e.pw.js   # yangi UI uchun yangilanishi kerak
+NODE_PATH=$(npm root -g) node tests/web/e2e.pw.js
+hadis-manba build-site --catalog web/catalog.json --out web --base-url <URL>
 HADIS_MANBA_REAL_HOME=/home/user/hadis-manba-kirish/library-run04 python3 -m pytest -q tests/test_real_corpus.py
 ```

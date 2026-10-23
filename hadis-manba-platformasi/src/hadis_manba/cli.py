@@ -124,6 +124,11 @@ def main(argv=None):
     p.add_argument("files", nargs="+")
     p.add_argument("--out", required=True)
 
+    p = sub.add_parser("build-site", help="SEO uchun /en/ va /ar/ statik sahifalar")
+    p.add_argument("--catalog", action="append", required=True)
+    p.add_argument("--out", required=True)
+    p.add_argument("--base-url", required=True)
+
     p = sub.add_parser("doctor", help="tekshiruv")
     p.add_argument("--port", type=int, default=8765)
     p = sub.add_parser("serve", help="mahalliy xizmat (127.0.0.1)")
@@ -193,6 +198,10 @@ def main(argv=None):
             print(f"{k}: {len(v)}")
             for x in v:
                 print(f"   {x}")
+        return 0
+    if args.cmd == "build-site":
+        from .site import build_site
+        print(build_site([Path(c) for c in args.catalog], Path(args.out), args.base_url))
         return 0
     if args.cmd == "doctor":
         from .doctor import run

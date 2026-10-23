@@ -18,6 +18,8 @@ header { position: sticky; top: 0; z-index: 5; background: var(--karta); border-
 .logo { font-weight: 700; font-size: 20px; color: var(--asosiy); text-decoration: none; }
 nav { display: flex; gap: 4px; overflow-x: auto; padding-top: 6px; scrollbar-width: none; }
 nav a { flex: none; padding: 10px 14px; min-height: 48px; font-size: 18px; display: inline-flex; align-items: center; border-radius: 10px; color: var(--matn); text-decoration: none; }
+.sayt header { position: static; }
+.sayt nav { flex-wrap: wrap; overflow: visible; }
 nav a[aria-current="page"] { background: var(--asosiy); color: var(--asosiy-matn); }
 main { max-width: 1200px; margin: 0 auto; padding: 16px; outline: none; }
 footer { text-align: center; padding: 24px 16px; }

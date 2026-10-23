@@ -1,15 +1,17 @@
 # Sinov hisoboti
 
-Sana: 2026-10-23. Buyruq: `sh scripts/verify.sh` (umumiy vaqt ~29 s). Faqat bajarilgan sinovlar "PASS" deb yozilgan.
+Sana: 2026-10-23. Buyruq: `sh scripts/verify.sh`. Faqat bajarilgan sinovlar "PASS" deb yozilgan.
 
 ## 1. Dastur ishlashi
 | Sinov | Natija | Dalil |
 |---|---|---|
-| pytest (Python yadro, paket, import, qidiruv, sharh, huquq, audit, mahalliy xizmat, MCP) | **PASS — 63/63** | `tests/*.py` |
-| Node: JS normalizatsiya va parcha Python bilan aynan bir xil, ZIP xavfsizligi, paket tekshiruvi | **PASS — 6/6** | `tests/web/core.node.test.js`, `tests/arabic_vectors.json` |
-| Playwright: 12 ssenariy × (1280 px, 390 px) + konsol xatosi yo'qligi | **PASS — 26/26** | `tests/web/e2e.pw.js` → `build/e2e-natija.json` |
+| pytest (Python yadro, paket, import, qidiruv, sharh, huquq, audit, mahalliy xizmat, MCP) | **PASS — 65 o‘tdi, 10 skip** (skip = haqiqiy korpus testlari, alohida ishga tushiriladi) | `tests/*.py` |
+| Node: JS normalizatsiya va parcha Python bilan aynan bir xil, ZIP xavfsizligi, paket tekshiruvi | **PASS — 7/7** (+ en/ar/uz UI kalitlari to‘liqligi) | `tests/web/core.node.test.js`, `tests/arabic_vectors.json` |
+| Playwright: (12 ssenariy + til almashtirish + kitob qidiruvi + manbali iqtibos + konsol) × {English, العربية} × {1280 px, 390 px} | **PASS — 64/64** | `tests/web/e2e.pw.js` → `build/e2e-natija.json` |
 | Toza venv'da `pip install .` → `install`, `doctor`, `resolve` | **PASS** (MCP'siz: doctor ogohlantirish beradi, xato emas) | qo'lda bajarildi |
 | Deterministik build (ikki marta → bir xil SHA-256) | **PASS** | `test_build_is_deterministic` + `sha256sum -c` |
+| Haqiqiy korpus (run04 → 50 paket o‘rnatilgan): Muslim 1233→591, Muvatto ikki raqamlash, 125 hash qatlami, Shamoil Julaymiy/Sunnah, Tabaroniy jildlari, `row:N`, Fath ikki nashri, Buxoriy 1 ↔ Umdat, qidiruv, legacy | **PASS — 10/10** | `tests/test_real_corpus.py` (`HADIS_MANBA_REAL_HOME`) |
+| SEO statik sahifalar: self-canonical, o‘zaro hreflang + x-default, sitemap ↔ sahifalar, havolalar butun, `<script>` yo‘q, shaxsiy yo‘l/manba matni yo‘q | **PASS** | `tests/test_site.py` |
 
 ### 22.1 Manba va import
 | Talab | Holat |
@@ -33,10 +35,11 @@ Sinalmagan: Claude Desktop/Code, Cursor va boshqa GUI mijozlar.
 
 ### 22.4–22.5 Tarqatma, UI, o'rnatish
 PASS: allowlist (unknown/restricted/noaniq conditional chiqariladi, shaxsiy yo'l rad etiladi); Git'da xom manba, Qur'on korpusi, shaxsiy yo'l yo'q (kirishlar repo tashqarisida); har paketda LICENSE/ATTRIBUTION; oflayn ishlash (headless Chromium); 390 px'da gorizontal siljish yo'q; arabcha `dir=rtl`; konsolda xato yo'q; GitHub project path (`/<repo>/hadis-manba-platformasi/web/`) ostida nisbiy URL'lar ishlaydi.
-**Bajarilmagan:** real iPhone/Android/Windows/Mac (`PLATFORM-TEST-MATRIX.md`); GitHub Pages'ga nashr va jonli URL tekshiruvi; release asset yuklab olish checksum'i (release yaratilmagan).
+English va العربية UI (RTL/LTR, til tanlovi saqlanishi, bidi izolyatsiya) — headless Chromium’da 4 kombinatsiya.
+**Bajarilmagan:** real iPhone/Android/Windows/Mac (`PLATFORM-TEST-MATRIX.md`); GitHub Pages'ga nashr va jonli URL/hreflang/canonical/sitemap tekshiruvi (branch merge qilinmagan); Search Console (foydalanuvchi hisobi kerak, `SEO.md`); release asset yuklab olish checksum'i (release yaratilmagan).
 
 ## 2. Ilmiy qamrov
-**INCOMPLETE.** Repodagi barcha paketlar sun'iy sinov namunasi. Haqiqiy korpus: MIRQAT 380/480 va transfer boshqaruv paketi fayl darajasida tekshirildi; transport 10/89. `COVERAGE.md`.
+**INCOMPLETE.** Fayl yetkazilishi to‘liq (R3 va R4 VERIFIED — `IMPORT-RUN04.md`), lekin ilmiy qamrov alohida masala: 33 asos paket (239 168 yozuv), 17 sharh paketi; 2 sharh (fath-al-mulhim, maarif-al-sunan) bog‘lama/matnsiz — o‘tkazildi; Mirqot 1 084 va Tibiy 655 bog‘lama asosda topilmadi — yaratilmadi; holat maydonlari asosan `unreviewed`. Batafsil: `COVERAGE.md`, `MISSING-CORPUS.tsv`.
 
 ## 3. Ommaviy tarqatish huquqi
-Ommaviy katalogda faqat CC0 sinov namunasi. Haqiqiy manbalar uchun huquq yozuvlari `RIGHTS.md`da; hech biri hali public build'ga kiritilmagan.
+Repodagi ommaviy katalogda hozircha faqat CC0 sinov namunasi. Haqiqiy paketlar mahalliy build qilingan: hadith-json (Sunnah.com ruxsati) kitoblari — `public`ga mos; OpenITI sharhlari — `conditional` (CC BY-NC-SA 4.0, alohida kanal); qolganlari `unknown` → faqat mahalliy. Public repo/Pages’ga joylash foydalanuvchi tasdig‘ini kutmoqda (`RIGHTS.md`, `QARORLAR.md` #25).

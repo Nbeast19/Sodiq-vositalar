@@ -96,8 +96,10 @@
   async function loadCatalog() {
     try { var r = await fetch('./catalog.json', { cache: 'no-cache' }); if (r.ok) catalog = await r.json(); }
     catch (e) { /* oflayn: o'rnatilganlar baribir ko'rinadi */ }
-    try { var r2 = await fetch('./catalog-shartli.json', { cache: 'no-cache' }); if (r2.ok) catalog.packages = catalog.packages.concat((await r2.json()).packages || []); }
-    catch (e) { /* ixtiyoriy */ }
+    if (catalog.conditional_catalog) {
+      try { var r2 = await fetch('./' + catalog.conditional_catalog, { cache: 'no-cache' }); if (r2.ok) catalog.packages = catalog.packages.concat((await r2.json()).packages || []); }
+      catch (e) { /* ixtiyoriy */ }
+    }
   }
   async function groups() {
     var pk = await Lib.packages();
@@ -223,7 +225,7 @@
     var row = el('div', { cls: 'paket', 'data-pkg': c.package_id }, [
       el('div', { cls: 'paket-matn' }, [
         tt.ar ? el('div', { cls: 'kitob-ar', lang: 'ar', dir: 'rtl', text: tt.ar }) : null,
-        el('div', { cls: 'kichik' }, [iso(c.package_id), ' · v', iso(c.package_version), c.edition_id ? ' · ' : '', c.edition_id ? iso(c.edition_id) : '']),
+        el('div', { cls: 'kichik' }, [iso(c.package_id), ' · ', iso('v' + c.package_version), c.edition_id ? ' · ' : '', c.edition_id ? iso(c.edition_id) : '']),
         size ? el('div', { cls: 'kichik', text: size }) : null,
         c.provides_units ? el('div', { cls: 'kichik', text: isBase ? t('book.records', { n: c.provides_units }) : t('book.occ', { n: c.provides_units }) }) : null,
         (c.requires_for_linked_reading || []).length ? el('div', { cls: 'kichik' }, [t('book.linksTo', { target: '' }), iso(c.requires_for_linked_reading.map(function (r) { return r.target_edition_id; }).join(', '))]) : null,
@@ -540,7 +542,7 @@
     pk.forEach(function (p) {
       main.appendChild(el('div', { cls: 'karta paket', 'data-pkg': p.package_id }, [el('div', { cls: 'paket-matn' }, [
         el('div', { lang: 'ar', dir: 'rtl', cls: 'kitob-ar', text: (p.manifest.title && (p.manifest.title.ar || p.manifest.title.en)) || p.package_id }),
-        el('div', { cls: 'kichik' }, [iso(p.package_id), ' · ', iso(p.kind), ' · v', iso(p.version), ' · ' + Lib.fmtBytes(p.bytes) + ' · ' + (p.offline_ready ? t('badge.ready') : t('badge.notReady'))]),
+        el('div', { cls: 'kichik' }, [iso(p.package_id), ' · ', iso(p.kind), ' · ', iso('v' + p.version), ' · ', iso(Lib.fmtBytes(p.bytes)), ' · ' + (p.offline_ready ? t('badge.ready') : t('badge.notReady'))]),
         el('details', {}, [el('summary', { text: t('pk.license') }), el('pre', { cls: 'kichik', dir: 'auto', text: p.license + '\n' + p.attribution }), el('p', { cls: 'xesh' }, [iso('sha256: ' + p.sha256)])])]),
         el('div', { cls: 'paket-tugmalar' }, [
           el('a', { cls: 'tugma', 'data-act': 'read', href: '#/read/' + encodeURIComponent(p.package_id), text: t('book.open') }),

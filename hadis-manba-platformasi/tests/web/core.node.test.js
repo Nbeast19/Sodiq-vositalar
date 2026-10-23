@@ -51,5 +51,17 @@ function ok(name) { n++; console.log('  ✓ ' + name); }
   assert.strictEqual(sp.manifest.kind, 'selection');
   assert.strictEqual(sp.manifest.contains.length, 3);
   ok("yig'ma (selection) ochildi: ichki paketlar ro'yxati saqlangan");
+  const I18N = require(path.join(ROOT, 'web/js/i18n.js'));
+  const keys = Object.keys(I18N.strings.en);
+  for (const l of ['ar', 'uz']) {
+    const miss = keys.filter(k => !(k in I18N.strings[l]));
+    assert.deepStrictEqual(miss, [], l + ' tarjimasida yetishmaydi');
+    for (const kind of Object.keys(I18N.enums)) assert.deepStrictEqual(Object.keys(I18N.enums[kind][l]).sort(), Object.keys(I18N.enums[kind].en).sort(), kind + '/' + l);
+  }
+  const app = fs.readFileSync(path.join(ROOT, 'web/js/app.js'), 'utf8');
+  const used = new Set([...app.matchAll(/\bt\('([a-z]+\.[A-Za-z]+)'/g)].map(m => m[1]));
+  const unknown = [...used].filter(k => !(k in I18N.strings.en));
+  assert.deepStrictEqual(unknown, [], 'app.js ishlatgan, lekin i18n da yo\'q');
+  ok('i18n: en/ar/uz kalitlari to\'liq (' + keys.length + '), app.js ishlatgan barcha kalitlar mavjud');
   console.log(n + ' ta tekshiruv o\'tdi');
 })().catch(e => { console.error(e); process.exit(1); });

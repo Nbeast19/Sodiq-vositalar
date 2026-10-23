@@ -117,6 +117,8 @@ def build_public(package_files: list[Path], out_dir: Path) -> dict:
            "note": "Faqat tarqatishga tasdiqlangan paketlar. Ommaviy demo to'liq mahalliy katalog bilan bir xil emas."}
     (out_dir / "catalog.json").write_text(json.dumps(cat, ensure_ascii=False, indent=1), "utf-8")
     if conditional:
+        cat["conditional_catalog"] = "catalog-shartli.json"
+        (out_dir / "catalog.json").write_text(json.dumps(cat, ensure_ascii=False, indent=1), "utf-8")
         (out_dir / "catalog-shartli.json").write_text(json.dumps(
             {"schema_version": "1.0.0", "packages": conditional,
              "note": "Shartli litsenziya (masalan NC/SA). Shartlarini o'qing."}, ensure_ascii=False, indent=1), "utf-8")

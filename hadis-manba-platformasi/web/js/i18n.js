@@ -278,7 +278,8 @@
   }
   function t(key, vars) {
     var s = (S[lang] && S[lang][key]) || S.en[key] || key;
-    if (vars) s = s.replace(/\{(\w+)\}/g, function (_, k) { return vars[k] == null ? '' : String(vars[k]); });
+    // qo'yilgan qiymatlar (raqam, hajm, ID, URL) bidi izolyatsiyasida: FSI … PDI
+    if (vars) s = s.replace(/\{(\w+)\}/g, function (_, k) { return vars[k] == null || vars[k] === '' ? '' : '\u2068' + String(vars[k]) + '\u2069'; });
     return s;
   }
   function e(kind, value) {

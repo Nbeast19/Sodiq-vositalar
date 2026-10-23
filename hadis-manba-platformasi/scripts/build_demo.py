@@ -1,6 +1,9 @@
 """Sinov namunasi paketlarini yasaydi va PWA uchun ommaviy katalog quradi.
 
-    python scripts/build_demo.py            -> build/namuna-manba, dist/*.hmz, web/catalog.json, web/paketlar/
+    python scripts/build_demo.py            -> build/namuna-manba, dist/*.hmz,
+                                               build/demo/hadis-manba-platformasi/web/ (ilova + sinov katalogi)
+`web/` (git) — ishlab chiqarish sayti: haqiqiy katalog (scripts/publish_release.py). Sinov namunasi
+unga yozilmaydi; E2E sinovlari build/demo ichidagi nusxada, GitHub project path ko'rinishida ishlaydi.
 Bir xil kirishdan har safar baytma-bayt bir xil paket chiqadi (deterministik ZIP).
 """
 from __future__ import annotations
@@ -32,8 +35,10 @@ def main():
     sel = build_selection([by_id[i][0] for i in chosen], "namuna-kitob-va-sharhlar",
                           {"uz": "Namuna kitobi + 2 sharh (sinov yig'masi)"}, "1.0.0", dist,
                           package_files=[by_id[i][1] for i in chosen])
-    web = ROOT / "web"
-    shutil.rmtree(web / "paketlar", ignore_errors=True)
+    web = ROOT / "build" / "demo" / ROOT.name / "web"
+    shutil.rmtree(web, ignore_errors=True)
+    shutil.copytree(ROOT / "web", web, ignore=shutil.ignore_patterns(
+        "en", "ar", "paketlar*", "catalog*.json", "sitemap.xml", "robots.txt", "PUBLIC-BUILD-REPORT.json"))
     rep = build_public(pkgs, web)
     print(json.dumps({k: [x.get("package_id", x) for x in v] for k, v in rep.items()}, ensure_ascii=False))
     print("selection:", sel.name)

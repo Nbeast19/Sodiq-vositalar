@@ -13,14 +13,18 @@ Rasmiy tayanchlar: [Google — localized versions (hreflang)](https://developers
 - Ommaviy katalogga faqat allowlist paketlari kiradi; shaxsiy qaydlar (IndexedDB) va mahalliy fayllar sahifalarga chiqmaydi.
 - Testlar: `tests/test_site.py` — canonical = o‘z URL, hreflang o‘zaro, x-default, sitemap ↔ sahifalar, nisbiy havolalar mavjud faylga olib boradi, `<script>` yo‘q, shaxsiy yo‘l yo‘q, manba matni yo‘q.
 
-## Base URL
-Standart: `https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/` (repo `Nbeast19/vositalar`, Pages `main` dan). Boshqa hosting/yo‘l bo‘lsa: `hadis-manba build-site --base-url <URL> …`. **Ish branchi merge qilinmaguncha bu URLlar jonli emas.**
+## Base URL va nashr
+Sayt: <https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/> (repo `Nbeast19/vositalar`). Pages **GitHub Actions** orqali nashr qilinadi (`.github/workflows/hadis-manba-pages.yml`): repo fayllari + Release’dan olingan paketlar. Boshqa hosting/yo‘l bo‘lsa: `hadis-manba build-site --base-url <URL> …`.
 
 ## robots.txt
 Crawlerlar faqat host ildizidagi `https://nbeast19.github.io/robots.txt` ni o‘qiydi. Project yo‘lidagi `web/robots.txt` ma’lumot uchun (unda `Sitemap:` qatori bor). Ildizda robots bo‘lmasa — hammasiga ruxsat. Bu loyihada `noindex` faqat ilova qobig‘ida.
 
-## Nashrdan keyin (foydalanuvchi qadamlari)
-1. Ish branchini `main` ga merge qiling (yoki Pages manbasini shu branchga sozlang).
-2. Jonli tekshiruv (avtomatik): har `/en/` va `/ar/` sahifa 200 qaytaradi, canonical/hreflang/sitemap jonli URL bilan mos — bu tekshiruv merge’dan keyin bajariladi.
-3. **Google Search Console:** `https://nbeast19.github.io/vositalar/` URL-prefix mulkini qo‘shing, tasdiqlang (HTML fayl yoki meta-teg — bu qadam sizning Google hisobingizni talab qiladi), so‘ng `…/hadis-manba-platformasi/web/sitemap.xml` ni yuboring.
-4. Google indeksi yoki birinchi o‘rin **kafolatlanmaydi**.
+## Jonli tekshiruv
+`.github/workflows/hadis-manba-jonli.yml` har Pages nashridan keyin ishlaydi (`tests/live/live.pw.js`): sitemap’dagi har sahifa 200, self-canonical, o‘zaro hreflang + x-default, `<script>` yo‘q, PWA `noindex`, host ildizidagi robots.txt, 32 paket saytdan SHA-256 bilan, Release havolalari; en (1280 px) va ar (390 px) da kitob + sharh o‘rnatish → hadis → sharh → qaytish → oflayn qidiruv.
+
+## Google Search Console (foydalanuvchi qadamlari — Google hisobingiz kerak)
+1. <https://search.google.com/search-console> → **Add property** → **URL prefix** → `https://nbeast19.github.io/vositalar/` kiriting.
+2. Tasdiqlash: **HTML file** usulini tanlang, `googleXXXXXXXX.html` faylini yuklab oling va menga yuboring (yoki o‘zingiz repo ildiziga — `vositalar/` — qo‘shib `main` ga push qiling). Pages nashridan keyin Search Console’da **Verify** ni bosing. (Muqobil: *HTML tag* — `<meta name="google-site-verification" …>` qatorini yuboring, uni ildizdagi `index.html` ga qo‘shaman.)
+3. **Sitemaps** bo‘limida `https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/sitemap.xml` ni yuboring.
+4. **URL inspection** bilan `…/web/en/` va `…/web/ar/` ni tekshirib, **Request indexing** ni bosing.
+5. Bir necha kun/hafta ichida **Pages** hisobotida “Indexed” sahifalarni ko‘ring. Google indeksi yoki o‘rin **kafolatlanmaydi**.

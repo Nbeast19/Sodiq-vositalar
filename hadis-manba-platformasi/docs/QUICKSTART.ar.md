@@ -7,7 +7,7 @@
 - **أندرويد:** افتحه في **كروم** ← ⋮ ← **تثبيت التطبيق**.
 - **ويندوز / ماك:** افتحه في **كروم أو إيدج** ← اضغط أيقونة **التثبيت** في شريط العنوان (سفاري ماك 17+: ملف ← إضافة إلى Dock).
 
-سيُذكر العنوان العام هنا بعد نشره (انظر [VALIDATION-REPORT.md](VALIDATION-REPORT.md)).
+العنوان: <https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/> (الحزم: [إصدار GitHub](https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1)).
 
 ## ٢. ثبّت كتابًا
 1. افتح **المكتبة**، وابحث عن الكتاب باسمه العربي أو الإنجليزي أو بالحروف اللاتينية.

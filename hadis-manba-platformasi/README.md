@@ -14,7 +14,9 @@
 
 → [docs/QUICKSTART.en.md](docs/QUICKSTART.en.md) (one page) · [docs/en/INSTALL.md](docs/en/INSTALL.md) (Windows, Mac, iPhone, Android, Linux)
 
-The public demo currently contains only **synthetic sample packages**. Real books are published only after their distribution rights are confirmed ([docs/RIGHTS.md](docs/RIGHTS.md)).
+**Open the app:** <https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/> · Catalogue: [English](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/en/) · [العربية](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/ar/)
+
+**Packages:** 17 main books (Sunnah.com, shared with permission) and 15 commentaries (OpenITI, CC BY-NC-SA 4.0 — non-commercial, share-alike, attribution) — each a separate download in the GitHub Release [hadis-manba-paketlar-v1](https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1), with `SHA256SUMS` and `RIGHTS-PAKETLAR.md` (licence, author, edition and attribution per package). Packages with unknown rights are not published; they stay local only ([docs/RIGHTS.md](docs/RIGHTS.md)).
 
 ## For advanced users (optional)
 

@@ -27,7 +27,7 @@ function ok(name) { n++; console.log('  ✓ ' + name); }
   }
   ok('parcha (snippet) Python bilan aynan mos');
 
-  const buf = fs.readFileSync(path.join(ROOT, 'web/paketlar/namuna-asos-a-1.0.0.hmz'));
+  const buf = fs.readFileSync(path.join(ROOT, 'dist/namuna-asos-a-1.0.0.hmz'));
   const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
   const pkg = await Pkg.open(ab);
   assert.strictEqual(pkg.manifest.package_id, 'namuna-asos-a');

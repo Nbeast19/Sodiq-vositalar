@@ -5,7 +5,7 @@
 - **Android:** open it in **Chrome** → ⋮ → **Install app**.
 - **Windows / Mac:** open it in **Chrome or Edge** → click the **install** icon in the address bar (Mac Safari 17+: File → Add to Dock).
 
-The public address will be listed here once it is published (see [VALIDATION-REPORT.md](VALIDATION-REPORT.md)).
+Address: <https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/> (packages: [GitHub Release](https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1)).
 
 ## 2. Install a book
 1. Open **Library**. Find a book by Arabic, English or transliterated name.

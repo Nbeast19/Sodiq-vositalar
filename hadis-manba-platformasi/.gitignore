@@ -5,3 +5,4 @@ __pycache__/
 .pytest_cache/
 web/PUBLIC-BUILD-REPORT.json
 node_modules/
+web/paketlar/

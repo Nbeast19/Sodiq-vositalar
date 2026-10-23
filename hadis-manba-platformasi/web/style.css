@@ -90,6 +90,8 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 .kitob-nom { font-weight: 600; font-size: 17px; }
 .ar-h { font-family: var(--ar-font); font-size: 30px; line-height: 1.7; text-align: right; margin: 8px 0; }
 .iso { unicode-bidi: isolate; }
+/* Uzun ID (ed-…, hm-…) RTL qatorda bo‘linsa ham o‘z tartibida qolsin */
+.kichik .iso, .xesh .iso { display: inline-block; max-width: 100%; overflow-wrap: anywhere; direction: ltr; }
 .tanlash { display: inline-flex; align-items: center; min-height: 48px; }
 .qadamlar li { margin: 8px 0; font-size: 18px; }
 [dir="rtl"] .xabar { text-align: right; }

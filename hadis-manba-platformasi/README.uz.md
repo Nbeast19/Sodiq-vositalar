@@ -9,7 +9,8 @@ Hadis to'plamlari va ularning sharhlarini **manbasi kuzatiladigan** tarzda o'qis
 - **Kompyuter yadrosi (Python):** SQLite + FTS5, xavfsiz paket importi, rollback, audit, mahalliy xizmat va **MCP server** (AI ulash ixtiyoriy).
 - **Cheklovlar yashirilmaydi:** har natijada holat (`verified` / `limited` / `unreviewed` …), qamrov va huquq ko'rinadi.
 
-> Hozirgi ommaviy demo faqat **sun'iy SINOV NAMUNASI** paketlarini o'z ichiga oladi. Haqiqiy korpus huquqi tasdiqlangach alohida paket bo'lib chiqadi (`docs/RIGHTS.md`).
+> **Ilova:** <https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/> · Katalog: [English](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/en/) · [العربية](https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/ar/)
+> **Paketlar:** 17 asosiy kitob (Sunnah.com, ruxsat bilan) + 15 sharh (OpenITI, CC BY-NC-SA 4.0 — notijoriy) — har biri alohida fayl, GitHub Release [hadis-manba-paketlar-v1](https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1). Huquqi noma'lum paketlar faqat mahalliy (`docs/RIGHTS.md`). Nashr tartibi: `docs/RELEASE.md`.
 
 ## Tez boshlash
 

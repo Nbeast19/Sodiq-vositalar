@@ -37,7 +37,7 @@ T = {
         "records": "Records", "printed_numbers": "Distinct printed numbers", "statuses": "Status counts",
         "links_to": "Linked to", "occurrences": "Commentary passages", "links": "Links to hadiths",
         "rights": "Rights", "public": "Open to share", "conditional": "Conditional licence", "version": "Version",
-        "install_in_app": "Install in the app", "by": "by", "linked_comms": "Commentaries for this book",
+        "install_in_app": "Install in the app", "download_file": "Download file (.hmz)", "attribution": "Attribution", "by": "by", "linked_comms": "Commentaries for this book",
         "none": "None in the public catalogue yet.", "fixture": "Sample package (synthetic test text, not a real source).",
         "not_records": "Records are entries of the source database, not a count of unique hadiths.",
         "coverage_note": "Scholarly coverage is incomplete. A match in search is not a verified identification.",
@@ -79,7 +79,7 @@ T = {
         "records": "السجلات", "printed_numbers": "الأرقام المطبوعة المختلفة", "statuses": "إحصاءات الحالة",
         "links_to": "مرتبط بـ", "occurrences": "مواضع الشرح", "links": "روابط بالأحاديث",
         "rights": "الحقوق", "public": "مسموح بمشاركته", "conditional": "ترخيص مشروط", "version": "الإصدار",
-        "install_in_app": "التثبيت في التطبيق", "by": "تأليف", "linked_comms": "شروح هذا الكتاب",
+        "install_in_app": "التثبيت في التطبيق", "download_file": "تنزيل الملف (.hmz)", "attribution": "النسبة", "by": "تأليف", "linked_comms": "شروح هذا الكتاب",
         "none": "لا يوجد في الفهرس العام بعد.", "fixture": "حزمة تجريبية (نص اصطناعي للاختبار، ليس مصدرًا حقيقيًا).",
         "not_records": "السجلات مداخل في قاعدة بيانات المصدر، وليست عددًا للأحاديث الفريدة.",
         "coverage_note": "التغطية العلمية غير مكتملة. التطابق في البحث ليس تحقيقًا مؤكدًا لهوية الحديث.",
@@ -231,6 +231,9 @@ class Site:
                 (s["size"], _bdi(_fmt_bytes(p.get("compressed_bytes")))),
                 (s["installed_size"], _bdi("~" + _fmt_bytes(p.get("installed_bytes")))),
                 (s["rights"], self.rights_cell(p, lang))]
+        attr = [r["required_attribution"] for r in p.get("rights", []) if r.get("applies_to") == "classical_body" and r.get("required_attribution")]
+        if attr:
+            rows.append((s["attribution"], _bdi(attr[0])))
         if p["kind"] == "base_book":
             rows.insert(2, (s["records"], _bdi(cov.get("source_records"))))
             rows.insert(3, (s["printed_numbers"], _bdi(cov.get("distinct_printed_numbers"))))
@@ -251,7 +254,9 @@ class Site:
         note = f'<p class="ogoh kichik">{_e(s["fixture"])}</p>' if p.get("is_test_fixture") else ""
         target = p["work_id"] if p["kind"] == "base_book" else (p.get("requires_for_linked_reading") or [{}])[0].get("target_work_id", p["work_id"])
         return (f'<section class="karta">{note}<table class="kichik">{tr}</table>'
-                f'<p><a class="tugma" href="{up}index.html#/w/{_e(target)}">{_e(s["install_in_app"])}</a></p></section>')
+                f'<p><a class="tugma" href="{up}index.html#/w/{_e(target)}">{_e(s["install_in_app"])}</a>'
+                + (f' <a class="tugma" href="{_e(p["download_url"])}" rel="noopener">{_e(s["download_file"])}</a>' if p.get("download_url") else "")
+                + '</p></section>')
 
     # ---------------------------------------------------------------- sahifalar
     def build(self):

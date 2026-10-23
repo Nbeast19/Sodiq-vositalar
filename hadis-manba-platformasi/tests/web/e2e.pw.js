@@ -1,6 +1,6 @@
 // PWA majburiy ssenariylari (22.5 + 26-bo'lim) — Chromium headless'da, English va العربية interfeysida,
 // kompyuter (1280px) va telefon (390px) kengligida. Bu real iPhone/Android/Windows/Mac sinovi EMAS.
-// Ishga tushirish: sh scripts/verify.sh  (yoki: python3 scripts/build_demo.py && node tests/web/e2e.pw.js)
+// Ishga tushirish: sh scripts/verify.sh  (yoki: python3 scripts/build_demo.py && node tests/web/e2e.pw.js; ilova build/demo nusxasidan)
 'use strict';
 const { chromium } = require('playwright');
 const assert = require('assert');
@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT = path.resolve(__dirname, '..', '..');
-const SERVE_ROOT = path.resolve(PROJECT, '..');           // GitHub project path ostidagidek
+const SERVE_ROOT = path.join(PROJECT, 'build', 'demo');    // build_demo.py: GitHub project path ko'rinishida
 const BASE_PATH = '/' + path.basename(PROJECT) + '/web/';
 const V110 = path.join(PROJECT, 'build/test-paketlar/namuna-asos-a-1.1.0.hmz');
 const SELECTION = path.join(PROJECT, 'dist/namuna-kitob-va-sharhlar-1.0.0.hmz');
@@ -226,7 +226,7 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
     });
     await step(label + ' 9: corrupt import and interrupted staging -> library unharmed', async () => {
       const bad = path.join(PROJECT, 'build', 'buzilgan.hmz');
-      const buf = fs.readFileSync(path.join(PROJECT, 'web/paketlar/namuna-sharh-2-1.0.0.hmz'));
+      const buf = fs.readFileSync(path.join(PROJECT, 'dist/namuna-sharh-2-1.0.0.hmz'));
       fs.writeFileSync(bad, buf.subarray(0, buf.length - 120));           // kesilgan fayl (EOCD yo'q)
       await importFile(B.page, bad);
       assert.strictEqual(await B.page.locator('[data-act=progress]').last().getAttribute('data-done'), 'fail');

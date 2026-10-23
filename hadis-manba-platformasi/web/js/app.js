@@ -19,7 +19,8 @@
       else if (k === 'cls') e.className = v;
       else e.setAttribute(k, v === true ? '' : v);
     }
-    (kids || []).forEach(function (c) { if (c != null) e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+    // Haqiqiy paketlarda ba'zi maydonlar son (jild, raqam): Node bo'lmagan qiymat matn sifatida qo'shiladi.
+    (kids || []).forEach(function (c) { if (c != null) e.appendChild(c instanceof Node ? c : document.createTextNode(String(c))); });
     return e;
   }
   function ar(text, extra) { return el('p', Object.assign({ lang: 'ar', dir: 'rtl', cls: 'ar' }, extra || {}), [text]); }
@@ -33,7 +34,7 @@
     return el('div', { cls: 'belgilar' }, keys.map(function (k) { return badge(k, st[k]); }));
   }
   function limits(list) {
-    if (!list || !list.length) return null;
+    if (!list || !list.length) return document.createDocumentFragment();  // cheklovsiz haqiqiy birliklar
     return el('details', { cls: 'cheklov-d' }, [el('summary', { text: t('cite.notes') + ' (' + list.length + ')' }),
       el('ul', { cls: 'cheklov', lang: 'uz', dir: 'ltr' }, list.map(function (l) { return el('li', { text: l }); }))]);
   }
@@ -230,10 +231,12 @@
         c.provides_units ? el('div', { cls: 'kichik', text: isBase ? t('book.records', { n: c.provides_units }) : t('book.occ', { n: c.provides_units }) }) : null,
         (c.requires_for_linked_reading || []).length ? el('div', { cls: 'kichik' }, [t('book.linksTo', { target: '' }), iso(c.requires_for_linked_reading.map(function (r) { return r.target_edition_id; }).join(', '))]) : null,
         el('div', { cls: 'kichik', text: t('rights.label') + ': ' + channelLabel(c) }),
+        licenceLine(c),
         el('div', { cls: 'holat', 'data-status': inst ? (inst.offline_ready ? 'ready' : 'installed') : 'none', text: status })])]);
     var b = el('div', { cls: 'paket-tugmalar' });
     if (!c.local_only && (!inst || inst.version !== c.package_version))
       b.appendChild(btn(inst ? t('book.update') : (isBase ? t('book.installBook') : t('book.install')), 'install', async function () { try { await installFromCatalog(c); } catch (e) { /* xabar ko'rsatildi */ } route(); }, 'asosiy katta'));
+    if (c.download_url) b.appendChild(el('a', { cls: 'tugma', 'data-act': 'download-file', href: c.download_url, rel: 'noopener', text: t('book.downloadFile') }));
     if (inst) {
       b.appendChild(el('a', { cls: 'tugma', 'data-act': 'read', href: '#/read/' + encodeURIComponent(c.package_id), text: t('book.open') }));
       if (isBase) b.appendChild(el('a', { cls: 'tugma', 'data-act': 'search-in', href: '#/search?book=' + encodeURIComponent(c.work_id), text: t('book.searchIn') }));
@@ -244,6 +247,14 @@
     }
     row.appendChild(b);
     return row;
+  }
+
+  function licenceLine(c) {
+    var body = (c.rights || []).find(function (r) { return r.applies_to === 'classical_body'; });
+    if (!body) return null;
+    var kids = [t('book.licence') + ': ', iso(body.license_id || t('book.permission'))];
+    if (body.required_attribution) kids.push(' · ' + t('book.attribution') + ': ', iso(body.required_attribution));
+    return el('div', { cls: 'kichik xira', 'data-act': 'licence' }, kids);
   }
 
   // ---------------------------------------------------------------- o'rnatish
@@ -259,7 +270,7 @@
       if (c.package_sha256 && (await Pkg.sha256Hex(buf)) !== c.package_sha256) throw new Error('SHA-256');
       await Lib.install(buf, st.set);
       st.ok();
-    } catch (e) { st.fail(e.message); throw e; }
+    } catch (e) { st.fail(e.message, c.download_url); throw e; }
   }
   async function doInstall(buf, name) {
     var st = progressBox(name);
@@ -287,7 +298,12 @@
     return {
       set: function (s, msg) { box.lastChild.textContent = t(STATE_KEY[s] || s) + (msg ? ': ' + msg : ''); },
       ok: function (msg) { box.setAttribute('data-done', 'ok'); box.lastChild.textContent = t('st.ok') + (msg ? ' — ' + msg : ''); setTimeout(function () { box.remove(); }, 3500); },
-      fail: function (msg) { box.setAttribute('data-done', 'fail'); box.classList.add('yomon'); box.lastChild.textContent = t('st.fail', { msg: msg }); box.appendChild(btn(t('close'), 'close', function () { box.remove(); })); }
+      fail: function (msg, link) {
+        box.setAttribute('data-done', 'fail'); box.classList.add('yomon'); box.lastChild.textContent = t('st.fail', { msg: msg });
+        // Tarmoq/limit xatosida: faylni qo'lda yuklab, "Mening kitoblarim → Fayldan import" orqali o'rnatish mumkin.
+        if (link) box.appendChild(el('p', { cls: 'kichik' }, [el('a', { href: link, rel: 'noopener', 'data-act': 'download-file', text: t('book.downloadFile') }), ' — ' + t('st.manual')]));
+        box.appendChild(btn(t('close'), 'close', function () { box.remove(); }));
+      }
     };
   }
 

@@ -1,0 +1,1445 @@
+{
+ "schema_version": "1.0.0",
+ "packages": [
+  {
+   "package_id": "hm-sharh-abudawud-badhl-al-majhud",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "بذل المجهود في حل سنن أبي داود",
+    "en": "Badhl Al Majhud",
+    "uz": "بذل المجهود في حل سنن أبي داود (ed-abudawud-badhl-al-majhud)"
+   },
+   "work_id": "w-abudawud-badhl-al-majhud",
+   "edition_id": "ed-abudawud-badhl-al-majhud",
+   "author_ids": [
+    "p-abudawud-badhl-al-majhud-a1"
+   ],
+   "file": "paketlar/hm-sharh-abudawud-badhl-al-majhud-1.0.0.hmz",
+   "package_sha256": "073fb410f13b40e95f4ea1a9637a7fbb8ea740dab6ac861ae876a561ef60e4cd",
+   "compressed_bytes": 4480086,
+   "installed_bytes": 75459312,
+   "temporary_space_bytes": 50306208,
+   "provides_units": 5213,
+   "coverage": {
+    "distinct_linked_units": 5186,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 5214,
+    "link_status_counts": {
+     "unreviewed": 5214
+    },
+    "links": 5214,
+    "occurrences": 5213,
+    "scope_counts": {
+     "preview_window": 5213
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "Muhyi ad-Din Abd al-Hamid, Dar al-Fikr: OpenITI JK000142-ara1, 1–5274; matn asosida bog‘langan",
+     "target_edition_id": "ed-abudawud-hj120",
+     "target_work_id": "w-abudawud"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1350AH/master/data/1346KhalilAhmadSaharanpuri/1346KhalilAhmadSaharanpuri.BadhlMajhud/1346KhalilAhmadSaharanpuri.BadhlMajhud.Sham19Y0014601-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1350AH/master/data/1346KhalilAhmadSaharanpuri/1346KhalilAhmadSaharanpuri.BadhlMajhud/1346KhalilAhmadSaharanpuri.BadhlMajhud.Sham19Y0014601-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/1350AH/master/data/1346KhalilAhmadSaharanpuri/1346KhalilAhmadSaharanpuri.BadhlMajhud/1346KhalilAhmadSaharanpuri.BadhlMajhud.Sham19Y0014601-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-abudawud-badhl-al-majhud-a1",
+     "name_ar": "خليل أحمد السهارنفوري",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "badhl-al-majhud",
+    "badhl al majhud",
+    "badhl al majhud"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-abudawud",
+   "is_test_fixture": false,
+   "release_asset_id": 669514089,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-abudawud-badhl-al-majhud-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-abudawud-maalim-al-sunan",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "معالم السنن",
+    "en": "Maalim Al Sunan",
+    "uz": "معالم السنن (ed-abudawud-maalim-al-sunan)"
+   },
+   "work_id": "w-abudawud-maalim-al-sunan",
+   "edition_id": "ed-abudawud-maalim-al-sunan",
+   "author_ids": [
+    "p-abudawud-maalim-al-sunan-a1"
+   ],
+   "file": "paketlar/hm-sharh-abudawud-maalim-al-sunan-1.0.0.hmz",
+   "package_sha256": "2d7a7aa022355b75380c3fbb46dc705d6626e8b1d5030362f80cb16438370876",
+   "compressed_bytes": 990734,
+   "installed_bytes": 17684169,
+   "temporary_space_bytes": 11789446,
+   "provides_units": 1588,
+   "coverage": {
+    "distinct_linked_units": 1576,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 1588,
+    "link_status_counts": {
+     "unreviewed": 1588
+    },
+    "links": 1588,
+    "occurrences": 1588,
+    "scope_counts": {
+     "preview_window": 1588
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "Muhyi ad-Din Abd al-Hamid, Dar al-Fikr: OpenITI JK000142-ara1, 1–5274; matn asosida bog‘langan",
+     "target_edition_id": "ed-abudawud-hj120",
+     "target_work_id": "w-abudawud"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0400AH/master/data/0388AbuSulaymanKhattabi/0388AbuSulaymanKhattabi.MacalimSunan/0388AbuSulaymanKhattabi.MacalimSunan.Shamela0001442-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0400AH/master/data/0388AbuSulaymanKhattabi/0388AbuSulaymanKhattabi.MacalimSunan/0388AbuSulaymanKhattabi.MacalimSunan.Shamela0001442-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/0400AH/master/data/0388AbuSulaymanKhattabi/0388AbuSulaymanKhattabi.MacalimSunan/0388AbuSulaymanKhattabi.MacalimSunan.Shamela0001442-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-abudawud-maalim-al-sunan-a1",
+     "name_ar": "أبو سليمان حمد بن محمد الخطابي",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "maalim-al-sunan",
+    "maalim al sunan",
+    "maalim al sunan"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-abudawud",
+   "is_test_fixture": false,
+   "release_asset_id": 669514094,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-abudawud-maalim-al-sunan-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-bukhari-fath-al-bari",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "فتح الباري شرح صحيح البخاري",
+    "en": "Fath Al Bari",
+    "uz": "فتح الباري شرح صحيح البخاري (ed-bukhari-fath-al-bari)"
+   },
+   "work_id": "w-bukhari-fath-al-bari",
+   "edition_id": "ed-bukhari-fath-al-bari",
+   "author_ids": [
+    "p-bukhari-fath-al-bari-a1"
+   ],
+   "file": "paketlar/hm-sharh-bukhari-fath-al-bari-1.0.0.hmz",
+   "package_sha256": "c94226d401a01e61f31f2046ea91d321a87352bfeed4028f5870b3360782b08e",
+   "compressed_bytes": 5299041,
+   "installed_bytes": 81064563,
+   "temporary_space_bytes": 54043042,
+   "provides_units": 5110,
+   "coverage": {
+    "distinct_linked_units": 4943,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 5123,
+    "link_status_counts": {
+     "unreviewed": 5123
+    },
+    "links": 5123,
+    "occurrences": 5110,
+    "scope_counts": {
+     "preview_window": 5110
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "Sahih al-Bukhari / Fath al-Bari continuous numbering 1–7563; Umdat local numbers are not assumed equivalent",
+     "target_edition_id": "ed-bukhari-hj120",
+     "target_work_id": "w-bukhari"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0875AH/master/data/0852IbnHajarCasqalani/0852IbnHajarCasqalani.FathBari/0852IbnHajarCasqalani.FathBari.JK000166-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0875AH/master/data/0852IbnHajarCasqalani/0852IbnHajarCasqalani.FathBari/0852IbnHajarCasqalani.FathBari.JK000166-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/0875AH/master/data/0852IbnHajarCasqalani/0852IbnHajarCasqalani.FathBari/0852IbnHajarCasqalani.FathBari.JK000166-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-bukhari-fath-al-bari-a1",
+     "name_ar": "أحمد بن علي بن حجر العسقلاني",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "fath-al-bari",
+    "fath al bari",
+    "fath al bari"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-bukhari",
+   "is_test_fixture": false,
+   "release_asset_id": 669514097,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-bukhari-fath-al-bari-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-bukhari-umdat-al-qari",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "عمدة القاري شرح صحيح البخاري",
+    "en": "Umdat Al Qari",
+    "uz": "عمدة القاري شرح صحيح البخاري (ed-bukhari-umdat-al-qari)"
+   },
+   "work_id": "w-bukhari-umdat-al-qari",
+   "edition_id": "ed-bukhari-umdat-al-qari",
+   "author_ids": [
+    "p-bukhari-umdat-al-qari-a1"
+   ],
+   "file": "paketlar/hm-sharh-bukhari-umdat-al-qari-1.0.0.hmz",
+   "package_sha256": "b78819f655e8e59b312276048e7751b17defd8c11443fa8204cfa9b0f2f26603",
+   "compressed_bytes": 7338124,
+   "installed_bytes": 114311037,
+   "temporary_space_bytes": 76207358,
+   "provides_units": 6174,
+   "coverage": {
+    "distinct_linked_units": 6104,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 4971,
+    "link_status_counts": {
+     "limited": 810,
+     "unreviewed": 4971,
+     "verified": 421
+    },
+    "links": 6202,
+    "occurrences": 6174,
+    "scope_counts": {
+     "preview_window": 6174
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "Sahih al-Bukhari / Fath al-Bari continuous numbering 1–7563; Umdat local numbers are not assumed equivalent",
+     "target_edition_id": "ed-bukhari-hj120",
+     "target_work_id": "w-bukhari"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0875AH/master/data/0855BadrDinCayni/0855BadrDinCayni.CumdatQari/0855BadrDinCayni.CumdatQari.Shamela0005756-ara1.completed)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0875AH/master/data/0855BadrDinCayni/0855BadrDinCayni.CumdatQari/0855BadrDinCayni.CumdatQari.Shamela0005756-ara1.completed)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/0875AH/master/data/0855BadrDinCayni/0855BadrDinCayni.CumdatQari/0855BadrDinCayni.CumdatQari.Shamela0005756-ara1.completed; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-bukhari-umdat-al-qari-a1",
+     "name_ar": "بدر الدين محمود بن أحمد العيني",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "umdat-al-qari",
+    "umdat al qari",
+    "umdat al qari"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-bukhari",
+   "is_test_fixture": false,
+   "release_asset_id": 669514113,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-bukhari-umdat-al-qari-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-ibnmajah-hashiyat-al-sindi",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "حاشية السندي على سنن ابن ماجه = كفاية الحاجة في شرح سنن ابن ماجه",
+    "en": "Hashiyat Al Sindi",
+    "uz": "حاشية السندي على سنن ابن ماجه = كفاية الحاجة في شرح سنن ابن ماجه (ed-ibnmajah-hashiyat-al-sindi)"
+   },
+   "work_id": "w-ibnmajah-hashiyat-al-sindi",
+   "edition_id": "ed-ibnmajah-hashiyat-al-sindi",
+   "author_ids": [
+    "p-ibnmajah-hashiyat-al-sindi-a1"
+   ],
+   "file": "paketlar/hm-sharh-ibnmajah-hashiyat-al-sindi-1.0.0.hmz",
+   "package_sha256": "a185413e2d97f4d8b0235063e5f952828058e96528451ea4dfb5fea8bd82ae89",
+   "compressed_bytes": 877413,
+   "installed_bytes": 17065131,
+   "temporary_space_bytes": 11376754,
+   "provides_units": 1647,
+   "coverage": {
+    "distinct_linked_units": 1641,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 1632,
+    "link_status_counts": {
+     "limited": 5,
+     "unreviewed": 1632,
+     "verified": 5
+    },
+    "links": 1642,
+    "occurrences": 1647,
+    "scope_counts": {
+     "preview_window": 1647
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "محمد فؤاد عبد الباقي",
+     "target_edition_id": "ed-ibnmajah-hj120",
+     "target_work_id": "w-ibnmajah"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1150AH/master/data/1138IbnCabdHadiNurDinSindi/1138IbnCabdHadiNurDinSindi.HashiyaCalaIbnMajah/1138IbnCabdHadiNurDinSindi.HashiyaCalaIbnMajah.Shamela0009810-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1150AH/master/data/1138IbnCabdHadiNurDinSindi/1138IbnCabdHadiNurDinSindi.HashiyaCalaIbnMajah/1138IbnCabdHadiNurDinSindi.HashiyaCalaIbnMajah.Shamela0009810-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/1150AH/master/data/1138IbnCabdHadiNurDinSindi/1138IbnCabdHadiNurDinSindi.HashiyaCalaIbnMajah/1138IbnCabdHadiNurDinSindi.HashiyaCalaIbnMajah.Shamela0009810-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-ibnmajah-hashiyat-al-sindi-a1",
+     "name_ar": "محمد بن عبد الهادي التتوي، أبو الحسن، نور الدين السندي",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "hashiyat-al-sindi",
+    "hashiyat al sindi",
+    "hashiyat al sindi"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-ibnmajah",
+   "is_test_fixture": false,
+   "release_asset_id": 669514126,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-ibnmajah-hashiyat-al-sindi-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-ibnmajah-misbah-al-zujaja",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "مصباح الزجاجة في زوائد ابن ماجه",
+    "en": "Misbah Al Zujaja",
+    "uz": "مصباح الزجاجة في زوائد ابن ماجه (ed-ibnmajah-misbah-al-zujaja)"
+   },
+   "work_id": "w-ibnmajah-misbah-al-zujaja",
+   "edition_id": "ed-ibnmajah-misbah-al-zujaja",
+   "author_ids": [
+    "p-ibnmajah-misbah-al-zujaja-a1"
+   ],
+   "file": "paketlar/hm-sharh-ibnmajah-misbah-al-zujaja-1.0.0.hmz",
+   "package_sha256": "ec168cb60ec8fe7766af5bd4ead95a638789d04187105ca9b35fcc299bcca91b",
+   "compressed_bytes": 525890,
+   "installed_bytes": 12481782,
+   "temporary_space_bytes": 8321188,
+   "provides_units": 1434,
+   "coverage": {
+    "distinct_linked_units": 1417,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 1426,
+    "link_status_counts": {
+     "unreviewed": 1426
+    },
+    "links": 1426,
+    "occurrences": 1434,
+    "scope_counts": {
+     "preview_window": 1434
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "محمد فؤاد عبد الباقي",
+     "target_edition_id": "ed-ibnmajah-hj120",
+     "target_work_id": "w-ibnmajah"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0850AH/master/data/0840ShihabDinBusiri/0840ShihabDinBusiri.MisbahZujaja/0840ShihabDinBusiri.MisbahZujaja.JK000312-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0850AH/master/data/0840ShihabDinBusiri/0840ShihabDinBusiri.MisbahZujaja/0840ShihabDinBusiri.MisbahZujaja.JK000312-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/0850AH/master/data/0840ShihabDinBusiri/0840ShihabDinBusiri.MisbahZujaja/0840ShihabDinBusiri.MisbahZujaja.JK000312-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-ibnmajah-misbah-al-zujaja-a1",
+     "name_ar": "أحمد بن أبي بكر البوصيري",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "misbah-al-zujaja",
+    "misbah al zujaja",
+    "misbah al zujaja"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-ibnmajah",
+   "is_test_fixture": false,
+   "release_asset_id": 669514129,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-ibnmajah-misbah-al-zujaja-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-malik-al-tamhid",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "التمهيد لما في الموطأ من المعاني والأسانيد",
+    "en": "Al Tamhid",
+    "uz": "التمهيد لما في الموطأ من المعاني والأسانيد (ed-malik-al-tamhid)"
+   },
+   "work_id": "w-malik-al-tamhid",
+   "edition_id": "ed-malik-al-tamhid",
+   "author_ids": [
+    "p-malik-al-tamhid-a1"
+   ],
+   "file": "paketlar/hm-sharh-malik-al-tamhid-1.0.0.hmz",
+   "package_sha256": "cd0a51cdd00c42c37cc826e2198d73af64b46e8f546b5f0c295fdeb07b99e039",
+   "compressed_bytes": 693199,
+   "installed_bytes": 10569381,
+   "temporary_space_bytes": 7046254,
+   "provides_units": 512,
+   "coverage": {
+    "distinct_linked_units": 514,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 515,
+    "link_status_counts": {
+     "unreviewed": 515
+    },
+    "links": 515,
+    "occurrences": 512,
+    "scope_counts": {
+     "preview_window": 512
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "raqam=Sunnah Arabic continuous via A1; raqam2=AbdBaqi book:hadith via A1; sharh_ichidagi_no=not established",
+     "target_edition_id": "ed-malik-hj120",
+     "target_work_id": "w-malik"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0475AH/master/data/0463IbnCabdBarr/0463IbnCabdBarr.TamhidMuwatta/0463IbnCabdBarr.TamhidMuwatta.JK000585-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0475AH/master/data/0463IbnCabdBarr/0463IbnCabdBarr.TamhidMuwatta/0463IbnCabdBarr.TamhidMuwatta.JK000585-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/0475AH/master/data/0463IbnCabdBarr/0463IbnCabdBarr.TamhidMuwatta/0463IbnCabdBarr.TamhidMuwatta.JK000585-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-malik-al-tamhid-a1",
+     "name_ar": "أبو عمر يوسف بن عبد الله بن عبد البر النمري",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "al-tamhid",
+    "al tamhid",
+    "al tamhid"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-malik",
+   "is_test_fixture": false,
+   "release_asset_id": 669514139,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-malik-al-tamhid-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-malik-sharh-al-zurqani",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "شرح الزرقاني على موطأ الإمام مالك",
+    "en": "Sharh Al Zurqani",
+    "uz": "شرح الزرقاني على موطأ الإمام مالك (ed-malik-sharh-al-zurqani)"
+   },
+   "work_id": "w-malik-sharh-al-zurqani",
+   "edition_id": "ed-malik-sharh-al-zurqani",
+   "author_ids": [
+    "p-malik-sharh-al-zurqani-a1"
+   ],
+   "file": "paketlar/hm-sharh-malik-sharh-al-zurqani-1.0.0.hmz",
+   "package_sha256": "26936a055deefda90007a7085e86de85f9230a3a65740127429500870f595a08",
+   "compressed_bytes": 1579154,
+   "installed_bytes": 23020263,
+   "temporary_space_bytes": 15346842,
+   "provides_units": 1495,
+   "coverage": {
+    "distinct_linked_units": 1508,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 1510,
+    "link_status_counts": {
+     "unreviewed": 1510
+    },
+    "links": 1510,
+    "occurrences": 1495,
+    "scope_counts": {
+     "preview_window": 1495
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "raqam=Sunnah Arabic continuous via A1; raqam2=AbdBaqi book:hadith via A1; sharh_ichidagi_no=not established",
+     "target_edition_id": "ed-malik-hj120",
+     "target_work_id": "w-malik"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1125AH/master/data/1122MuhammadZurqani/1122MuhammadZurqani.SharhCalaMuwatta/1122MuhammadZurqani.SharhCalaMuwatta.JK000754-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1125AH/master/data/1122MuhammadZurqani/1122MuhammadZurqani.SharhCalaMuwatta/1122MuhammadZurqani.SharhCalaMuwatta.JK000754-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/1125AH/master/data/1122MuhammadZurqani/1122MuhammadZurqani.SharhCalaMuwatta/1122MuhammadZurqani.SharhCalaMuwatta.JK000754-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-malik-sharh-al-zurqani-a1",
+     "name_ar": "محمد بن عبد الباقي بن يوسف الزرقاني",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "sharh-al-zurqani",
+    "sharh al zurqani",
+    "sharh al zurqani"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-malik",
+   "is_test_fixture": false,
+   "release_asset_id": 669514177,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-malik-sharh-al-zurqani-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-mishkat-almasabih-mirqat-al-mafatih",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "مرقاة المفاتيح شرح مشكاة المصابيح",
+    "en": "Mirqat Al Mafatih",
+    "uz": "مرقاة المفاتيح شرح مشكاة المصابيح (ed-mishkat-almasabih-mirqat-al-mafatih)"
+   },
+   "work_id": "w-mishkat-almasabih-mirqat-al-mafatih",
+   "edition_id": "ed-mishkat-almasabih-mirqat-al-mafatih",
+   "author_ids": [
+    "p-mishkat-almasabih-mirqat-al-mafatih-a1"
+   ],
+   "file": "paketlar/hm-sharh-mishkat-almasabih-mirqat-al-mafatih-1.0.0.hmz",
+   "package_sha256": "d6570550b161f5aab033cb862479b272eaea0e09db10b70731eb38416e4f83b5",
+   "compressed_bytes": 4162672,
+   "installed_bytes": 62378205,
+   "temporary_space_bytes": 41585470,
+   "provides_units": 4210,
+   "coverage": {
+    "distinct_linked_units": 3120,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 2568,
+    "link_status_counts": {
+     "limited": 558,
+     "unreviewed": 2568
+    },
+    "links": 3126,
+    "occurrences": 4210,
+    "scope_counts": {
+     "preview_window": 4210
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "al-Albani, al-Maktab al-Islami, Beirut, 3-nashr, 1985; Shamela 8360; 1–6294. Birlashtirilgan raqam guruhlari ochiq pars qilindi.",
+     "target_edition_id": "ed-mishkat-almasabih-hj120",
+     "target_work_id": "w-mishkat-almasabih"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1025AH/master/data/1014MullaCaliQari/1014MullaCaliQari.MirqatMafatih/1014MullaCaliQari.MirqatMafatih.JK007044-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1025AH/master/data/1014MullaCaliQari/1014MullaCaliQari.MirqatMafatih/1014MullaCaliQari.MirqatMafatih.JK007044-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/1025AH/master/data/1014MullaCaliQari/1014MullaCaliQari.MirqatMafatih/1014MullaCaliQari.MirqatMafatih.JK007044-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-mishkat-almasabih-mirqat-al-mafatih-a1",
+     "name_ar": "علي بن سلطان محمد القاري",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "mirqat-al-mafatih",
+    "mirqat al mafatih",
+    "mirqat al mafatih"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-mishkat-almasabih",
+   "is_test_fixture": false,
+   "release_asset_id": 669514167,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-mishkat-almasabih-mirqat-al-mafatih-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-mishkat-almasabih-sharh-al-tibi",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "الكاشف عن حقائق السنن (شرح مشكاة المصابيح)",
+    "en": "Sharh Al Tibi",
+    "uz": "الكاشف عن حقائق السنن (شرح مشكاة المصابيح) (ed-mishkat-almasabih-sharh-al-tibi)"
+   },
+   "work_id": "w-mishkat-almasabih-sharh-al-tibi",
+   "edition_id": "ed-mishkat-almasabih-sharh-al-tibi",
+   "author_ids": [
+    "p-mishkat-almasabih-sharh-al-tibi-a1"
+   ],
+   "file": "paketlar/hm-sharh-mishkat-almasabih-sharh-al-tibi-1.0.0.hmz",
+   "package_sha256": "6baa5676e67b4ac878f8cc263ff924cd1b9bdd46e98f0b19758f16189ab64e30",
+   "compressed_bytes": 2514126,
+   "installed_bytes": 37353582,
+   "temporary_space_bytes": 24902388,
+   "provides_units": 2353,
+   "coverage": {
+    "distinct_linked_units": 1698,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 1259,
+    "link_status_counts": {
+     "limited": 436,
+     "unreviewed": 1259,
+     "verified": 3
+    },
+    "links": 1698,
+    "occurrences": 2353,
+    "scope_counts": {
+     "preview_window": 2353
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "al-Albani, al-Maktab al-Islami, Beirut, 3-nashr, 1985; Shamela 8360; 1–6294. Birlashtirilgan raqam guruhlari ochiq pars qilindi.",
+     "target_edition_id": "ed-mishkat-almasabih-hj120",
+     "target_work_id": "w-mishkat-almasabih"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0750AH/master/data/0743SharafDinTibi/0743SharafDinTibi.SharhMishkat/0743SharafDinTibi.SharhMishkat.Sham19Y0122257-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0750AH/master/data/0743SharafDinTibi/0743SharafDinTibi.SharhMishkat/0743SharafDinTibi.SharhMishkat.Sham19Y0122257-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/0750AH/master/data/0743SharafDinTibi/0743SharafDinTibi.SharhMishkat/0743SharafDinTibi.SharhMishkat.Sham19Y0122257-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-mishkat-almasabih-sharh-al-tibi-a1",
+     "name_ar": "شرف الدين الحسين بن محمد بن عبد الله الطيبي",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "sharh-al-tibi",
+    "sharh al tibi",
+    "sharh al tibi"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-mishkat-almasabih",
+   "is_test_fixture": false,
+   "release_asset_id": 669514182,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-mishkat-almasabih-sharh-al-tibi-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-muslim-minhaj-nawawi",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "المنهاج شرح صحيح مسلم بن الحجاج",
+    "en": "Minhaj Nawawi",
+    "uz": "المنهاج شرح صحيح مسلم بن الحجاج (ed-muslim-minhaj-nawawi)"
+   },
+   "work_id": "w-muslim-minhaj-nawawi",
+   "edition_id": "ed-muslim-minhaj-nawawi",
+   "author_ids": [
+    "p-muslim-minhaj-nawawi-a1"
+   ],
+   "file": "paketlar/hm-sharh-muslim-minhaj-nawawi-1.0.0.hmz",
+   "package_sha256": "7f57ba37232c2a115e276ed2fc8d830be8bb372317bab3e52f0562f8c0798f83",
+   "compressed_bytes": 1553276,
+   "installed_bytes": 30327579,
+   "temporary_space_bytes": 20218386,
+   "provides_units": 1909,
+   "coverage": {
+    "distinct_linked_units": 4648,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 5202,
+    "link_status_counts": {
+     "unreviewed": 5202
+    },
+    "links": 5202,
+    "occurrences": 1909,
+    "scope_counts": {
+     "preview_window": 1909
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "Muhammad Fuad Abd al-Baqi; har bogʻlama JK109 asos matni bilan alohida tekshirildi.",
+     "target_edition_id": "ed-muslim-hj120",
+     "target_work_id": "w-muslim"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0700AH/master/data/0676Nawawi/0676Nawawi.MinhajFiSharhMuslim/0676Nawawi.MinhajFiSharhMuslim.JK000137-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0700AH/master/data/0676Nawawi/0676Nawawi.MinhajFiSharhMuslim/0676Nawawi.MinhajFiSharhMuslim.JK000137-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/0700AH/master/data/0676Nawawi/0676Nawawi.MinhajFiSharhMuslim/0676Nawawi.MinhajFiSharhMuslim.JK000137-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-muslim-minhaj-nawawi-a1",
+     "name_ar": "أبو زكريا يحيى بن شرف النووي",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "minhaj-nawawi",
+    "minhaj nawawi",
+    "minhaj nawawi"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-muslim",
+   "is_test_fixture": false,
+   "release_asset_id": 669514181,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-muslim-minhaj-nawawi-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-nasai-hashiyat-al-sindi",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "حاشية السندي على سنن النسائي",
+    "en": "Hashiyat Al Sindi",
+    "uz": "حاشية السندي على سنن النسائي (ed-nasai-hashiyat-al-sindi)"
+   },
+   "work_id": "w-nasai-hashiyat-al-sindi",
+   "edition_id": "ed-nasai-hashiyat-al-sindi",
+   "author_ids": [
+    "p-nasai-hashiyat-al-sindi-a1"
+   ],
+   "file": "paketlar/hm-sharh-nasai-hashiyat-al-sindi-1.0.0.hmz",
+   "package_sha256": "ef733164e86d39ddf7d15d23fda4a76b497e99e431644975da5161571c8a681d",
+   "compressed_bytes": 766296,
+   "installed_bytes": 16817916,
+   "temporary_space_bytes": 11211944,
+   "provides_units": 2142,
+   "coverage": {
+    "distinct_linked_units": 2130,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 2142,
+    "link_status_counts": {
+     "unreviewed": 2142
+    },
+    "links": 2142,
+    "occurrences": 2142,
+    "scope_counts": {
+     "preview_window": 2142
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "عبد الفتاح أبو غدة",
+     "target_edition_id": "ed-nasai-hj120",
+     "target_work_id": "w-nasai"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1150AH/master/data/1138IbnCabdHadiNurDinSindi/1138IbnCabdHadiNurDinSindi.HashiyaCalaNasai/1138IbnCabdHadiNurDinSindi.HashiyaCalaNasai.JK000554-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1150AH/master/data/1138IbnCabdHadiNurDinSindi/1138IbnCabdHadiNurDinSindi.HashiyaCalaNasai/1138IbnCabdHadiNurDinSindi.HashiyaCalaNasai.JK000554-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/1150AH/master/data/1138IbnCabdHadiNurDinSindi/1138IbnCabdHadiNurDinSindi.HashiyaCalaNasai/1138IbnCabdHadiNurDinSindi.HashiyaCalaNasai.JK000554-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-nasai-hashiyat-al-sindi-a1",
+     "name_ar": "محمد بن عبد الهادي السندي",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "hashiyat-al-sindi",
+    "hashiyat al sindi",
+    "hashiyat al sindi"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-nasai",
+   "is_test_fixture": false,
+   "release_asset_id": 669514186,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-nasai-hashiyat-al-sindi-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-nasai-zahr-al-ruba",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "زهر الربى على المجتبى",
+    "en": "Zahr Al Ruba",
+    "uz": "زهر الربى على المجتبى (ed-nasai-zahr-al-ruba)"
+   },
+   "work_id": "w-nasai-zahr-al-ruba",
+   "edition_id": "ed-nasai-zahr-al-ruba",
+   "author_ids": [
+    "p-nasai-zahr-al-ruba-a1"
+   ],
+   "file": "paketlar/hm-sharh-nasai-zahr-al-ruba-1.0.0.hmz",
+   "package_sha256": "2dba3ab7eef89832debb830fcc8ca365d13fe40852173c6a4f9f76ed9247c305",
+   "compressed_bytes": 372815,
+   "installed_bytes": 7461870,
+   "temporary_space_bytes": 4974580,
+   "provides_units": 908,
+   "coverage": {
+    "distinct_linked_units": 901,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 908,
+    "link_status_counts": {
+     "unreviewed": 908
+    },
+    "links": 908,
+    "occurrences": 908,
+    "scope_counts": {
+     "preview_window": 908
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "عبد الفتاح أبو غدة",
+     "target_edition_id": "ed-nasai-hj120",
+     "target_work_id": "w-nasai"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0925AH/master/data/0911Suyuti/0911Suyuti.SharhSunanNasai/0911Suyuti.SharhSunanNasai.JK000553-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/0925AH/master/data/0911Suyuti/0911Suyuti.SharhSunanNasai/0911Suyuti.SharhSunanNasai.JK000553-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/0925AH/master/data/0911Suyuti/0911Suyuti.SharhSunanNasai/0911Suyuti.SharhSunanNasai.JK000553-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-nasai-zahr-al-ruba-a1",
+     "name_ar": "جلال الدين السيوطي",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "zahr-al-ruba",
+    "zahr al ruba",
+    "zahr al ruba"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-nasai",
+   "is_test_fixture": false,
+   "release_asset_id": 669514213,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-nasai-zahr-al-ruba-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-shamail-muhammadiyah-jam-al-wasail",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "جمع الوسائل في شرح الشمائل",
+    "en": "Jam Al Wasail",
+    "uz": "جمع الوسائل في شرح الشمائل (ed-shamail-muhammadiyah-jam-al-wasail)"
+   },
+   "work_id": "w-shamail-muhammadiyah-jam-al-wasail",
+   "edition_id": "ed-shamail-muhammadiyah-jam-al-wasail",
+   "author_ids": [
+    "p-shamail-muhammadiyah-jam-al-wasail-a1"
+   ],
+   "file": "paketlar/hm-sharh-shamail-muhammadiyah-jam-al-wasail-1.0.0.hmz",
+   "package_sha256": "8b2a92f3db0f4ff880b0f3a44f729a9b129f2b8d5f0fdf1031d2cc413da48653",
+   "compressed_bytes": 487440,
+   "installed_bytes": 6803769,
+   "temporary_space_bytes": 4535846,
+   "provides_units": 379,
+   "coverage": {
+    "distinct_linked_units": 364,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 379,
+    "link_status_counts": {
+     "unreviewed": 379
+    },
+    "links": 379,
+    "occurrences": 379,
+    "scope_counts": {
+     "preview_window": 379
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "Sunnah.com Shamail 1–417; Jaguar v1.1.0 da 402 arabcha yozuv, ulardan 15 tasi ikki Sunnah raqamini birlashtiradi; alohida sanad dalilisiz yorliq nusxalanmaydi",
+     "target_edition_id": "ed-shamail-muhammadiyah-hj120",
+     "target_work_id": "w-shamail-muhammadiyah"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1025AH/master/data/1014MullaCaliQari/1014MullaCaliQari.JamcWasail/1014MullaCaliQari.JamcWasail.Shamela0002569-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1025AH/master/data/1014MullaCaliQari/1014MullaCaliQari.JamcWasail/1014MullaCaliQari.JamcWasail.Shamela0002569-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/1025AH/master/data/1014MullaCaliQari/1014MullaCaliQari.JamcWasail/1014MullaCaliQari.JamcWasail.Shamela0002569-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-shamail-muhammadiyah-jam-al-wasail-a1",
+     "name_ar": "علي بن سلطان محمد القاري",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "jam-al-wasail",
+    "jam al wasail",
+    "jam al wasail"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-shamail-muhammadiyah",
+   "is_test_fixture": false,
+   "release_asset_id": 669514217,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-shamail-muhammadiyah-jam-al-wasail-1.0.0.hmz"
+  },
+  {
+   "package_id": "hm-sharh-tirmidhi-tuhfat-al-ahwadhi",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "تحفة الأحوذي بشرح جامع الترمذي",
+    "en": "Tuhfat Al Ahwadhi",
+    "uz": "تحفة الأحوذي بشرح جامع الترمذي (ed-tirmidhi-tuhfat-al-ahwadhi)"
+   },
+   "work_id": "w-tirmidhi-tuhfat-al-ahwadhi",
+   "edition_id": "ed-tirmidhi-tuhfat-al-ahwadhi",
+   "author_ids": [
+    "p-tirmidhi-tuhfat-al-ahwadhi-a1"
+   ],
+   "file": "paketlar/hm-sharh-tirmidhi-tuhfat-al-ahwadhi-1.0.0.hmz",
+   "package_sha256": "6900172c531f7f6fa3031e3ad451d8c5fde9b2a3cd6e250e6f985c27e5cd2b3c",
+   "compressed_bytes": 2546422,
+   "installed_bytes": 37411473,
+   "temporary_space_bytes": 24940982,
+   "provides_units": 2091,
+   "coverage": {
+    "distinct_linked_units": 2066,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 1787,
+    "link_status_counts": {
+     "limited": 274,
+     "unreviewed": 1787,
+     "verified": 5
+    },
+    "links": 2066,
+    "occurrences": 2091,
+    "scope_counts": {
+     "preview_window": 2091
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "numbering": "Ahmad Muhammad Shakir va boshqalar tahriridagi Sunan Tirmidhi (OpenITI JK140; yetishmagan sarlavhalar Shakir Shamela1435 nusxasidan). Har bog‘lama raqam+iqtibos bilan tekshirildi.",
+     "target_edition_id": "ed-tirmidhi-hj120",
+     "target_work_id": "w-tirmidhi"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1375AH/master/data/1353IbnCabdRahimMubarakfuri/1353IbnCabdRahimMubarakfuri.TuhfatAhwadhi/1353IbnCabdRahimMubarakfuri.TuhfatAhwadhi.JK000201-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "conditional",
+     "license_id": "CC-BY-NC-SA-4.0",
+     "license_url": "https://github.com/OpenITI/documentation/blob/master/index.md",
+     "required_attribution": "OpenITI corpus (https://raw.githubusercontent.com/OpenITI/1375AH/master/data/1353IbnCabdRahimMubarakfuri/1353IbnCabdRahimMubarakfuri.TuhfatAhwadhi/1353IbnCabdRahimMubarakfuri.TuhfatAhwadhi.JK000201-ara1)",
+     "commercial_use_allowed": false,
+     "share_alike_requirements": "CC BY-NC-SA 4.0"
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": null,
+     "required_attribution": null,
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Sharh matni: https://raw.githubusercontent.com/OpenITI/1375AH/master/data/1353IbnCabdRahimMubarakfuri/1353IbnCabdRahimMubarakfuri.TuhfatAhwadhi/1353IbnCabdRahimMubarakfuri.TuhfatAhwadhi.JK000201-ara1; bog'lamalar: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "conditional",
+   "authors": [
+    {
+     "person_id": "p-tirmidhi-tuhfat-al-ahwadhi-a1",
+     "name_ar": "محمد عبد الرحمن بن عبد الرحيم المباركفوري أبو العلا",
+     "name_en": null,
+     "name_uz": null
+    }
+   ],
+   "names": [
+    "tuhfat-al-ahwadhi",
+    "tuhfat al ahwadhi",
+    "tuhfat al ahwadhi"
+   ],
+   "names_origin": "slug",
+   "work_type": "commentary",
+   "commentary_on": "w-tirmidhi",
+   "is_test_fixture": false,
+   "release_asset_id": 669514223,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-sharh-tirmidhi-tuhfat-al-ahwadhi-1.0.0.hmz"
+  }
+ ],
+ "note": "Shartli litsenziya (masalan NC/SA). Shartlarini o'qing.",
+ "release": {
+  "repo": "Nbeast19/vositalar",
+  "tag": "hadis-manba-paketlar-v1",
+  "url": "https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1"
+ }
+}

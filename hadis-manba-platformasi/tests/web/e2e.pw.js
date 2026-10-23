@@ -61,7 +61,7 @@ async function newApp(browser, url, viewport, lang) {
 async function go(page, hash) {
   await page.evaluate(h => { location.hash = h; }, hash);
   await page.waitForTimeout(120);
-  await page.waitForFunction(() => !document.querySelector('#asosiy').textContent.match(/Loading…|جارٍ التحميل/));
+  await page.waitForFunction(() => document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
 }
 async function poll(page, fn, arg, timeout) {  // waitForFunction Promise natijasini ishonchli kutmaydi
   const end = Date.now() + (timeout || 20000);
@@ -69,12 +69,17 @@ async function poll(page, fn, arg, timeout) {  // waitForFunction Promise natija
   throw new Error('kutish vaqti tugadi');
 }
 async function installFromCatalog(page, pid) {
-  await go(page, '#/w/' + WORK);
-  await page.locator(`[data-pkg="${pid}"] [data-act=install]`).click();
+  await go(page, '#/w/' + WORK + '?tab=comms');
+  await page.evaluate(() => document.querySelectorAll('[data-act=progress]').forEach(b => b.remove()));
+  await page.locator(`[data-pkg="${pid}"] [data-act=install]`).first().click();
   await poll(page, id => Lib.getPackage(id).then(p => !!(p && p.offline_ready)), pid);
+  // o'rnatishdan keyin ilova sahifani bir marta qayta chizadi — tugashini kutamiz
+  await page.waitForSelector('[data-act=progress][data-done]', { state: 'attached' });
+  await page.waitForTimeout(250);
+  await page.waitForFunction(() => document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
 }
 async function importFile(page, file) {
-  await go(page, '#/');
+  await go(page, '#/installed');
   await page.evaluate(() => document.querySelectorAll('[data-act=progress]').forEach(b => b.remove()));
   await page.setInputFiles('#import-fayl', file);
   await page.waitForSelector('[data-act=progress][data-done]', { state: 'attached', timeout: 20000 });
@@ -96,6 +101,7 @@ async function expectLang(page, lang) {
   const d = await page.evaluate(() => [document.documentElement.lang, document.documentElement.dir]);
   assert.deepStrictEqual(d, [lang, lang === 'ar' ? 'rtl' : 'ltr']);
 }
+async function passCount(page) { await page.waitForSelector('#sharh-panel[data-tayyor="1"]'); return page.locator('#sharh-panel [data-act=passage]').count(); }
 function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
 
 (async () => {
@@ -113,7 +119,9 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
     await step(label + ' 0: library — language, book search (Arabic/English/transliteration)', async () => {
       await expectLang(A.page, lang);
       const nav = await A.page.locator('#nav a').allTextContents();
-      assert.ok(nav.length === 5 && nav[0] === (lang === 'ar' ? 'المكتبة' : 'Library'), nav.join('|'));
+      assert.ok(nav.length === 5 && nav[0] === (lang === 'ar' ? 'الرئيسية' : 'Home'), nav.join('|'));
+      assert.strictEqual(await A.page.locator('#tabbar a').count(), 5);
+      await go(A.page, '#/books');
       for (const q of ['النموذج', 'Sample', 'namudhaj', 'Sample author']) {
         await A.page.fill('#kitob-izla', q);
         assert.strictEqual(await A.page.locator('[data-act=open-book]:not(.yashirin)').count(), 1, q);
@@ -125,24 +133,26 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
     await step(label + ' 1: one book only -> offline -> contents/search/number', async () => {
       await installFromCatalog(A.page, 'namuna-asos-a');
       await go(A.page, '#/w/' + WORK);
-      assert.strictEqual(await A.page.locator('[data-pkg="namuna-asos-a"] .holat').getAttribute('data-status'), 'ready');
+      assert.strictEqual(await A.page.locator('[data-pkg="namuna-asos-a"] .holat').first().getAttribute('data-status'), 'ready');
       await offline(A.ctx, A.page, true);
       assert.ok(await searchCount(A.page, 'طلب العلم') >= 2);
       await go(A.page, '#/read/namuna-asos-a');
-      assert.ok(await A.page.locator('[data-act=toc-item]').count() >= 12);
+      assert.ok(await A.page.locator('[data-act=toc-item]').count() >= 1);
+      const total = (await A.page.locator('.toc-ch .c').allTextContents()).reduce((a, x) => a + Number(x), 0);
+      assert.ok(total >= 12, 'mundarija: ' + total);
       await go(A.page, '#/search');
       await A.page.fill('[data-act=num-number]', '5');
       await A.page.click('[data-act=num-go]');
       await A.page.waitForSelector('[data-act=num-many]');
       await go(A.page, '#/h/' + A1);
-      assert.strictEqual(await A.page.locator('p.ar.matn').getAttribute('dir'), 'rtl');
+      assert.strictEqual(await A.page.locator('.text-card p.src').getAttribute('dir'), 'rtl');
       await noHorizontalScroll(A.page);
     });
     await step(label + ' 1b: language switch keeps current hadith and installed packages', async () => {
       await go(A.page, '#/h/' + A1);
       const other = lang === 'ar' ? 'en' : 'ar';
       await A.page.selectOption('#til', other);
-      await A.page.waitForSelector('p.ar.matn');
+      await A.page.waitForSelector('.text-card p.src');
       await expectLang(A.page, other);
       assert.ok(decodeURIComponent(A.page.url()).endsWith('#/h/' + A1));
       assert.strictEqual(await A.page.evaluate(() => Lib.packages().then(p => p.length)), 1);
@@ -172,7 +182,7 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
       const before = count('namuna-sharh-1-1.0.0.hmz');
       await installFromCatalog(B.page, 'namuna-asos-a');
       await go(B.page, '#/h/' + A1);
-      await B.page.waitForSelector('#sharh-panel [data-act=open-commentary]');
+      await B.page.waitForSelector('#sharh-panel [data-act=passage]');
       assert.strictEqual(count('namuna-sharh-1-1.0.0.hmz'), before);
     });
     await step(label + ' 5: add another commentary -> main book not downloaded again', async () => {
@@ -180,12 +190,13 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
       await installFromCatalog(B.page, 'namuna-sharh-2');
       assert.strictEqual(count('namuna-asos-a-1.0.0.hmz'), before);
       await go(B.page, '#/h/' + A1);
-      assert.strictEqual(await B.page.locator('#sharh-panel [data-act=open-commentary]').count(), 3);
+      assert.strictEqual(await passCount(B.page), 3);
     });
     await step(label + ' 6: remove one commentary -> book, other commentary and notes stay', async () => {
       await go(B.page, '#/h/' + A1);
       await B.page.click('[data-act=bookmark]');
       await poll(B.page, id => Notes.get('bookmark:' + id).then(n => !!n), A1);
+      await B.page.evaluate(() => { document.querySelector('details.note-box').open = true; });
       await B.page.waitForSelector('[data-act=note]');
       await B.page.fill('[data-act=note]', 'my test note');
       await B.page.click('[data-act=note-save]');
@@ -194,7 +205,7 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
       await B.page.click('[data-pkg="namuna-sharh-2"] [data-act=remove]');
       await poll(B.page, () => Lib.getPackage('namuna-sharh-2').then(p => !p));
       await go(B.page, '#/h/' + A1);
-      assert.strictEqual(await B.page.locator('#sharh-panel [data-act=open-commentary]').count(), 2);
+      assert.strictEqual(await passCount(B.page), 2);
       assert.strictEqual(await B.page.inputValue('[data-act=note]'), 'my test note');
     });
     await step(label + ' 10: update -> IDs/links/notes kept; rollback works', async () => {
@@ -203,7 +214,7 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
       await B.page.waitForSelector('text=تَصْحِيحٌ تَجْرِيبِيٌّ');
       await go(B.page, '#/h/' + A1);
       assert.strictEqual(await B.page.inputValue('[data-act=note]'), 'my test note');
-      assert.strictEqual(await B.page.locator('#sharh-panel [data-act=open-commentary]').count(), 2);
+      assert.strictEqual(await passCount(B.page), 2);
       await go(B.page, '#/installed');
       await B.page.click('[data-pkg="namuna-asos-a"] [data-act=rollback]');
       await poll(B.page, () => Lib.getPackage('namuna-asos-a').then(p => p && p.version === '1.0.0'));
@@ -282,16 +293,19 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
     });
     await step(label + ' 4: book + two selected commentaries together -> both ways', async () => {
       const D = await newApp(browser, URL0, viewport, lang);
-      await go(D.page, '#/w/' + WORK);
+      await go(D.page, '#/w/' + WORK + '?tab=comms');
       for (const cb of await D.page.locator('[data-act=pick-commentary]').all()) await cb.check();
       await D.page.click('[data-act=install-with]');
       await poll(D.page, () => Lib.packages().then(ps => ps.filter(p => p.offline_ready).length === 3));
+      await D.page.waitForTimeout(300);
+      await D.page.waitForFunction(() => document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
       await go(D.page, '#/h/' + A1);
-      assert.strictEqual(await D.page.locator('#sharh-panel [data-act=open-commentary]').count(), 3);
-      await D.page.locator('#sharh-panel [data-act=open-commentary]').nth(2).click();
-      await D.page.waitForSelector('.segmentlar');
+      assert.strictEqual(await passCount(D.page), 3);
+      await D.page.locator('#sharh-panel [data-act=passage]').nth(2).click();
+      await D.page.locator('#sharh-panel .c-preview [data-act=open-commentary]').click();
+      await D.page.waitForSelector('main[data-route="s"] .text-card');
       await D.page.click('[data-act=to-hadith]');
-      await D.page.waitForSelector('p.ar.matn');
+      await D.page.waitForSelector('.text-card p.src');
       assert.ok(decodeURIComponent(D.page.url()).endsWith('#/h/' + A1));
       await importFile(D.page, SELECTION);  // yig'ma: o'rnatilganlar qayta yozilmaydi
       await noHorizontalScroll(D.page);

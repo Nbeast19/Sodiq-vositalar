@@ -4,7 +4,7 @@ No account, no Python, no AI. After installation the books you installed work wi
 **Test status:** these flows pass automated tests in headless Chromium (English and Arabic, 1280px and 390px, offline). They have **not yet been tested on real devices**; see [PLATFORM-TEST-MATRIX.md](../PLATFORM-TEST-MATRIX.md).
 
 ## iPhone / iPad (iOS/iPadOS 16.4 or newer)
-1. Open the Hadis Manba address in **Safari**.
+1. Open the Hadith Library address in **Safari**.
 2. Share (↑) → **Add to Home Screen** → **Add**. Open it from the Home Screen icon.
 3. **Library** → choose a book → **Install book only** or **Install book + selected commentaries** → wait for **Offline ready**.
 4. Keep the screen on while downloading; iOS may pause downloads in the background. If interrupted, press install again — nothing is lost.

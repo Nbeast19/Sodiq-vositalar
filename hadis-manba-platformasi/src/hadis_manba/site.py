@@ -20,19 +20,19 @@ from pathlib import Path
 LANGS = ("en", "ar")
 T = {
     "en": {
-        "site": "Hadis Manba", "tagline": "Hadith sources and commentaries — offline, with evidence",
-        "home_title": "Hadis Manba — hadith books and commentaries to read offline",
+        "site": "Hadith Library", "tagline": "Hadith collections and their commentaries — offline, with sources",
+        "home_title": "Hadith Library | مكتبة الحديث — read hadith collections and commentaries offline",
         "home_desc": "Install hadith books and their commentaries one by one, read and search them without internet, "
                      "and copy citations with their source. Coverage and limitations are shown openly.",
-        "home_h1": "Hadith books and commentaries — offline, with sources",
+        "home_h1": "Read the hadith collections, with their commentaries.",
         "home_intro": "Choose a book, install only the book or the book with the commentaries you need, then read, "
                       "search and copy a citation with its source. No account, no AI and no internet are needed after installation.",
-        "open_app": "Open the app", "books": "Books", "commentaries": "Commentaries", "authors": "Authors",
+        "open_app": "Open the app", "suffix": "Hadith Library", "browse": "Browse books", "start": "Start reading", "entries": "entries", "comm_count": "commentaries", "books": "Books", "commentaries": "Commentaries", "authors": "Authors",
         "help": "Help", "install": "Install on your device", "lang_other": "العربية",
-        "books_title": "Book catalogue — Hadis Manba", "books_desc": "Hadith collections available as separate offline packages, with editions, sizes, coverage and rights.",
+        "books_title": "Books — Hadith Library", "books_desc": "Hadith collections available as separate offline packages, with editions, sizes, coverage and rights.",
         "book_desc": "{title}: separate offline package. Edition, size, records, status counts and the commentaries linked to it.",
         "comm_desc": "{title}: commentary package with the hadiths it is linked to, edition, status counts and licence.",
-        "author_desc": "Works by {name} available in Hadis Manba.",
+        "author_desc": "Works by {name} available in Hadith Library.",
         "main_text": "Main text", "edition": "Edition", "size": "Download size", "installed_size": "Size after installation",
         "records": "Records", "printed_numbers": "Distinct printed numbers", "statuses": "Status counts",
         "links_to": "Linked to", "occurrences": "Commentary passages", "links": "Links to hadiths",
@@ -41,7 +41,7 @@ T = {
         "none": "None in the public catalogue yet.", "fixture": "Sample package (synthetic test text, not a real source).",
         "not_records": "Records are entries of the source database, not a count of unique hadiths.",
         "coverage_note": "Scholarly coverage is incomplete. A match in search is not a verified identification.",
-        "help_title": "Help — Hadis Manba", "help_desc": "How to install a book, read offline, open its commentary and copy a citation.",
+        "help_title": "Help — Hadith Library", "help_desc": "How to install a book, read offline, open its commentary and copy a citation.",
         "help_steps": ["Open the app and the Library.", "Choose a book.",
                        "Install the book only, or tick commentaries and install them together.",
                        "Search, or open the book's contents.",
@@ -51,7 +51,7 @@ T = {
         "help_offline": "After installation books work without internet. Only installed packages are available offline. "
                         "Browsers can delete stored data — keep the package files and export your notes.",
         "help_ai": "AI connection is optional and only on a computer (MCP server). The app works fully without it.",
-        "install_title": "Install Hadis Manba on Windows, Mac, iPhone and Android",
+        "install_title": "Install Hadith Library on Windows, Mac, iPhone and Android",
         "install_desc": "Step-by-step: add the app to your device, install books and use them offline.",
         "platforms": [
             ("iphone", "iPhone / iPad", "Open the app in Safari (iOS 16.4 or newer) → Share → Add to Home Screen → Add. Open it from the Home Screen, then install books in the Library."),
@@ -62,19 +62,19 @@ T = {
         "tested_note": "These steps were tested in an automated Chromium browser only; they have not yet been tested on real iPhone, Android, Windows or Mac devices.",
     },
     "ar": {
-        "site": "Hadis Manba", "tagline": "مصادر الحديث وشروحه — بلا إنترنت، مع الدليل",
-        "home_title": "Hadis Manba — كتب الحديث وشروحها للقراءة بلا إنترنت",
+        "site": "مكتبة الحديث", "tagline": "كتب الحديث وشروحها — بلا إنترنت، مع المصادر",
+        "home_title": "مكتبة الحديث | Hadith Library — اقرأ كتب الحديث وشروحها بلا إنترنت",
         "home_desc": "ثبّت كتب الحديث وشروحها كتابًا كتابًا، واقرأ وابحث فيها بلا إنترنت، وانسخ الاقتباس مع مصدره. "
                      "التغطية والقيود معروضة بوضوح.",
-        "home_h1": "كتب الحديث وشروحها — بلا إنترنت، مع المصادر",
+        "home_h1": "اقرأ كتب الحديث مع شروحها.",
         "home_intro": "اختر كتابًا، وثبّت الكتاب وحده أو مع الشروح التي تحتاجها، ثم اقرأ وابحث وانسخ الاقتباس مع مصدره. "
                       "لا حاجة إلى حساب ولا ذكاء اصطناعي ولا إنترنت بعد التثبيت.",
-        "open_app": "افتح التطبيق", "books": "الكتب", "commentaries": "الشروح", "authors": "المؤلفون",
+        "open_app": "افتح التطبيق", "suffix": "مكتبة الحديث", "browse": "تصفّح الكتب", "start": "ابدأ القراءة", "entries": "سجلًا", "comm_count": "شروح", "books": "الكتب", "commentaries": "الشروح", "authors": "المؤلفون",
         "help": "المساعدة", "install": "التثبيت على جهازك", "lang_other": "English",
-        "books_title": "فهرس الكتب — Hadis Manba", "books_desc": "مجاميع الحديث المتاحة حزمًا مستقلة للعمل بلا إنترنت، مع الطبعات والأحجام والتغطية والحقوق.",
+        "books_title": "الكتب — مكتبة الحديث", "books_desc": "مجاميع الحديث المتاحة حزمًا مستقلة للعمل بلا إنترنت، مع الطبعات والأحجام والتغطية والحقوق.",
         "book_desc": "{title}: حزمة مستقلة للعمل بلا إنترنت. الطبعة والحجم وعدد السجلات وإحصاءات الحالة والشروح المرتبطة به.",
         "comm_desc": "{title}: حزمة شرح مع الأحاديث المرتبطة بها والطبعة وإحصاءات الحالة والترخيص.",
-        "author_desc": "مؤلفات {name} المتاحة في Hadis Manba.",
+        "author_desc": "مؤلفات {name} المتاحة في مكتبة الحديث.",
         "main_text": "النص الأصلي", "edition": "الطبعة", "size": "حجم التنزيل", "installed_size": "الحجم بعد التثبيت",
         "records": "السجلات", "printed_numbers": "الأرقام المطبوعة المختلفة", "statuses": "إحصاءات الحالة",
         "links_to": "مرتبط بـ", "occurrences": "مواضع الشرح", "links": "روابط بالأحاديث",
@@ -83,7 +83,7 @@ T = {
         "none": "لا يوجد في الفهرس العام بعد.", "fixture": "حزمة تجريبية (نص اصطناعي للاختبار، ليس مصدرًا حقيقيًا).",
         "not_records": "السجلات مداخل في قاعدة بيانات المصدر، وليست عددًا للأحاديث الفريدة.",
         "coverage_note": "التغطية العلمية غير مكتملة. التطابق في البحث ليس تحقيقًا مؤكدًا لهوية الحديث.",
-        "help_title": "المساعدة — Hadis Manba", "help_desc": "كيف تثبّت كتابًا، وتقرأ بلا إنترنت، وتفتح شرحه، وتنسخ الاقتباس.",
+        "help_title": "المساعدة — مكتبة الحديث", "help_desc": "كيف تثبّت كتابًا، وتقرأ بلا إنترنت، وتفتح شرحه، وتنسخ الاقتباس.",
         "help_steps": ["افتح التطبيق ثم المكتبة.", "اختر كتابًا.", "ثبّت الكتاب وحده، أو اختر شروحًا وثبّتها معه.",
                        "ابحث أو افتح فهرس الكتاب.", "في صفحة الحديث افتح شرحًا مثبتًا؛ و«العودة إلى الحديث» ترجعك.",
                        "انسخ الاقتباس مع مصدره."],
@@ -91,7 +91,7 @@ T = {
         "help_offline": "بعد التثبيت تعمل الكتب بلا إنترنت، ولا يتوفر بلا إنترنت إلا ما ثبّتّه. "
                         "قد يحذف المتصفح البيانات المخزنة — احتفظ بملفات الحزم وصدّر ملاحظاتك.",
         "help_ai": "الربط بالذكاء الاصطناعي اختياري وعلى الحاسوب فقط (خادم MCP). يعمل التطبيق كاملًا بدونه.",
-        "install_title": "تثبيت Hadis Manba على ويندوز وماك وآيفون وأندرويد",
+        "install_title": "تثبيت مكتبة الحديث على ويندوز وماك وآيفون وأندرويد",
         "install_desc": "خطوة بخطوة: أضف التطبيق إلى جهازك، وثبّت الكتب، واستعملها بلا إنترنت.",
         "platforms": [
             ("iphone", "آيفون / آيباد", "افتح التطبيق في سفاري (iOS 16.4 أو أحدث) ← مشاركة ← إضافة إلى الشاشة الرئيسية ← إضافة. افتحه من الشاشة الرئيسية ثم ثبّت الكتب من المكتبة."),
@@ -171,7 +171,7 @@ class Site:
         t = p.get("title") or {}
         return t.get("ar") or "", t.get("en") or t.get("uz") or work_id
 
-    def page(self, lang: str, rel: str, title: str, desc: str, h1: str, body: str):
+    def page(self, lang: str, rel: str, title: str, desc: str, h1: str, body: str, hero: str = ""):
         s = T[lang]
         depth = rel.count("/")
         up = "../" * (depth + 1)            # web/ ildiziga
@@ -179,10 +179,18 @@ class Site:
         other = "ar" if lang == "en" else "en"
         alt = "".join(f'<link rel="alternate" hreflang="{l}" href="{_e(self.url(l, rel))}">' for l in LANGS)
         alt += f'<link rel="alternate" hreflang="x-default" href="{_e(self.url("en", rel))}">'
-        nav = (f'<nav aria-label="{_e(s["site"])}"><a href="{here}">{_e(s["site"])}</a>'
-               f'<a href="{here}books/">{_e(s["books"])}</a><a href="{here}authors/">{_e(s["authors"])}</a>'
-               f'<a href="{here}help/">{_e(s["help"])}</a><a href="{here}install/">{_e(s["install"])}</a>'
-               f'<a href="{up}{other}/{rel}" hreflang="{other}" lang="{other}">{_e(s["lang_other"])}</a></nav>')
+        cur = rel.split("/")[0]
+        def nav_a(href, label, sec):
+            mark = ' aria-current="page"' if sec == cur else ""
+            return f'<a href="{href}"{mark}>{_e(label)}</a>'
+        brand_sub = "Hadith Library" if lang == "ar" else "مكتبة الحديث"
+        header = (f'<header class="appbar"><div class="appbar-in">'
+                  f'<a class="brand" href="{here}"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/></svg></span>'
+                  f'<span class="brand-text"><b>{_e(s["site"])}</b><small lang="{"en" if lang == "ar" else "ar"}" dir="{"ltr" if lang == "ar" else "rtl"}">{_e(brand_sub)}</small></span></a>'
+                  f'<nav class="topnav" aria-label="{_e(s["site"])}">{nav_a(here + "books/", s["books"], "books")}{nav_a(here + "authors/", s["authors"], "authors")}'
+                  f'{nav_a(here + "help/", s["help"], "help")}{nav_a(here + "install/", s["install"], "install")}</nav>'
+                  f'<div class="appbar-tools"><a class="btn sm ghost" href="{up}{other}/{rel}" hreflang="{other}" lang="{other}">{_e(s["lang_other"])}</a>'
+                  f'<a class="btn sm primary" href="{up}index.html">{_e(s["open_app"])}</a></div></div></header>')
         doc = f"""<!doctype html>
 <html lang="{lang}" dir="{'rtl' if lang == 'ar' else 'ltr'}">
 <head>
@@ -195,18 +203,18 @@ class Site:
 <meta property="og:title" content="{_e(title)}">
 <meta property="og:description" content="{_e(desc)}">
 <meta property="og:url" content="{_e(self.url(lang, rel))}">
+<meta property="og:site_name" content="Hadith Library | مكتبة الحديث">
 <meta property="og:locale" content="{'ar_AR' if lang == 'ar' else 'en_US'}">
 <link rel="stylesheet" href="{up}style.css">
 <link rel="icon" href="{up}ikonkalar/ikonka-192.png">
 </head>
-<body class="sayt">
-<header>{nav}</header>
+<body class="site">
+{header}
 <main id="asosiy">
-<h1>{h1}</h1>
+{hero or f'<h1>{h1}</h1>'}
 {body}
-<p><a class="tugma asosiy katta" href="{up}index.html">{_e(s['open_app'])}</a></p>
 </main>
-<footer class="kichik xira"><p>{_e(s['tagline'])}</p><p>{_e(s['coverage_note'])}</p></footer>
+<footer class="foot"><p>{_e(s['tagline'])}</p><p>{_e(s['coverage_note'])}</p></footer>
 </body>
 </html>
 """
@@ -250,12 +258,12 @@ class Site:
             ls = cov.get("link_status_counts") or {}
             if ls:
                 rows.append((s["statuses"], SEP[lang].join(f"{_e(STATUS[lang].get(v, v))} {_bdi(n)}" for v, n in sorted(ls.items()))))
-        tr = "".join(f"<tr><th>{_e(a)}</th><td>{b}</td></tr>" for a, b in rows)
-        note = f'<p class="ogoh kichik">{_e(s["fixture"])}</p>' if p.get("is_test_fixture") else ""
+        dl = "".join(f"<dt>{_e(a)}</dt><dd>{b}</dd>" for a, b in rows)
+        note = f'<p class="note warn">{_e(s["fixture"])}</p>' if p.get("is_test_fixture") else ""
         target = p["work_id"] if p["kind"] == "base_book" else (p.get("requires_for_linked_reading") or [{}])[0].get("target_work_id", p["work_id"])
-        return (f'<section class="karta">{note}<table class="kichik">{tr}</table>'
-                f'<p><a class="tugma" href="{up}index.html#/w/{_e(target)}">{_e(s["install_in_app"])}</a>'
-                + (f' <a class="tugma" href="{_e(p["download_url"])}" rel="noopener">{_e(s["download_file"])}</a>' if p.get("download_url") else "")
+        return (f'<section class="card">{note}<dl class="meta">{dl}</dl>'
+                f'<p class="btns section"><a class="btn primary" href="{up}index.html#/w/{_e(target)}">{_e(s["install_in_app"])}</a>'
+                + (f' <a class="btn ghost" href="{_e(p["download_url"])}" rel="noopener">{_e(s["download_file"])}</a>' if p.get("download_url") else "")
                 + '</p></section>')
 
     # ---------------------------------------------------------------- sahifalar
@@ -265,16 +273,18 @@ class Site:
             bases = [w for w in self.works.values() if w["kind"] == "base_book" and w["pkgs"]]
             comms = [w for w in self.works.values() if w["kind"] == "commentary" and w["pkgs"]]
             items = "".join(self.card(w, lang, "books/") for w in sorted(bases, key=lambda w: w["work_id"])) or f"<p>{_e(s['none'])}</p>"
+            hero = (f'<section class="hero-main"><div class="hero-ar" lang="ar" dir="rtl">مكتبة الحديث</div>'
+                    f'<h1>{_e(s["home_h1"])}</h1><p class="lead">{_e(s["home_intro"])}</p>'
+                    f'<p class="btns"><a class="btn primary lg" href="../index.html">{_e(s["open_app"])}</a>'
+                    f'<a class="btn ghost lg" href="books/">{_e(s["browse"])}</a></p></section>')
             self.page(lang, "", s["home_title"], s["home_desc"], _e(s["home_h1"]),
-                      f'<p class="kirish">{_e(s["home_intro"])}</p><h2>{_e(s["books"])}</h2>'
-                      f'<div class="kitob-royxat">{items}</div>'
-                      f'<p><a href="books/">{_e(s["books"])}</a> · <a href="authors/">{_e(s["authors"])}</a> · '
-                      f'<a href="help/">{_e(s["help"])}</a> · <a href="install/">{_e(s["install"])}</a></p>')
+                      f'<section class="section"><div class="section-head"><h2>{_e(s["books"])}</h2><a href="books/">{_e(s["browse"])}</a></div>'
+                      f'<div class="grid">{items}</div></section>', hero=hero)
             listing = "".join(self.card(w, lang, "") for w in sorted(bases, key=lambda w: w["work_id"])) or f"<p>{_e(s['none'])}</p>"
             clist = "".join(self.card(w, lang, "../commentaries/") for w in sorted(comms, key=lambda w: w["work_id"]))
             self.page(lang, "books/", s["books_title"], s["books_desc"], _e(s["books"]),
-                      f'<p class="kichik">{_e(s["not_records"])}</p><div class="kitob-royxat">{listing}</div>'
-                      f'<h2>{_e(s["commentaries"])}</h2><div class="kitob-royxat">{clist or _e(s["none"])}</div>')
+                      f'<p class="muted">{_e(s["books_desc"])}</p><p class="small faint">{_e(s["not_records"])}</p><div class="grid">{listing}</div>'
+                      f'<section class="section"><h2>{_e(s["commentaries"])}</h2><div class="grid">{clist or _e(s["none"])}</div></section>')
             for w in bases:
                 self.book_page(w, lang)
             for w in comms:
@@ -283,13 +293,28 @@ class Site:
             self.help_pages(lang)
 
     def card(self, w: dict, lang: str, prefix: str) -> str:
+        s = T[lang]
         ar_t, other = self.title_of(w["work_id"], lang)
         p = w["pkgs"][0]
         au = (p.get("authors") or [{}])[0]
         who = " · ".join(x for x in (_arb(au.get("name_ar")), _e(au.get("name_en") or "")) if x)
-        return (f'<a class="karta kitob" href="{prefix}{_e(_slug(w["work_id"]))}/">'
-                f'{f"<div class=kitob-ar lang=ar dir=rtl>{_e(ar_t)}</div>" if ar_t else ""}'
-                f'<div class="kitob-nom">{_e(other)}</div>{f"<div class=kichik>{who}</div>" if who else ""}</a>')
+        pills = ""
+        if p["kind"] == "base_book" and (p.get("coverage") or {}).get("source_records"):
+            pills += f'<span class="pill">{_bdi(p["coverage"]["source_records"])} {_e(s["entries"])}</span>'
+        if w.get("comms"):
+            pills += f'<span class="pill accent">{_bdi(len(w["comms"]))} {_e(s["comm_count"])}</span>'
+        if p.get("compressed_bytes"):
+            pills += f'<span class="pill">{_bdi(_fmt_bytes(p["compressed_bytes"]))}</span>'
+        return (f'<a class="book" href="{prefix}{_e(_slug(w["work_id"]))}/"><span class="spine" aria-hidden="true"></span>'
+                f'{f"<div class=ttl-ar lang=ar dir=rtl>{_e(ar_t)}</div>" if ar_t else ""}'
+                f'<div class="ttl-en">{_e(other)}</div>{f"<div class=auth>{who}</div>" if who else ""}'
+                f'<div class="row">{pills}</div></a>')
+
+    def hero_block(self, ar_t: str, other: str, authors: str, s: dict, cta: str) -> str:
+        return (f'<section class="book-hero"><div class="cover" aria-hidden="true"><div class="c-ar" lang="ar" dir="rtl">{_e(ar_t)}</div>'
+                f'<div class="c-orn"></div><div class="c-en">{_e(other)}</div></div><div>'
+                + (f'<h1 class="ttl-ar" lang="ar" dir="rtl">{_e(ar_t)}</h1><div class="ttl-en">{_e(other)}</div>' if ar_t else f'<h1>{_e(other)}</h1>')
+                + (f'<div class="auth">{_e(s["by"])} {authors}</div>' if authors else "") + f'<p class="btns">{cta}</p></div></section>')
 
     def book_page(self, w: dict, lang: str):
         s = T[lang]
@@ -300,11 +325,11 @@ class Site:
         authors = " · ".join(f'<a href="../../authors/{_e(_slug(a["person_id"]))}/">{_arb(a.get("name_ar")) or _e(a.get("name_en"))}</a>' for a in au)
         blocks = "".join(self.pkg_block(p, lang, "../../../") for p in w["pkgs"])
         cl = "".join(self.card(self.works[c], lang, "../../commentaries/") for c in w["comms"] if self.works.get(c, {}).get("pkgs"))
-        h1 = (f'<span lang="ar" dir="rtl">{_e(ar_t)}</span><br><span class="kichik">{_e(other)}</span>' if ar_t else _e(other))
-        self.page(lang, rel, f"{name} — Hadis Manba", s["book_desc"].replace("{title}", name), h1,
-                  (f'<p>{_e(s["by"])} {authors}</p>' if authors else "") + f'<h2>{_e(s["main_text"])}</h2>{blocks}'
-                  f'<p class="kichik">{_e(s["not_records"])}</p><h2>{_e(s["linked_comms"])}</h2>'
-                  f'<div class="kitob-royxat">{cl or _e(s["none"])}</div>')
+        cta = f'<a class="btn primary lg" href="../../../index.html#/w/{_e(w["work_id"])}">{_e(s["install_in_app"])}</a>'
+        self.page(lang, rel, f"{name} — {s['suffix']}", s["book_desc"].replace("{title}", name), "",
+                  f'<section class="section"><h2>{_e(s["main_text"])}</h2>{blocks}<p class="small faint">{_e(s["not_records"])}</p></section>'
+                  f'<section class="section"><h2>{_e(s["linked_comms"])}</h2><div class="grid">{cl or _e(s["none"])}</div></section>',
+                  hero=self.hero_block(ar_t, other, authors, s, cta))
 
     def comm_page(self, w: dict, lang: str):
         s = T[lang]
@@ -322,42 +347,43 @@ class Site:
                 targets.append(f'<a href="../../books/{_e(_slug(tw))}/">{_arb(ta) or _e(to)}</a> ({_bdi(r["target_edition_id"])})')
             else:
                 targets.append(f'{_bdi(tw)} ({_bdi(r["target_edition_id"])})')
-        h1 = (f'<span lang="ar" dir="rtl">{_e(ar_t)}</span><br><span class="kichik">{_e(other)}</span>' if ar_t else _e(other))
-        self.page(lang, rel, f"{name} — Hadis Manba", s["comm_desc"].replace("{title}", name), h1,
-                  (f'<p>{_e(s["by"])} {authors}</p>' if authors else "") +
-                  f'<p>{_e(s["links_to"])}: {" · ".join(targets) or "—"}</p>' +
-                  "".join(self.pkg_block(x, lang, "../../../") for x in w["pkgs"]))
+        tw0 = (p.get("requires_for_linked_reading") or [{}])[0].get("target_work_id", w["work_id"])
+        cta = f'<a class="btn primary lg" href="../../../index.html#/w/{_e(tw0)}?tab=comms">{_e(s["install_in_app"])}</a>'
+        self.page(lang, rel, f"{name} — {s['suffix']}", s["comm_desc"].replace("{title}", name), "",
+                  f'<p class="section">{_e(s["links_to"])}: {" · ".join(targets) or "—"}</p>' +
+                  "".join(self.pkg_block(x, lang, "../../../") for x in w["pkgs"]),
+                  hero=self.hero_block(ar_t, other, authors, s, cta))
 
     def authors_pages(self, lang: str):
         s = T[lang]
         items = []
         for pid, a in sorted(self.authors.items()):
             nm = a.get("name_ar") or a.get("name_en") or pid
-            items.append(f'<li><a href="{_e(_slug(pid))}/">{_arb(a.get("name_ar")) or _e(a.get("name_en"))}</a>'
+            items.append(f'<li class="card"><a href="{_e(_slug(pid))}/">{_arb(a.get("name_ar")) or _e(a.get("name_en"))}</a>'
                          f'{" · " + _e(a["name_en"]) if a.get("name_en") and a.get("name_ar") else ""}</li>')
             works = []
             for wid in a["works"]:
                 w = self.works.get(wid, {})
                 ar_t, other = self.title_of(wid, lang)
                 sec = "books" if w.get("kind") == "base_book" else "commentaries"
-                works.append(f'<li><a href="../../{sec}/{_e(_slug(wid))}/">{_arb(ar_t) or _e(other)}</a> — {_e(other)}</li>')
+                works.append(f'<li class="card"><a href="../../{sec}/{_e(_slug(wid))}/">{_arb(ar_t) or _e(other)}</a> — {_e(other)}</li>')
             label = f"{a.get('name_ar') or ''} {a.get('name_en') or ''}".strip() or nm
             h1 = (f'<span lang="ar" dir="rtl">{_e(a["name_ar"])}</span>' if a.get("name_ar") else _e(nm)) + \
-                 (f'<br><span class="kichik">{_e(a["name_en"])}</span>' if a.get("name_en") and a.get("name_ar") else "")
-            self.page(lang, f"authors/{_slug(pid)}/", f"{label} — Hadis Manba", s["author_desc"].replace("{name}", label),
-                      h1, f'<ul>{"".join(works)}</ul>')
-        self.page(lang, "authors/", f"{s['authors']} — Hadis Manba", s["books_desc"], _e(s["authors"]),
-                  f'<ul>{"".join(items) or _e(s["none"])}</ul>')
+                 (f'<br><span class="muted">{_e(a["name_en"])}</span>' if a.get("name_en") and a.get("name_ar") else "")
+            self.page(lang, f"authors/{_slug(pid)}/", f"{label} — {s['suffix']}", s["author_desc"].replace("{name}", label),
+                      h1, f'<ul class="help-grid" role="list">{"".join(works)}</ul>')
+        self.page(lang, "authors/", f"{s['authors']} — {s['suffix']}", s["books_desc"], _e(s["authors"]),
+                  f'<ul class="help-grid" role="list">{"".join(items) or _e(s["none"])}</ul>')
 
     def help_pages(self, lang: str):
         s = T[lang]
         steps = "".join(f"<li>{_e(x)}</li>" for x in s["help_steps"])
         self.page(lang, "help/", s["help_title"], s["help_desc"], _e(s["help"]),
-                  f'<ol class="qadamlar">{steps}</ol><p class="karta">{_e(s["help_offline"])}</p>'
-                  f'<p class="karta">{_e(s["help_status"])}</p><p class="karta">{_e(s["help_ai"])}</p>')
-        plats = "".join(f'<section class="karta" id="{k}"><h2>{_e(n)}</h2><p>{_e(txt)}</p></section>' for k, n, txt in s["platforms"])
+                  f'<section class="card"><ol>{steps}</ol></section><div class="help-grid section"><p class="card">{_e(s["help_offline"])}</p>'
+                  f'<p class="card">{_e(s["help_status"])}</p><p class="card">{_e(s["help_ai"])}</p></div>')
+        plats = "".join(f'<section class="card" id="{k}"><h2>{_e(n)}</h2><p class="muted">{_e(txt)}</p></section>' for k, n, txt in s["platforms"])
         self.page(lang, "install/", s["install_title"], s["install_desc"], _e(s["install"]),
-                  plats + f'<p class="kichik ogoh">{_e(s["tested_note"])}</p>')
+                  f'<div class="help-grid">{plats}</div><p class="note warn section">{_e(s["tested_note"])}</p>')
 
     def sitemap(self):
         out = ['<?xml version="1.0" encoding="UTF-8"?>',

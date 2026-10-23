@@ -2,7 +2,7 @@
 
 **Talab:** Chrome 103+ (yoki Samsung Internet / Edge yangi versiya).
 
-1. Chrome'da Hadis Manba saytini oching (HTTPS).
+1. Chrome'da Hadith Library saytini oching (HTTPS).
 2. ⋮ → **Ilovani o'rnatish** (yoki "Add to Home screen").
 3. **Kitoblar** → **O'rnatish** → "Oflayn tayyor".
 4. Fayldan: `.hmz` → **Kitoblar → Fayldan import** (fayl tanlagich Downloads/Drive'dan oladi).

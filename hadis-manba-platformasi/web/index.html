@@ -3,33 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'">
-<title>Hadis Manba — app</title>
-<meta name="description" content="Offline reader for hadith sources and their commentaries. تطبيق لقراءة مصادر الحديث وشروحها بلا إنترنت.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+<title>Hadith Library | مكتبة الحديث</title>
+<meta name="description" content="Read hadith collections and their commentaries offline, with sources. اقرأ كتب الحديث وشروحها بلا إنترنت، مع المصادر.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#1d5c4a">
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121513" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Hadis Manba">
+<meta name="apple-mobile-web-app-title" content="Hadith Library">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./ikonkalar/apple-touch-icon.png">
 <link rel="icon" href="./ikonkalar/ikonka-192.png">
+<link rel="preload" href="./fonts/NotoNaskhArabic-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./style.css">
+<script src="./js/theme.js"></script>
 </head>
 <body>
 <a class="otish" id="otish" href="#asosiy">Skip to content</a>
-<header>
-  <div class="sarlavha">
-    <a href="#/" class="logo">Hadis Manba</a>
-    <span id="tagline" class="kichik xira"></span>
-    <select id="til" class="til" aria-label="Language"></select>
+<header class="appbar">
+  <div class="appbar-in">
+    <a href="#/" class="brand" data-act="brand" aria-label="Hadith Library">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/><path d="M11 19c.3.6.7 1 1 1s.7-.4 1-1"/></svg></span>
+      <span class="brand-text"><b id="brand-name">Hadith Library</b><small id="brand-ar" lang="ar" dir="rtl">مكتبة الحديث</small></span>
+    </a>
+    <nav id="nav" class="topnav" aria-label="Sections"></nav>
+    <div class="appbar-tools">
+      <button id="tema" class="icon-btn" type="button" data-act="theme" aria-label="Theme"></button>
+      <select id="til" class="lang" aria-label="Language"></select>
+    </div>
   </div>
-  <span id="tarmoq" class="kichik" role="status"></span>
-  <button id="yangilash" class="yashirin asosiy"></button>
-  <nav id="nav" aria-label="Sections"></nav>
+  <div id="tarmoq" class="netbar yashirin" role="status"></div>
+  <button id="yangilash" class="btn primary sm updatebar yashirin" type="button"></button>
 </header>
-<main id="asosiy" tabindex="-1"><p class="xira">Loading…</p></main>
-<footer id="futer" class="kichik xira"></footer>
+<main id="asosiy" tabindex="-1"><p class="faint">Loading…</p></main>
+<footer id="futer" class="foot"></footer>
+<nav id="tabbar" class="tabbar" aria-label="Sections"></nav>
 <script src="./js/i18n.js"></script>
 <script src="./js/arabic.js"></script>
 <script src="./js/zip.js"></script>

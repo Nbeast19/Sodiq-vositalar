@@ -1,7 +1,7 @@
 # Windows
 
 ## A) AIsiz o'qish/qidiruv (PWA) — tavsiya
-1. Chrome yoki Edge'da Hadis Manba saytini oching.
+1. Chrome yoki Edge'da Hadith Library saytini oching.
 2. Manzil satridagi **O'rnatish** belgisi → ilova Start menyusida paydo bo'ladi.
 3. **Kitoblar** → paket o'rnating → "Oflayn tayyor".
 

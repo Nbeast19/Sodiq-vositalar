@@ -1,4 +1,4 @@
-# Hadis Manba (o‘zbekcha)
+# Hadith Library | مكتبة الحديث (o‘zbekcha)
 
 [English](README.md) · [العربية](README.ar.md)
 

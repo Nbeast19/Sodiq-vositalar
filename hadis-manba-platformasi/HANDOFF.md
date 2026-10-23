@@ -2,6 +2,24 @@
 
 Bu fayl keyingi sessiya/agent uchun: nima qilingan, nima qolgan, qayerda nima turibdi. Foydalanuvchi bilan muloqot **o‘zbek tilida**.
 
+## 0. 27-bo‘lim — ENG MUHIM (2026-10-23)
+
+**Foydalanuvchi haqiqiy Buxoriyni o‘rnatib ko‘rib, BUTUN sayt dizayni va foydalanish tajribasini qat’iy rad etdi** (zamonaviy emas, noqulay). Rad etilgan “before” holat: yashil chiziqli maket, raqamlari bob sarlavhalari bilan siljigan mundarija (600 yozuvdan keyin uzilgan), chap chetdagi tor matn, 7 ta tushuntirilmagan belgi, bir xil sharh kartalari, oldingi/keyingi yo‘q. **Dizayn birinchi bosqichga ko‘tarildi**; sanad/huquq auditi uni kutib turmaydi.
+
+Yangi ommaviy nom: **Hadith Library | مكتبة الحديث** (texnik ID, paket nomlari, xeshlar, IndexedDB nomi `hadis-manba` va eski havolalar o‘zgarmaydi).
+
+Bajarildi (frontend qayta loyihalandi, offlayn yadro saqlandi):
+- Yangi dizayn tizimi (`web/style.css`): iliq oq / qorong‘i mavzu (eslab qolinadi, `web/js/theme.js`), Noto Naskh Arabic (OFL, `web/fonts/`), yuqori panel + mobil pastki tablar.
+- Ekranlar (`web/js/app.js`): Bosh sahifa (katta qidiruv, Start/Continue reading, kutubxonangiz, to‘plamlar), Kitoblar katalogi (filtrlar), kitob sahifasi (muqova, Start/Continue, Mundarija / Sharhlar / Nashr haqida tablari, nashrlar ro‘yxati), mundarija (bo‘limlar paneli/drawer, sahifalash — 600 cheklovi yo‘q, raqam bo‘yicha o‘tish), hadis o‘quvchi (markaziy ustun, yuqori va pastda Oldingi/Keyingi — `seq` tartibida, klaviatura ←/→, o‘qish sozlamalari: o‘lcham, oraliq, harakatlar, diqqat rejimi, mavzu), roviy paneli (hadis yopilmaydi; faqat `verified` terminal roviy; ism matndagi aynan oraliqdan), sharhlar asar+muallif+nashr bo‘yicha guruhlangan va panel ichida oldindan ko‘rish, “Manba va tekshiruv” bloki (har yozuv uchun sodda xulosa + “Bu nimani anglatadi?” jadvali), Kutubxonam, Qidiruv, Yordam.
+- Statik en/ar sahifalar (`site.py`) va README’lar yangi nom va dizaynda; Release tavsifi/label’lari: `release/` + `.github/workflows/hadis-manba-release-meta.yml`.
+- Skrinshotlar (real Buxoriy + Fath al-Bari, en/ar, light/dark, 1366/390): `docs/img/` va sessiya scratchpad’ida; README’da.
+
+Ochiq (27-bo‘lim):
+- **To‘liq sanad indeksi**: dalil topildi — `raw/shamela-bukhari/pages.jsonl` (Shamela 1681, `inr://man-<id>` roviy havolalari, `<hadeeth-N>` matn chegarasi), `page_isnads.json` (book_id 1458 = Buxoriy, 7 244 qator; tartib Nabiy ﷺ tomondan kompilyatorga, oxirgi element Buxoriy 5495; `hadeeth_key` — matn guruhi kaliti, bosma raqam EMAS: 17661 p10 va 17713 p104 ikkalasi key=1), `narrators.json` (18 989). Bog‘lash: sahifa + bosma raqam + sanad matni bilan (raqam tengligi bilan emas).
+- **Huquq**: AuthenticIlm README “License: … Terms of use: Research and personal use” (`raw/shamela-README.md`, 316–320-qatorlar) → ommaviy qayta tarqatish tasdiqlanmagan. Foydalanuvchi qarori: alohida paket tayyorlansin; ruxsat aniqlanmasa — faqat mahalliy. Paket hali yasalmagan.
+- **Muallaqot**: hadith-json Buxoriyda faqat 97 “kitob” sarlavhasi, bob tarjimalari/muallaqot yo‘q; manbada muallaq tasnifi maydoni yo‘q (raqamlar.sqlite’da `muallaq` 0 ta). UI’da “tasniflanmagan” deb ochiq ko‘rsatiladi; Abu Sa’id al-Mu’allo kabi ism tasnifga ishlatilmaydi.
+- Paket ichidagi `persons` yozuvlarida `name_ar` yo‘q (faqat o‘zbekcha ism + normallashtirilgan taxallus); Buxoriyda roviy holati: verified 5 131, conflict 2 146.
+
 ## 1. Asosiy talablar (o‘zgarmaydi)
 
 - Har **asosiy kitob alohida**, har **sharh alohida** paket; “faqat kitob”, “faqat sharh”, “kitob + tanlangan sharhlar”. Birga o‘rnatilsa hadis ↔ sharh **ikki tomonlama** bog‘lanadi (faqat mos nashr va versiyada; raqam bir xilligi yetarli emas).

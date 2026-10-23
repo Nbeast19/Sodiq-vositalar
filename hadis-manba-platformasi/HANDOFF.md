@@ -16,7 +16,8 @@ Bajarildi (frontend qayta loyihalandi, offlayn yadro saqlandi):
 
 Ochiq (27-bo‘lim):
 - **To‘liq sanad indeksi**: dalil topildi — `raw/shamela-bukhari/pages.jsonl` (Shamela 1681, `inr://man-<id>` roviy havolalari, `<hadeeth-N>` matn chegarasi), `page_isnads.json` (book_id 1458 = Buxoriy, 7 244 qator; tartib Nabiy ﷺ tomondan kompilyatorga, oxirgi element Buxoriy 5495; `hadeeth_key` — matn guruhi kaliti, bosma raqam EMAS: 17661 p10 va 17713 p104 ikkalasi key=1), `narrators.json` (18 989). Bog‘lash: sahifa + bosma raqam + sanad matni bilan (raqam tengligi bilan emas).
-- **Huquq**: AuthenticIlm README “License: … Terms of use: Research and personal use” (`raw/shamela-README.md`, 316–320-qatorlar) → ommaviy qayta tarqatish tasdiqlanmagan. Foydalanuvchi qarori: alohida paket tayyorlansin; ruxsat aniqlanmasa — faqat mahalliy. Paket hali yasalmagan.
+- **Huquq**: AuthenticIlm README “License: … Terms of use: Research and personal use” (`raw/shamela-README.md`, 316–320-qatorlar) → ommaviy qayta tarqatish tasdiqlanmagan. Foydalanuvchi qarori: alohida paket tayyorlansin; ruxsat aniqlanmasa — faqat mahalliy.
+- **Mahalliy sanad indeksi yasaldi** (`scripts/build_isnad_index.py`, hujjat `docs/ISNAD-INDEX.md`, sinov `tests/test_isnad_index.py`): 7 277 dan 7 041 bog‘landi, 4 914 tasi bitta yo‘l bilan to‘liq tasdiqlangan (vositalar soni beriladi), 2 086 qisman, 41 ح tarmoqli. Natija repo/saytga kirmaydi. Keyingi qadam: ilovaga mahalliy import (yangi paket turi) va o‘quvchida to‘liq sanadni ko‘rsatish.
 - **Muallaqot**: hadith-json Buxoriyda faqat 97 “kitob” sarlavhasi, bob tarjimalari/muallaqot yo‘q; manbada muallaq tasnifi maydoni yo‘q (raqamlar.sqlite’da `muallaq` 0 ta). UI’da “tasniflanmagan” deb ochiq ko‘rsatiladi; Abu Sa’id al-Mu’allo kabi ism tasnifga ishlatilmaydi.
 - Paket ichidagi `persons` yozuvlarida `name_ar` yo‘q (faqat o‘zbekcha ism + normallashtirilgan taxallus); Buxoriyda roviy holati: verified 5 131, conflict 2 146.
 

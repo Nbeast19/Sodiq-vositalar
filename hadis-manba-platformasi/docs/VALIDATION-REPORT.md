@@ -5,13 +5,15 @@ Sana: 2026-10-23. Buyruq: `sh scripts/verify.sh`. Faqat bajarilgan sinovlar "PAS
 ## 1. Dastur ishlashi
 | Sinov | Natija | Dalil |
 |---|---|---|
-| pytest (Python yadro, paket, import, qidiruv, sharh, huquq, audit, mahalliy xizmat, MCP) | **PASS — 65 o‘tdi, 10 skip** (skip = haqiqiy korpus testlari, alohida ishga tushiriladi) | `tests/*.py` |
+| pytest (Python yadro, paket, import, qidiruv, sharh, huquq, audit, mahalliy xizmat, MCP) | **PASS — 69 o‘tdi, 10 skip** (sanad indeksi regressiyasi 17661/17713 bilan) (skip = haqiqiy korpus testlari, alohida ishga tushiriladi) | `tests/*.py` |
 | Node: JS normalizatsiya va parcha Python bilan aynan bir xil, ZIP xavfsizligi, paket tekshiruvi | **PASS — 7/7** (+ en/ar/uz UI kalitlari to‘liqligi) | `tests/web/core.node.test.js`, `tests/arabic_vectors.json` |
 | Playwright: (12 ssenariy + til almashtirish + kitob qidiruvi + manbali iqtibos + konsol) × {English, العربية} × {1280 px, 390 px} | **PASS — 64/64** | `tests/web/e2e.pw.js` → `build/e2e-natija.json` |
 | Toza venv'da `pip install .` → `install`, `doctor`, `resolve` | **PASS** (MCP'siz: doctor ogohlantirish beradi, xato emas) | qo'lda bajarildi |
 | Deterministik build (ikki marta → bir xil SHA-256) | **PASS** | `test_build_is_deterministic` + `sha256sum -c` |
 | Haqiqiy korpus (run04 → 50 paket o‘rnatilgan): Muslim 1233→591, Muvatto ikki raqamlash, 125 hash qatlami, Shamoil Julaymiy/Sunnah, Tabaroniy jildlari, `row:N`, Fath ikki nashri, Buxoriy 1 ↔ Umdat, qidiruv, legacy | **PASS — 10/10** | `tests/test_real_corpus.py` (`HADIS_MANBA_REAL_HOME`) |
 | SEO statik sahifalar: self-canonical, o‘zaro hreflang + x-default, sitemap ↔ sahifalar, havolalar butun, `<script>` yo‘q, shaxsiy yo‘l/manba matni yo‘q | **PASS** | `tests/test_site.py` |
+| **Jonli sayt — yangi dizayn (27-bo‘lim)** (Hadith Library, `main` eead2b3, 2026-10-23 17:44 UTC): SEO sahifalari, 32 paket SHA-256, Release havolalari; en 1280 px: Buxoriy + Fath al-Bari o‘rnatish → hadis 1 → sharh → qaytish → oldingi/keyingi → roviy paneli → oflayn qidiruv; ar 390 px: Muvatto + at-Tamhid xuddi shunday; gorizontal siljish va konsol xatosi yo‘q | **PASS — 16/16** (headless Chromium, GitHub Actions; real qurilma emas) | [`hadis-manba-jonli` run](https://github.com/Nbeast19/vositalar/actions/runs/39997363878) |
+| CI shriftlari bilan 390 px (birinchi PR urinishida `marfu’` belgisi sahifani 409 px ga kengaytirgan edi; tuzatildi, lokalda DejaVu Sans bilan ham tekshirildi) | **PASS — 64/64** | `tests/web/e2e.pw.js` |
 | **Jonli sayt** (https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/, GitHub Pages, 2026-10-23 15:40 UTC): sitemap’dagi 136 sahifa 200 + self-canonical + o‘zaro hreflang + x-default + `<script>` yo‘q; PWA `noindex`; host ildizida robots.txt yo‘q (404 → hammasiga ruxsat); 32 paket saytdan SHA-256 mos; 32 Release havolasi 200; en 1280 px: Buxoriy + Fath al-Bari o‘rnatish → hadis 1 → sharh → qaytish → oflayn qidiruv; ar 390 px: Muvatto + at-Tamhid xuddi shunday; gorizontal siljish va konsol xatosi yo‘q | **PASS — 14/14** (headless Chromium, GitHub Actions) | [`hadis-manba-jonli` run](https://github.com/Nbeast19/vositalar/actions/runs/39980216816), `tests/live/live.pw.js` |
 
 ### 22.1 Manba va import

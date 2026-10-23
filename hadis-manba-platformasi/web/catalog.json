@@ -8,6 +8,7 @@
    "schema_version": "1.0.0",
    "title": {
     "ar": "كِتَابُ النَّمُوذَجِ التَّجْرِيبِيِّ",
+    "en": "Sample Book (test, synthetic)",
     "uz": "Namuna kitobi — A nashr (sinov)"
    },
    "work_id": "w-namuna",
@@ -16,10 +17,10 @@
     "p-namuna-muallif"
    ],
    "file": "paketlar/namuna-asos-a-1.0.0.hmz",
-   "package_sha256": "9228874a4e577ecddba7a00de7011a7fa529c0435e85c11a115bb2b237e611a0",
-   "compressed_bytes": 9596,
-   "installed_bytes": 93633,
-   "temporary_space_bytes": 62422,
+   "package_sha256": "8e998da405dfa5dfa15f2304a1a67720a2d950c6c2f271c7663709aba7f768e3",
+   "compressed_bytes": 9685,
+   "installed_bytes": 93747,
+   "temporary_space_bytes": 62498,
    "provides_units": 12,
    "coverage": {
     "by_text_kind": {
@@ -110,6 +111,21 @@
    ],
    "attribution": "Hadis Manba sinov namunasi",
    "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-namuna-muallif",
+     "name_ar": "مُؤَلِّفُ النَّمُوذَجِ",
+     "name_en": "Sample author (test)",
+     "name_uz": "Namuna muallifi (sinov)"
+    }
+   ],
+   "names": [
+    "Kitab an-Namudhaj",
+    "Sample book"
+   ],
+   "names_origin": "test_fixture",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
    "is_test_fixture": true
   },
   {
@@ -119,6 +135,7 @@
    "schema_version": "1.0.0",
    "title": {
     "ar": "كِتَابُ النَّمُوذَجِ التَّجْرِيبِيِّ",
+    "en": "Sample Book (test, synthetic)",
     "uz": "Namuna kitobi — B nashr (sinov)"
    },
    "work_id": "w-namuna",
@@ -127,10 +144,10 @@
     "p-namuna-muallif"
    ],
    "file": "paketlar/namuna-asos-b-1.0.0.hmz",
-   "package_sha256": "2fae5bd11326aeb6b3b9c5c7194c0d7d2e59f1b1cc8f963f41c71aa9b77ba159",
-   "compressed_bytes": 9683,
-   "installed_bytes": 94977,
-   "temporary_space_bytes": 63318,
+   "package_sha256": "ab8a43fed1f813ceaf37dcf0892c216c1e9d00f234d07782595661001b21ce3f",
+   "compressed_bytes": 9769,
+   "installed_bytes": 95091,
+   "temporary_space_bytes": 63394,
    "provides_units": 12,
    "coverage": {
     "by_text_kind": {
@@ -221,6 +238,21 @@
    ],
    "attribution": "Hadis Manba sinov namunasi",
    "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-namuna-muallif",
+     "name_ar": "مُؤَلِّفُ النَّمُوذَجِ",
+     "name_en": "Sample author (test)",
+     "name_uz": "Namuna muallifi (sinov)"
+    }
+   ],
+   "names": [
+    "Kitab an-Namudhaj",
+    "Sample book"
+   ],
+   "names_origin": "test_fixture",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
    "is_test_fixture": true
   },
   {
@@ -230,6 +262,7 @@
    "schema_version": "1.0.0",
    "title": {
     "ar": "الشَّرْحُ التَّجْرِيبِيُّ الأَوَّلُ",
+    "en": "Sample commentary 1 (test)",
     "uz": "1-sinov sharhi"
    },
    "work_id": "w-namuna-sharh-1",
@@ -238,8 +271,8 @@
     "p-shorih-1"
    ],
    "file": "paketlar/namuna-sharh-1-1.0.0.hmz",
-   "package_sha256": "e998d96ff07cb714b9b12e45ed9dc3a2eb54aeb0d136c1684451f3877177ba6e",
-   "compressed_bytes": 5472,
+   "package_sha256": "0cae5db138ed302d2f5ee64ab35dda62fe14ce12b2bb182af39f8482b3a912a6",
+   "compressed_bytes": 5521,
    "installed_bytes": 48843,
    "temporary_space_bytes": 32562,
    "provides_units": 5,
@@ -309,6 +342,20 @@
    ],
    "attribution": "Hadis Manba sinov namunasi",
    "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-shorih-1",
+     "name_ar": "الشَّارِحُ التَّجْرِيبِيُّ الأَوَّلُ",
+     "name_en": null,
+     "name_uz": "1-sinov shorihi"
+    }
+   ],
+   "names": [
+    "Sharh (sample)"
+   ],
+   "names_origin": "test_fixture",
+   "work_type": "commentary",
+   "commentary_on": "w-namuna",
    "is_test_fixture": true
   },
   {
@@ -318,6 +365,7 @@
    "schema_version": "1.0.0",
    "title": {
     "ar": "الشَّرْحُ التَّجْرِيبِيُّ الثَّانِي",
+    "en": "Sample commentary 2 (test)",
     "uz": "2-sinov sharhi"
    },
    "work_id": "w-namuna-sharh-2",
@@ -326,8 +374,8 @@
     "p-shorih-2"
    ],
    "file": "paketlar/namuna-sharh-2-1.0.0.hmz",
-   "package_sha256": "aed98467c3fc21a2c16f806cef8dddc2d7ef8a9c27e21de5d7690c0ef42ec4f4",
-   "compressed_bytes": 4364,
+   "package_sha256": "83e0bee42169352b93b7bf79ea77bd8e955907b36e84abe08221a6068d73664c",
+   "compressed_bytes": 4411,
    "installed_bytes": 13221,
    "temporary_space_bytes": 8814,
    "provides_units": 2,
@@ -395,6 +443,20 @@
    ],
    "attribution": "Hadis Manba sinov namunasi",
    "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-shorih-2",
+     "name_ar": "الشَّارِحُ التَّجْرِيبِيُّ الثَّانِي",
+     "name_en": null,
+     "name_uz": "2-sinov shorihi"
+    }
+   ],
+   "names": [
+    "Sharh (sample)"
+   ],
+   "names_origin": "test_fixture",
+   "work_type": "commentary",
+   "commentary_on": "w-namuna",
    "is_test_fixture": true
   }
  ],

@@ -37,6 +37,22 @@ ROVIY_TURI = {
     "aniqlanmagan": ("text_block", "unknown"),
 }
 PACKAGE_VERSION = "1.0.1"  # 1.0.1: Sunnah raqami xaritasi alohida sxema sifatida qo'shildi
+# Tahririy (editorial) nomlar: manbada arabcha/inglizcha sarlavha yo'q kitoblar uchun qidiruv va ko'rsatish nomi.
+# Manba ma'lumoti emas — katalogda names_origin="editorial" deb belgilanadi.
+EDITORIAL_NAMES = {
+    "abdurrazzoq": ("مصنف عبد الرزاق", "Musannaf ʿAbd al-Razzaq"),
+    "bayhaqiy-kubro": ("السنن الكبرى للبيهقي", "al-Sunan al-Kubra (al-Bayhaqi)"),
+    "doraqutniy": ("سنن الدارقطني", "Sunan al-Daraqutni"),
+    "ibn-abi-shayba": ("مصنف ابن أبي شيبة", "Musannaf Ibn Abi Shayba"),
+    "ibn-hibbon": ("صحيح ابن حبان", "Sahih Ibn Hibban"),
+    "ibn-xuzayma": ("صحيح ابن خزيمة", "Sahih Ibn Khuzayma"),
+    "musnad-ahmad": ("مسند أحمد", "Musnad Ahmad"),
+    "mustadrak": ("المستدرك على الصحيحين", "al-Mustadrak ʿala al-Sahihayn (al-Hakim)"),
+    "shuab-iymon": ("شعب الإيمان", "Shuʿab al-Iman (al-Bayhaqi)"),
+    "tabaroniy-avsat": ("المعجم الأوسط", "al-Muʿjam al-Awsat (al-Tabarani)"),
+    "tabaroniy-kabir": ("المعجم الكبير", "al-Muʿjam al-Kabir (al-Tabarani)"),
+    "tabaroniy-sagir": ("المعجم الصغير", "al-Muʿjam al-Saghir (al-Tabarani)"),
+}
 SUNNAH_PERMISSION = "foydalanuvchi tasdiqlagan Sunnah.com ruxsati (2026-10-23); qo'shimcha hujjat talab qilinmaydi"
 
 
@@ -107,6 +123,11 @@ def build_book(manba: Path, book: str, out_root: Path, book_names: dict, persons
         work_id = f"w-{_slug(book)}"
         pid = ed["edition_id"].replace("ed-", "hm-", 1)
         title_ar = (md.get("arabic") or {}).get("title") or None
+        title_en = (md.get("english") or {}).get("title") or None
+        names_origin = "source" if (title_ar or title_en) else None
+        if not title_ar and book in EDITORIAL_NAMES:
+            title_ar, title_en = EDITORIAL_NAMES[book]
+            names_origin = "editorial"
         author_ar = (md.get("arabic") or {}).get("author") or None
         names = book_names.get(book, {})
         title_uz = names.get("full") or book
@@ -243,7 +264,10 @@ def build_book(manba: Path, book: str, out_root: Path, book_names: dict, persons
         manifest = {
             "package_id": pid, "kind": "base_book", "package_version": PACKAGE_VERSION, "schema_version": "1.0.0",
             "work_id": work_id, "edition_id": ed["edition_id"], "source_revision": "dot-20261023-04",
-            "title": {"uz": title_uz + ("" if len(eds) == 1 else f" — {ed['edition_id']}"), "ar": title_ar},
+            "title": {"uz": title_uz + ("" if len(eds) == 1 else f" — {ed['edition_id']}"), "ar": title_ar,
+                      "en": (title_en or title_uz) + ("" if len(eds) == 1 else f" — {ed['edition_id']}")},
+            "names": sorted({x for x in [title_en, title_uz, *(names.get("mentions") or []), book] if x}),
+            "names_origin": names_origin,
             "author_ids": [f"p-author-{_slug(book)}"] if author_ar else [],
             "source_metadata": [{"source_id": f"src-{ed['edition_id']}", "source_file": ed["source_file"],
                                  "db": "manbalar/hadis-raqamlar/raqamlar.sqlite", "book": book}],

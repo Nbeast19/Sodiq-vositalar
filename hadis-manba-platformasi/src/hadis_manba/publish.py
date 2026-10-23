@@ -60,6 +60,11 @@ def privacy_scan(pkg) -> list[str]:
 
 def catalog_entry(pkg, path: Path, channel: str) -> dict:
     m = pkg.manifest
+    ents = pkg.entities
+    persons = {p["person_id"]: p for p in ents.get("persons", [])}
+    authors = [{"person_id": a, "name_ar": persons.get(a, {}).get("name_ar"), "name_en": persons.get(a, {}).get("name_en"),
+                "name_uz": persons.get(a, {}).get("name_uz")} for a in m.get("author_ids", [])]
+    work = next((w for w in ents.get("works", []) if w.get("work_id") == m.get("work_id")), {})
     return {
         "package_id": m["package_id"], "kind": m["kind"], "package_version": m["package_version"],
         "schema_version": m["schema_version"], "title": m["title"], "work_id": m.get("work_id"),
@@ -72,6 +77,8 @@ def catalog_entry(pkg, path: Path, channel: str) -> dict:
                                           "required_attribution", "commercial_use_allowed",
                                           "share_alike_requirements")} for r in m["rights"]],
         "attribution": m.get("attribution"), "channel": channel,
+        "authors": authors, "names": m.get("names", []), "names_origin": m.get("names_origin"),
+        "work_type": work.get("work_type"), "commentary_on": work.get("commentary_on"),
         "is_test_fixture": bool(m.get("is_test_fixture")),
     }
 

@@ -1,8 +1,8 @@
 // Service worker: faqat dastur qobig'ini oflayn ochadi. Kitob/sharh ma'lumoti IndexedDB'da
 // (foydalanuvchi tanlab o'rnatgan paketlar) — bu yerda yashirin keshlanmaydi.
-var VERSIYA = 'hadis-manba-qobiq-v1';
+var VERSIYA = 'hadis-manba-qobiq-v2';
 var QOBIQ = ['./', './index.html', './style.css', './manifest.webmanifest',
-  './js/arabic.js', './js/zip.js', './js/pkg.js', './js/lib.js', './js/notes.js', './js/app.js', './js/search-worker.js',
+  './js/i18n.js', './js/arabic.js', './js/zip.js', './js/pkg.js', './js/lib.js', './js/notes.js', './js/app.js', './js/search-worker.js',
   './ikonkalar/ikonka-192.png', './ikonkalar/ikonka-512.png', './ikonkalar/apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {

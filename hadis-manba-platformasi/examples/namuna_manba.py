@@ -39,7 +39,8 @@ def sha(s: str) -> str:
 
 
 PERSONS = [
-    {"person_id": "p-namuna-muallif", "name_ar": "مُؤَلِّفُ النَّمُوذَجِ", "name_uz": "Namuna muallifi (sinov)"},
+    {"person_id": "p-namuna-muallif", "name_ar": "مُؤَلِّفُ النَّمُوذَجِ", "name_uz": "Namuna muallifi (sinov)",
+     "name_en": "Sample author (test)"},
     {"person_id": "p-shorih-1", "name_ar": "الشَّارِحُ التَّجْرِيبِيُّ الأَوَّلُ", "name_uz": "1-sinov shorihi"},
     {"person_id": "p-shorih-2", "name_ar": "الشَّارِحُ التَّجْرِيبِيُّ الثَّانِي", "name_uz": "2-sinov shorihi"},
     {"person_id": "p-muhaqqiq-1", "name_ar": "المُحَقِّقُ التَّجْرِيبِيُّ", "name_uz": "Sinov muhaqqiqi"},
@@ -176,7 +177,9 @@ def write_pkg(out: Path, manifest: dict, entities: dict, files: dict[str, list |
 def base_manifest(pid, ed, version, title_uz):
     return {"package_id": pid, "kind": "base_book", "package_version": version, "schema_version": "1.0.0",
             "work_id": "w-namuna", "edition_id": ed, "source_revision": "sinov-1",
-            "title": {"uz": title_uz, "ar": WORK_BASE["title_ar"]}, "author_ids": ["p-namuna-muallif"],
+            "title": {"uz": title_uz, "ar": WORK_BASE["title_ar"], "en": "Sample Book (test, synthetic)"},
+            "names": ["Kitab an-Namudhaj", "Sample book"], "names_origin": "test_fixture",
+            "author_ids": ["p-namuna-muallif"],
             "source_metadata": [{"source_id": f"src-{ed}", "note": FIXTURE_NOTE}],
             "attribution": "Hadis Manba sinov namunasi", "rights": RIGHTS, "compatible_app_versions": ">=0.1.0",
             "normalization_version": "ar-search-v1", "is_test_fixture": True}
@@ -251,7 +254,8 @@ def link(lid, oid, unit, status="verified", legacy=None):
 def commentary_manifest(pid, work, ed, author, title_uz, version="1.0.0"):
     return {"package_id": pid, "kind": "commentary", "package_version": version, "schema_version": "1.0.0",
             "work_id": work["work_id"], "edition_id": ed, "source_revision": "sinov-1",
-            "title": {"uz": title_uz, "ar": work["title_ar"]}, "author_ids": [author],
+            "title": {"uz": title_uz, "ar": work["title_ar"], "en": title_uz.replace("1-sinov sharhi", "Sample commentary 1 (test)").replace("2-sinov sharhi", "Sample commentary 2 (test)")},
+            "names": ["Sharh (sample)"], "names_origin": "test_fixture", "author_ids": [author],
             "source_metadata": [{"source_id": f"src-{ed}", "note": FIXTURE_NOTE}],
             "attribution": "Hadis Manba sinov namunasi", "rights": RIGHTS, "compatible_app_versions": ">=0.1.0",
             "normalization_version": "ar-search-v1", "is_test_fixture": True,

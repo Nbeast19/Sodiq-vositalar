@@ -240,7 +240,9 @@ def build_commentary(manba: Path, d: Path, out_root: Path, edition_index: dict[s
     manifest = {
         "package_id": pid, "kind": "commentary", "package_version": "1.0.0", "schema_version": "1.0.0",
         "work_id": work_id, "edition_id": ed_id, "source_revision": "dot-20261023-04",
-        "title": {"ar": meta.get("title_ar"), "uz": f"{meta.get('title_ar')} ({ed_id})"},
+        "title": {"ar": meta.get("title_ar"), "uz": f"{meta.get('title_ar')} ({ed_id})",
+                  "en": sharh.replace("-", " ").title() + (" (Salafiyya ed.)" if sharh.endswith("salafiyya") else "")},
+        "names": [sharh, sharh.replace("-", " "), work_slug.replace("-", " ")], "names_origin": "slug",
         "author_ids": person_ids,
         "source_metadata": [{"source_id": f"src-{ed_id}", **{k: (meta.get("source") or {}).get(k)
                                                             for k in ("url", "dataset_id", "downloaded", "sha256")}}],

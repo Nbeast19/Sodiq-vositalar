@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hadis-manba"
+version = "0.1.0"
+description = "Hadis Manba: manbasi kuzatiladigan hadis va sharh kutubxonasi (mahalliy, oflayn, MCP)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT (faqat kod; ma'lumot litsenziyasi har paketda alohida)" }
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["mcp==2.3.0"]
+test = ["pytest>=8", "mcp==2.3.0", "jsonschema>=4"]
+
+[project.scripts]
+hadis-manba = "hadis_manba.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+hadis_manba = ["schemas/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "examples"]

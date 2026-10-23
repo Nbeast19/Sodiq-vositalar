@@ -1,0 +1,402 @@
+{
+ "schema_version": "1.0.0",
+ "packages": [
+  {
+   "package_id": "namuna-asos-a",
+   "kind": "base_book",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "كِتَابُ النَّمُوذَجِ التَّجْرِيبِيِّ",
+    "uz": "Namuna kitobi — A nashr (sinov)"
+   },
+   "work_id": "w-namuna",
+   "edition_id": "ed-namuna-a",
+   "author_ids": [
+    "p-namuna-muallif"
+   ],
+   "file": "paketlar/namuna-asos-a-1.0.0.hmz",
+   "package_sha256": "9228874a4e577ecddba7a00de7011a7fa529c0435e85c11a115bb2b237e611a0",
+   "compressed_bytes": 9596,
+   "installed_bytes": 93633,
+   "temporary_space_bytes": 62422,
+   "provides_units": 12,
+   "coverage": {
+    "by_text_kind": {
+     "full": 11,
+     "heading": 1
+    },
+    "by_unit_type": {
+     "athar_sahabi": 1,
+     "author_statement": 1,
+     "chapter_heading": 1,
+     "hadith": 9
+    },
+    "distinct_printed_numbers": 16,
+    "kind": "base_book",
+    "source_records": 12,
+    "status_counts": {
+     "edition_identity_status": {
+      "verified": 12
+     },
+     "narrator_identity_status": {
+      "limited": 1,
+      "not_applicable": 2,
+      "not_found": 1,
+      "verified": 8
+     },
+     "number_status": {
+      "not_applicable": 2,
+      "verified": 10
+     },
+     "printed_page_status": {
+      "unreviewed": 12
+     },
+     "rights_status": {
+      "verified": 12
+     },
+     "semantic_review_status": {
+      "unreviewed": 12
+     },
+     "source_identity_status": {
+      "verified": 12
+     },
+     "text_preservation_status": {
+      "verified": 12
+     },
+     "transport_integrity": {
+      "verified": 12
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "editorial_notes",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Hadis Manba sinov namunasi",
+   "channel": "public",
+   "is_test_fixture": true
+  },
+  {
+   "package_id": "namuna-asos-b",
+   "kind": "base_book",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "كِتَابُ النَّمُوذَجِ التَّجْرِيبِيِّ",
+    "uz": "Namuna kitobi — B nashr (sinov)"
+   },
+   "work_id": "w-namuna",
+   "edition_id": "ed-namuna-b",
+   "author_ids": [
+    "p-namuna-muallif"
+   ],
+   "file": "paketlar/namuna-asos-b-1.0.0.hmz",
+   "package_sha256": "2fae5bd11326aeb6b3b9c5c7194c0d7d2e59f1b1cc8f963f41c71aa9b77ba159",
+   "compressed_bytes": 9683,
+   "installed_bytes": 94977,
+   "temporary_space_bytes": 63318,
+   "provides_units": 12,
+   "coverage": {
+    "by_text_kind": {
+     "full": 11,
+     "heading": 1
+    },
+    "by_unit_type": {
+     "athar_sahabi": 1,
+     "author_statement": 1,
+     "chapter_heading": 1,
+     "hadith": 9
+    },
+    "distinct_printed_numbers": 16,
+    "kind": "base_book",
+    "source_records": 12,
+    "status_counts": {
+     "edition_identity_status": {
+      "verified": 12
+     },
+     "narrator_identity_status": {
+      "limited": 1,
+      "not_applicable": 2,
+      "not_found": 1,
+      "verified": 8
+     },
+     "number_status": {
+      "not_applicable": 2,
+      "verified": 10
+     },
+     "printed_page_status": {
+      "unreviewed": 12
+     },
+     "rights_status": {
+      "verified": 12
+     },
+     "semantic_review_status": {
+      "unreviewed": 12
+     },
+     "source_identity_status": {
+      "verified": 12
+     },
+     "text_preservation_status": {
+      "verified": 12
+     },
+     "transport_integrity": {
+      "verified": 12
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "editorial_notes",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Hadis Manba sinov namunasi",
+   "channel": "public",
+   "is_test_fixture": true
+  },
+  {
+   "package_id": "namuna-sharh-1",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "الشَّرْحُ التَّجْرِيبِيُّ الأَوَّلُ",
+    "uz": "1-sinov sharhi"
+   },
+   "work_id": "w-namuna-sharh-1",
+   "edition_id": "ed-sharh1",
+   "author_ids": [
+    "p-shorih-1"
+   ],
+   "file": "paketlar/namuna-sharh-1-1.0.0.hmz",
+   "package_sha256": "e998d96ff07cb714b9b12e45ed9dc3a2eb54aeb0d136c1684451f3877177ba6e",
+   "compressed_bytes": 5472,
+   "installed_bytes": 48843,
+   "temporary_space_bytes": 32562,
+   "provides_units": 5,
+   "coverage": {
+    "distinct_linked_units": 6,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 1,
+    "link_status_counts": {
+     "limited": 5,
+     "unreviewed": 1,
+     "verified": 1
+    },
+    "links": 7,
+    "occurrences": 5,
+    "scope_counts": {
+     "fragment": 1,
+     "full_section": 3,
+     "preview_window": 1
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "target_edition_id": "ed-namuna-a",
+     "target_work_id": "w-namuna"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "editorial_notes",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Hadis Manba sinov namunasi",
+   "channel": "public",
+   "is_test_fixture": true
+  },
+  {
+   "package_id": "namuna-sharh-2",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "الشَّرْحُ التَّجْرِيبِيُّ الثَّانِي",
+    "uz": "2-sinov sharhi"
+   },
+   "work_id": "w-namuna-sharh-2",
+   "edition_id": "ed-sharh2",
+   "author_ids": [
+    "p-shorih-2"
+   ],
+   "file": "paketlar/namuna-sharh-2-1.0.0.hmz",
+   "package_sha256": "aed98467c3fc21a2c16f806cef8dddc2d7ef8a9c27e21de5d7690c0ef42ec4f4",
+   "compressed_bytes": 4364,
+   "installed_bytes": 13221,
+   "temporary_space_bytes": 8814,
+   "provides_units": 2,
+   "coverage": {
+    "distinct_linked_units": 2,
+    "kind": "commentary",
+    "legacy_unreviewed_links": 0,
+    "link_status_counts": {
+     "limited": 1,
+     "verified": 1
+    },
+    "links": 2,
+    "occurrences": 2,
+    "scope_counts": {
+     "full_section": 1,
+     "preview_window": 1
+    }
+   },
+   "requires_for_linked_reading": [
+    {
+     "compatible_package_versions": [
+      "1.*"
+     ],
+     "target_edition_id": "ed-namuna-a",
+     "target_work_id": "w-namuna"
+    }
+   ],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "editorial_notes",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": "CC0-1.0",
+     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+     "required_attribution": "Hadis Manba sinov namunasi",
+     "commercial_use_allowed": true,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Hadis Manba sinov namunasi",
+   "channel": "public",
+   "is_test_fixture": true
+  }
+ ],
+ "note": "Faqat tarqatishga tasdiqlangan paketlar. Ommaviy demo to'liq mahalliy katalog bilan bir xil emas."
+}

@@ -1,11 +1,14 @@
 # GitHub Pages nashri: repo fayllari (avvalgidek, .nojekyll) + Hadis Manba paketlari.
 # Paketlar gitda emas — GitHub Release'dan olinadi, SHA-256 tekshiriladi va
 # hadis-manba-platformasi/web/paketlar/ ga qo'yiladi (brauzer Release'dan CORS sababli ololmaydi).
-# Talab: Settings → Pages → Build and deployment → Source: "GitHub Actions".
+# Tavsiya: Settings → Pages → Build and deployment → Source: "GitHub Actions".
+# Manba hali "Deploy from a branch" bo'lsa, eski nashr har push'da paketlarsiz saytni ustidan yozadi —
+# shuning uchun bu workflow page_build (eski nashr tugagach) hodisasida ham qayta ishlaydi va oxirgi bo'ladi.
 name: hadis-manba-pages
 on:
   push:
     branches: [main]
+  page_build:
   workflow_dispatch:
 permissions:
   contents: read

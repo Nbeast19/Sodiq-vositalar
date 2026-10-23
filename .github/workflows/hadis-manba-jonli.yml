@@ -1,0 +1,30 @@
+# Jonli sayt tekshiruvi: GitHub Pages'dagi haqiqiy URL'da (konteynerdan github.io'ga kirish yo'q).
+name: hadis-manba-jonli
+on:
+  push:
+    branches: ["claude/new-session-f9jsvi"]
+    paths: ["hadis-manba-platformasi/tests/live/**", ".github/workflows/hadis-manba-jonli.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hadis-manba-platformasi/tests/live
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: CORS probe
+        env:
+          REPO: ${{ github.repository }}
+          TAG: hadis-manba-paketlar-v1
+          ASSET_ID: "669513966"
+          ORIGIN_URL: https://nbeast19.github.io/vositalar/
+        run: node cors-probe.pw.js

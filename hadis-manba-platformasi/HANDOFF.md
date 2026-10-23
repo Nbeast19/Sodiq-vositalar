@@ -11,10 +11,13 @@ Bu fayl keyingi sessiya/agent uchun: nima qilingan, nima qolgan, qayerda nima tu
 - Real qurilmada sinalmagan narsaga **PASS yozilmaydi**. Ilmiy qamrov **INCOMPLETE** — fayl yetkazilishi bilan aralashtirilmaydi.
 - Manba fayllari **read-only**. Xom korpus va shaxsiy 0-Manba **public repoga yuklanmaydi**. Qur’on/qiroat va shaxsiy qo‘lyozmalar doiradan tashqari.
 
-## 2. Repo va branch
+## 2. Repo, nashr, branch
 
-- Repo: `Nbeast19/vositalar` (avvalgi nomi `desktop-tutorial`, **public**, Pages: https://nbeast19.github.io/vositalar/ — `main` dan). Ishchi branch: **`claude/new-session-f9jsvi`** (merge qilinmagan, PR ochilmagan).
-- Loyiha papkasi: `hadis-manba-platformasi/`. CI: `.github/workflows/hadis-manba.yml` (path filtri bilan).
+- Repo: `Nbeast19/vositalar` (avvalgi nomi `desktop-tutorial`, **public**). Ishchi branch: `claude/new-session-f9jsvi`; PR [Nbeast19/vositalar#3](https://github.com/Nbeast19/vositalar/pull/3) **squash bilan `main` ga qo‘shilgan** (2026-10-23).
+- **Sayt:** https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/ (katalog: `…/web/en/`, `…/web/ar/`).
+- **Paketlar:** Release [`hadis-manba-paketlar-v1`](https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1) — 17 kitob + 15 sharh, `SHA256SUMS`, `RIGHTS-PAKETLAR.md`. Gitda paket yo‘q.
+- Workflow’lar: `hadis-manba.yml` (testlar), `hadis-manba-pages.yml` (Pages: repo + Release paketlari), `hadis-manba-jonli.yml` (nashrdan keyin jonli tekshiruv). Nashr tartibi: `docs/RELEASE.md`.
+- Konteynerdan `github.io`, `api.github.com` ga kirish yo‘q (proxy 403) — jonli tekshiruv faqat Actions’da.
 
 ## 3. Bajarilgan
 
@@ -34,8 +37,9 @@ Bu fayl keyingi sessiya/agent uchun: nima qilingan, nima qolgan, qayerda nima tu
 
 ## 4. Test natijalari (oxirgi ishga tushirish)
 
-- `sh scripts/verify.sh`: pytest **65 passed**, 10 skipped; Node **7/7**; Playwright **64/64** (en/ar × 1280/390, oflayn).
+- `sh scripts/verify.sh`: pytest **65 passed**, 10 skipped; Node **7/7**; Playwright **64/64** (en/ar × 1280/390, oflayn; sinov namunasi `build/demo` da).
 - Haqiqiy korpus: `HADIS_MANBA_REAL_HOME=/home/user/hadis-manba-kirish/library-run04 pytest tests/test_real_corpus.py` → **10/10**.
+- **Jonli sayt (Actions, headless Chromium): 14/14** — SEO 136 sahifa, 32 paket xeshi, en/ar o‘rnatish→sharh→oflayn.
 - Real iPhone/Android/Windows/Mac: **sinalmagan**.
 
 ## 5. Haqiqiy manba (repo TASHQARISIDA, faqat o‘qish)
@@ -59,12 +63,13 @@ Bulut konteyneri vaqtinchalik: bu papkalar sessiya tugasa yo‘qoladi (qayta yet
 - Tibiy: mualliflik `attribution_unresolved`. Inglizcha tarjima paketlarga kiritilmagan.
 - O‘tkazib yuborilgan sharhlar: `muslim/fath-al-mulhim`, `tirmidhi/maarif-al-sunan` (META: bog‘lama/matn yo‘q).
 
-## 7. Qolgan vazifalar (tartib bilan)
+## 7. Qolgan vazifalar
 
-1. Foydalanuvchiga savol: ruxsatli real paketlarni (hadith-json kitoblari; OpenITI sharhlari shartli kanal) public Pages/Release’ga joylashga ruxsatmi? Mahalliy real sayt: `/home/user/hadis-manba-kirish/site-run04/`.
-2. Ruxsatdan keyin: `main` ga merge, jonli URL/hreflang/canonical/sitemap tekshiruvi; Search Console — foydalanuvchi qadami (`docs/SEO.md`).
-3. Real qurilmalarda en/ar matritsasi (`PLATFORM-TEST-MATRIX.md`) — foydalanuvchi natija yuborsa yoziladi.
-4. Katta paketlarni jild bo‘yicha bo‘lish (telefon xotirasi), yuklashni davom ettirish (resume).
+1. Google Search Console — foydalanuvchi qadami (`docs/SEO.md`); tasdiqlash faylini/meta-tegni yuborsa repo ildiziga qo‘shiladi.
+2. Real qurilmalarda en/ar matritsasi (`PLATFORM-TEST-MATRIX.md`) — natija kelsa yoziladi.
+3. Agar Settings → Pages → Source hali “Deploy from a branch” bo‘lsa — “GitHub Actions” ga o‘tkazish (aks holda eski nashr paketlarsiz sayt bilan ustidan yozishi mumkin; jonli tekshiruv buni ushlaydi).
+4. Katta paketlarni jild bo‘yicha bo‘lish (telefon xotirasi), yuklashni davom ettirish (resume); paket ichidagi cheklov matnlari (`limitations`) hozircha o‘zbekcha.
+5. Huquqi noma’lum 18 paket uchun huquq dalili topilsa — `publish.classify` orqali keyingi Release.
 
 ## 8. Buyruqlar
 

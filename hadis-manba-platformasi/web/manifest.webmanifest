@@ -1,0 +1,15 @@
+{
+  "name": "Hadis Manba",
+  "short_name": "Hadis Manba",
+  "description": "Hadis manbalari va sharhlari — qurilmada, internetsiz",
+  "lang": "uz",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f6f2",
+  "theme_color": "#1d5c4a",
+  "icons": [
+    { "src": "ikonkalar/ikonka-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "ikonkalar/ikonka-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

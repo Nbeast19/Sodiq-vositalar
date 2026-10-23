@@ -1,0 +1,1999 @@
+{
+ "schema_version": "1.0.0",
+ "packages": [
+  {
+   "package_id": "hm-abudawud-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "سنن أبي داود",
+    "en": "Sunan Abi Dawud",
+    "uz": "Sunan Abu Dovud"
+   },
+   "work_id": "w-abudawud",
+   "edition_id": "ed-abudawud-hj120",
+   "author_ids": [
+    "p-author-abudawud"
+   ],
+   "file": "paketlar/hm-abudawud-hj120-1.0.1.hmz",
+   "package_sha256": "ebd73ca9dcdcc03332eddc32042bb8089515049a5ee9cc549e7f59a79b90cb4d",
+   "compressed_bytes": 2303257,
+   "installed_bytes": 62201586,
+   "temporary_space_bytes": 41467724,
+   "provides_units": 5276,
+   "coverage": {
+    "by_text_kind": {
+     "full": 5276
+    },
+    "by_unit_type": {
+     "hadith": 4610,
+     "text_block": 666
+    },
+    "distinct_printed_numbers": 5274,
+    "kind": "base_book",
+    "source_records": 5276,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 5276
+     },
+     "narrator_identity_status": {
+      "conflict": 2096,
+      "verified": 3180
+     },
+     "number_status": {
+      "conflict": 16,
+      "not_found": 1,
+      "verified": 5259
+     },
+     "printed_page_status": {
+      "not_found": 5276
+     },
+     "rights_status": {
+      "verified": 5276
+     },
+     "semantic_review_status": {
+      "unreviewed": 5276
+     },
+     "source_identity_status": {
+      "verified": 5276
+     },
+     "text_preservation_status": {
+      "unreviewed": 5276
+     },
+     "transport_integrity": {
+      "verified": 5276
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-abudawud",
+     "name_ar": "الإمام سليمان بن الأشعث أبو داود السجستاني",
+     "name_en": null,
+     "name_uz": "Imam Sulayman ibn al-Ash'ath Abu Dawud al-Sijistani"
+    }
+   ],
+   "names": [
+    "Abu Dovud",
+    "Sunan Abi Dawud",
+    "Sunan Abu Dovud",
+    "abudawud"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669513966,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-abudawud-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-ahmed-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "مسند الإمام أحمد بن حنبل",
+    "en": "Musnad Ahmad ibn Hanbal",
+    "uz": "Musnad Ahmad"
+   },
+   "work_id": "w-ahmed",
+   "edition_id": "ed-ahmed-hj120",
+   "author_ids": [
+    "p-author-ahmed"
+   ],
+   "file": "paketlar/hm-ahmed-hj120-1.0.1.hmz",
+   "package_sha256": "bf0bbea6e6f0b033cd22d5848be92d9399315bb576c5c0f599fa53824847c138",
+   "compressed_bytes": 609303,
+   "installed_bytes": 16056609,
+   "temporary_space_bytes": 10704406,
+   "provides_units": 1374,
+   "coverage": {
+    "by_text_kind": {
+     "full": 1374
+    },
+    "by_unit_type": {
+     "hadith": 1256,
+     "text_block": 118
+    },
+    "distinct_printed_numbers": 1001,
+    "kind": "base_book",
+    "source_records": 1374,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 1374
+     },
+     "narrator_identity_status": {
+      "conflict": 522,
+      "verified": 852
+     },
+     "number_status": {
+      "conflict": 16,
+      "limited": 3,
+      "not_found": 246,
+      "verified": 1109
+     },
+     "printed_page_status": {
+      "not_found": 1374
+     },
+     "rights_status": {
+      "verified": 1374
+     },
+     "semantic_review_status": {
+      "unreviewed": 1374
+     },
+     "source_identity_status": {
+      "verified": 1374
+     },
+     "text_preservation_status": {
+      "unreviewed": 1374
+     },
+     "transport_integrity": {
+      "verified": 1374
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-ahmed",
+     "name_ar": "الإمام أحمد بن حنبل",
+     "name_en": null,
+     "name_uz": "Imam Ahmad ibn Hanbal"
+    }
+   ],
+   "names": [
+    "Imom Ahmad",
+    "Musnad Ahmad",
+    "Musnad Ahmad ibn Hanbal",
+    "ahmed"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669513968,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-ahmed-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-aladab-almufrad-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "الأدب المفرد",
+    "en": "Al-Adab Al-Mufrad",
+    "uz": "Al-Adab al-mufrad"
+   },
+   "work_id": "w-aladab-almufrad",
+   "edition_id": "ed-aladab-almufrad-hj120",
+   "author_ids": [
+    "p-author-aladab-almufrad"
+   ],
+   "file": "paketlar/hm-aladab-almufrad-hj120-1.0.1.hmz",
+   "package_sha256": "625543c329931d2789a193bd1753ea4b8890665502daad328c6b174f53492a9a",
+   "compressed_bytes": 526564,
+   "installed_bytes": 14567478,
+   "temporary_space_bytes": 9711652,
+   "provides_units": 1326,
+   "coverage": {
+    "by_text_kind": {
+     "full": 1326
+    },
+    "by_unit_type": {
+     "hadith": 947,
+     "text_block": 379
+    },
+    "distinct_printed_numbers": 1300,
+    "kind": "base_book",
+    "source_records": 1326,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 1326
+     },
+     "narrator_identity_status": {
+      "conflict": 626,
+      "verified": 700
+     },
+     "number_status": {
+      "conflict": 1,
+      "not_found": 20,
+      "verified": 1305
+     },
+     "printed_page_status": {
+      "not_found": 1326
+     },
+     "rights_status": {
+      "verified": 1326
+     },
+     "semantic_review_status": {
+      "unreviewed": 1326
+     },
+     "source_identity_status": {
+      "verified": 1326
+     },
+     "text_preservation_status": {
+      "unreviewed": 1326
+     },
+     "transport_integrity": {
+      "verified": 1326
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-aladab-almufrad",
+     "name_ar": "الإمام محمد بن إسماعيل البخاري",
+     "name_en": null,
+     "name_uz": "Imam Muhammad ibn Ismail al-Bukhari"
+    }
+   ],
+   "names": [
+    "Adab al-mufrad",
+    "Al-Adab Al-Mufrad",
+    "Al-Adab al-mufrad",
+    "aladab_almufrad"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669513962,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-aladab-almufrad-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-bukhari-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "صحيح البخاري",
+    "en": "Sahih al-Bukhari",
+    "uz": "Sahih al-Buxoriy"
+   },
+   "work_id": "w-bukhari",
+   "edition_id": "ed-bukhari-hj120",
+   "author_ids": [
+    "p-author-bukhari"
+   ],
+   "file": "paketlar/hm-bukhari-hj120-1.0.1.hmz",
+   "package_sha256": "a734328462a08b5a03662c8280f4bbdc4e18a2045c5daad44d66b2bb67acb76e",
+   "compressed_bytes": 3366336,
+   "installed_bytes": 88317492,
+   "temporary_space_bytes": 58878328,
+   "provides_units": 7277,
+   "coverage": {
+    "by_text_kind": {
+     "full": 7277
+    },
+    "by_unit_type": {
+     "hadith": 6602,
+     "text_block": 675
+    },
+    "distinct_printed_numbers": 7252,
+    "kind": "base_book",
+    "source_records": 7277,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 7277
+     },
+     "narrator_identity_status": {
+      "conflict": 2146,
+      "verified": 5131
+     },
+     "number_status": {
+      "conflict": 88,
+      "not_found": 278,
+      "verified": 6911
+     },
+     "printed_page_status": {
+      "not_found": 7277
+     },
+     "rights_status": {
+      "verified": 7277
+     },
+     "semantic_review_status": {
+      "unreviewed": 7277
+     },
+     "source_identity_status": {
+      "verified": 7277
+     },
+     "text_preservation_status": {
+      "unreviewed": 7277
+     },
+     "transport_integrity": {
+      "verified": 7277
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-bukhari",
+     "name_ar": "الإمام محمد بن إسماعيل البخاري",
+     "name_en": null,
+     "name_uz": "Imam Muhammad ibn Ismail al-Bukhari"
+    }
+   ],
+   "names": [
+    "Bukhari",
+    "Buxoriy",
+    "Sahih al-Bukhari",
+    "Sahih al-Buxoriy",
+    "bukhari"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669513975,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-bukhari-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-bulugh-almaram-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "بلوغ المرام",
+    "en": "Bulugh al-Maram",
+    "uz": "Bulug‘ul marom"
+   },
+   "work_id": "w-bulugh-almaram",
+   "edition_id": "ed-bulugh-almaram-hj120",
+   "author_ids": [
+    "p-author-bulugh-almaram"
+   ],
+   "file": "paketlar/hm-bulugh-almaram-hj120-1.0.1.hmz",
+   "package_sha256": "892ceda349a218bdfbc982eb8c133360e34a26f9b51824e03c6bc85f2e35ecdb",
+   "compressed_bytes": 782628,
+   "installed_bytes": 19822344,
+   "temporary_space_bytes": 13214896,
+   "provides_units": 1767,
+   "coverage": {
+    "by_text_kind": {
+     "full": 1767
+    },
+    "by_unit_type": {
+     "athar_sahabi": 1,
+     "hadith": 1386,
+     "text_block": 380
+    },
+    "distinct_printed_numbers": 3331,
+    "kind": "base_book",
+    "source_records": 1767,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 1767
+     },
+     "narrator_identity_status": {
+      "conflict": 644,
+      "verified": 1123
+     },
+     "number_status": {
+      "verified": 1767
+     },
+     "printed_page_status": {
+      "not_found": 1767
+     },
+     "rights_status": {
+      "verified": 1767
+     },
+     "semantic_review_status": {
+      "unreviewed": 1767
+     },
+     "source_identity_status": {
+      "verified": 1767
+     },
+     "text_preservation_status": {
+      "unreviewed": 1767
+     },
+     "transport_integrity": {
+      "verified": 1767
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-bulugh-almaram",
+     "name_ar": "الإمام ابن حجر العسقلاني",
+     "name_en": null,
+     "name_uz": "Ibn Hajar al-Asqalani"
+    }
+   ],
+   "names": [
+    "Bulugh al-Maram",
+    "Bulug‘ul marom",
+    "bulugh_almaram"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669513957,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-bulugh-almaram-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-darimi-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "سنن الدارمي",
+    "en": "Sunan al-Darimi",
+    "uz": "Sunan ad-Dorimiy"
+   },
+   "work_id": "w-darimi",
+   "edition_id": "ed-darimi-hj120",
+   "author_ids": [
+    "p-author-darimi"
+   ],
+   "file": "paketlar/hm-darimi-hj120-1.0.1.hmz",
+   "package_sha256": "5eb23b2d342406a43f7ccf546c48f9b84c9825db2bd7420b92e2b2e14929e1c8",
+   "compressed_bytes": 1221102,
+   "installed_bytes": 35105331,
+   "temporary_space_bytes": 23403554,
+   "provides_units": 3406,
+   "coverage": {
+    "by_text_kind": {
+     "full": 3406
+    },
+    "by_unit_type": {
+     "hadith": 2062,
+     "text_block": 1344
+    },
+    "distinct_printed_numbers": 3362,
+    "kind": "base_book",
+    "source_records": 3406,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 3406
+     },
+     "narrator_identity_status": {
+      "conflict": 2005,
+      "verified": 1401
+     },
+     "number_status": {
+      "limited": 1,
+      "verified": 3405
+     },
+     "printed_page_status": {
+      "not_found": 3406
+     },
+     "rights_status": {
+      "verified": 3406
+     },
+     "semantic_review_status": {
+      "unreviewed": 3406
+     },
+     "source_identity_status": {
+      "verified": 3406
+     },
+     "text_preservation_status": {
+      "unreviewed": 3406
+     },
+     "transport_integrity": {
+      "verified": 3406
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-darimi",
+     "name_ar": "الإمام أبو محمد عبد الرحمن بن عبد الله بن الدارمي",
+     "name_en": null,
+     "name_uz": "Imam Abu Muhammad Abd al-Rahman ibn Abd Allah ibn al-Darimi"
+    }
+   ],
+   "names": [
+    "Dorimiy",
+    "Sunan ad-Dorimiy",
+    "Sunan al-Darimi",
+    "darimi"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514024,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-darimi-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-ibnmajah-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "سنن ابن ماجه",
+    "en": "Sunan Ibn Majah",
+    "uz": "Sunan Ibn Moja"
+   },
+   "work_id": "w-ibnmajah",
+   "edition_id": "ed-ibnmajah-hj120",
+   "author_ids": [
+    "p-author-ibnmajah"
+   ],
+   "file": "paketlar/hm-ibnmajah-hj120-1.0.1.hmz",
+   "package_sha256": "c0de7a06d70b69005b582eed19055014af26867d3536bc970e7193aec9a058e2",
+   "compressed_bytes": 1775978,
+   "installed_bytes": 49609194,
+   "temporary_space_bytes": 33072796,
+   "provides_units": 4345,
+   "coverage": {
+    "by_text_kind": {
+     "full": 4345
+    },
+    "by_unit_type": {
+     "hadith": 4190,
+     "text_block": 155
+    },
+    "distinct_printed_numbers": 4328,
+    "kind": "base_book",
+    "source_records": 4345,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 4345
+     },
+     "narrator_identity_status": {
+      "conflict": 1144,
+      "verified": 3201
+     },
+     "number_status": {
+      "conflict": 10,
+      "not_found": 15,
+      "verified": 4320
+     },
+     "printed_page_status": {
+      "not_found": 4345
+     },
+     "rights_status": {
+      "verified": 4345
+     },
+     "semantic_review_status": {
+      "unreviewed": 4345
+     },
+     "source_identity_status": {
+      "verified": 4345
+     },
+     "text_preservation_status": {
+      "unreviewed": 4345
+     },
+     "transport_integrity": {
+      "verified": 4345
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-ibnmajah",
+     "name_ar": "الإمام محمد بن يزيد بن ماجه القزويني",
+     "name_en": null,
+     "name_uz": "Imam Muhammad ibn Yazid Ibn Majah al-Qazwini"
+    }
+   ],
+   "names": [
+    "Ibn Moja",
+    "Sunan Ibn Majah",
+    "Sunan Ibn Moja",
+    "ibnmajah"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514020,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-ibnmajah-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-malik-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "موطأ مالك",
+    "en": "Muwatta Malik",
+    "uz": "Muvatto (Imom Molik)"
+   },
+   "work_id": "w-malik",
+   "edition_id": "ed-malik-hj120",
+   "author_ids": [
+    "p-author-malik"
+   ],
+   "file": "paketlar/hm-malik-hj120-1.0.1.hmz",
+   "package_sha256": "b7fcb38cbc828672f4a9abf88a078972b418223c8d881a547efeefb51a6a9b94",
+   "compressed_bytes": 944303,
+   "installed_bytes": 25381245,
+   "temporary_space_bytes": 16920830,
+   "provides_units": 1985,
+   "coverage": {
+    "by_text_kind": {
+     "fragment": 2,
+     "full": 1983
+    },
+    "by_unit_type": {
+     "athar_sahabi": 567,
+     "athar_tabii": 299,
+     "author_statement": 144,
+     "hadith": 969,
+     "text_block": 6
+    },
+    "distinct_printed_numbers": 3704,
+    "kind": "base_book",
+    "source_records": 1985,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 1985
+     },
+     "narrator_identity_status": {
+      "conflict": 1291,
+      "not_applicable": 144,
+      "verified": 550
+     },
+     "number_status": {
+      "not_found": 123,
+      "verified": 1862
+     },
+     "printed_page_status": {
+      "not_found": 1,
+      "unreviewed": 1984
+     },
+     "rights_status": {
+      "verified": 1985
+     },
+     "semantic_review_status": {
+      "unreviewed": 1985
+     },
+     "source_identity_status": {
+      "verified": 1985
+     },
+     "text_preservation_status": {
+      "unreviewed": 1985
+     },
+     "transport_integrity": {
+      "verified": 1985
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-malik",
+     "name_ar": "الإمام مالك بن أنس",
+     "name_en": null,
+     "name_uz": "Imam Malik ibn Anas"
+    }
+   ],
+   "names": [
+    "Imom Molik",
+    "Muvatto",
+    "Muvatto (Imom Molik)",
+    "Muwatta Malik",
+    "malik"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514029,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-malik-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-mishkat-almasabih-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "مشكاة المصابيح",
+    "en": "Mishkat al-Masabih",
+    "uz": "Mishkotul masobih"
+   },
+   "work_id": "w-mishkat-almasabih",
+   "edition_id": "ed-mishkat-almasabih-hj120",
+   "author_ids": [
+    "p-author-mishkat-almasabih"
+   ],
+   "file": "paketlar/hm-mishkat-almasabih-hj120-1.0.1.hmz",
+   "package_sha256": "808fcdf4e69f7fbbee31fe5772bb76e00d309c2b3ddd50f92ffb8f33d7468a18",
+   "compressed_bytes": 1598965,
+   "installed_bytes": 46313415,
+   "temporary_space_bytes": 30875610,
+   "provides_units": 4428,
+   "coverage": {
+    "by_text_kind": {
+     "full": 4428
+    },
+    "by_unit_type": {
+     "hadith": 4207,
+     "text_block": 221
+    },
+    "distinct_printed_numbers": 4262,
+    "kind": "base_book",
+    "source_records": 4428,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 4428
+     },
+     "narrator_identity_status": {
+      "conflict": 1263,
+      "verified": 3165
+     },
+     "number_status": {
+      "conflict": 4,
+      "not_found": 162,
+      "verified": 4262
+     },
+     "printed_page_status": {
+      "not_found": 4428
+     },
+     "rights_status": {
+      "verified": 4428
+     },
+     "semantic_review_status": {
+      "unreviewed": 4428
+     },
+     "source_identity_status": {
+      "verified": 4428
+     },
+     "text_preservation_status": {
+      "unreviewed": 4428
+     },
+     "transport_integrity": {
+      "verified": 4428
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-mishkat-almasabih",
+     "name_ar": "الإمام الكاتب التبريزي",
+     "name_en": null,
+     "name_uz": "Al-Khatib Al-Tabrizi"
+    }
+   ],
+   "names": [
+    "Mishkat al-Masabih",
+    "Mishkotul masobih",
+    "mishkat_almasabih"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514035,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-mishkat-almasabih-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-muslim-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "صحيح مسلم",
+    "en": "Sahih Muslim",
+    "uz": "Sahih Muslim"
+   },
+   "work_id": "w-muslim",
+   "edition_id": "ed-muslim-hj120",
+   "author_ids": [
+    "p-author-muslim"
+   ],
+   "file": "paketlar/hm-muslim-hj120-1.0.1.hmz",
+   "package_sha256": "3b20aa24eed4c646abfe427f204d3d1536c9198b0276bb3085489eb15ee42bf7",
+   "compressed_bytes": 4011637,
+   "installed_bytes": 106429119,
+   "temporary_space_bytes": 70952746,
+   "provides_units": 7459,
+   "coverage": {
+    "by_text_kind": {
+     "full": 7459
+    },
+    "by_unit_type": {
+     "hadith": 6080,
+     "text_block": 1379
+    },
+    "distinct_printed_numbers": 7373,
+    "kind": "base_book",
+    "source_records": 7459,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 7459
+     },
+     "narrator_identity_status": {
+      "conflict": 2801,
+      "verified": 4658
+     },
+     "number_status": {
+      "conflict": 241,
+      "limited": 1,
+      "not_found": 37,
+      "verified": 7180
+     },
+     "printed_page_status": {
+      "not_found": 7459
+     },
+     "rights_status": {
+      "verified": 7459
+     },
+     "semantic_review_status": {
+      "unreviewed": 7459
+     },
+     "source_identity_status": {
+      "verified": 7459
+     },
+     "text_preservation_status": {
+      "unreviewed": 7459
+     },
+     "transport_integrity": {
+      "verified": 7459
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-muslim",
+     "name_ar": "الإمام مسلم بن الحجاج القشيري النيسابوري",
+     "name_en": null,
+     "name_uz": "Imam Muslim ibn al-Hajjaj al-Naysaburi"
+    }
+   ],
+   "names": [
+    "Muslim",
+    "Sahih Muslim",
+    "muslim"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514038,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-muslim-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-nasai-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "سنن النسائي",
+    "en": "Sunan al-Nasa'i",
+    "uz": "Sunan an-Nasoiy"
+   },
+   "work_id": "w-nasai",
+   "edition_id": "ed-nasai-hj120",
+   "author_ids": [
+    "p-author-nasai"
+   ],
+   "file": "paketlar/hm-nasai-hj120-1.0.1.hmz",
+   "package_sha256": "19b62383de4480ddd2577f59f28127794aeaa3b9a72c288db98e3b75015d69d5",
+   "compressed_bytes": 2240034,
+   "installed_bytes": 66420636,
+   "temporary_space_bytes": 44280424,
+   "provides_units": 5768,
+   "coverage": {
+    "by_text_kind": {
+     "full": 5768
+    },
+    "by_unit_type": {
+     "hadith": 5302,
+     "text_block": 466
+    },
+    "distinct_printed_numbers": 5756,
+    "kind": "base_book",
+    "source_records": 5768,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 5768
+     },
+     "narrator_identity_status": {
+      "conflict": 1932,
+      "verified": 3836
+     },
+     "number_status": {
+      "conflict": 18,
+      "not_found": 4,
+      "verified": 5746
+     },
+     "printed_page_status": {
+      "not_found": 5768
+     },
+     "rights_status": {
+      "verified": 5768
+     },
+     "semantic_review_status": {
+      "unreviewed": 5768
+     },
+     "source_identity_status": {
+      "verified": 5768
+     },
+     "text_preservation_status": {
+      "unreviewed": 5768
+     },
+     "transport_integrity": {
+      "verified": 5768
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-nasai",
+     "name_ar": "الإمام أبو عبد الرحمن أحمد بن شعيب النسائي",
+     "name_en": null,
+     "name_uz": "Imam Ahmad ibn Shu'ayb al-Nasa'i"
+    }
+   ],
+   "names": [
+    "Nasoiy",
+    "Sunan al-Nasa'i",
+    "Sunan an-Nasoiy",
+    "nasai"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514047,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-nasai-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-nawawi40-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "الأربعون النووية",
+    "en": "The Forty Hadith of Imam Nawawi",
+    "uz": "Arbaʼin Navaviy"
+   },
+   "work_id": "w-nawawi40",
+   "edition_id": "ed-nawawi40-hj120",
+   "author_ids": [
+    "p-author-nawawi40"
+   ],
+   "file": "paketlar/hm-nawawi40-hj120-1.0.1.hmz",
+   "package_sha256": "ba00462ee43c7968382074e990c77eb65b1ebc2668825a2187f63ca25c81462f",
+   "compressed_bytes": 26025,
+   "installed_bytes": 466542,
+   "temporary_space_bytes": 311028,
+   "provides_units": 42,
+   "coverage": {
+    "by_text_kind": {
+     "full": 42
+    },
+    "by_unit_type": {
+     "hadith": 42
+    },
+    "distinct_printed_numbers": 40,
+    "kind": "base_book",
+    "source_records": 42,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 42
+     },
+     "narrator_identity_status": {
+      "conflict": 16,
+      "verified": 26
+     },
+     "number_status": {
+      "conflict": 2,
+      "verified": 40
+     },
+     "printed_page_status": {
+      "not_found": 42
+     },
+     "rights_status": {
+      "verified": 42
+     },
+     "semantic_review_status": {
+      "unreviewed": 42
+     },
+     "source_identity_status": {
+      "verified": 42
+     },
+     "text_preservation_status": {
+      "unreviewed": 42
+     },
+     "transport_integrity": {
+      "verified": 42
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-nawawi40",
+     "name_ar": "الإمام يحيى بن شرف النووي",
+     "name_en": null,
+     "name_uz": "Imam Yahya ibn Sharaf al-Nawawi"
+    }
+   ],
+   "names": [
+    "Arbaʼin Navaviy",
+    "The Forty Hadith of Imam Nawawi",
+    "nawawi40"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514058,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-nawawi40-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-qudsi40-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "الأربعون القدسية",
+    "en": "The Forty Hadith Qudsi",
+    "uz": "Qirq hadis qudsiy"
+   },
+   "work_id": "w-qudsi40",
+   "edition_id": "ed-qudsi40-hj120",
+   "author_ids": [],
+   "file": "paketlar/hm-qudsi40-hj120-1.0.1.hmz",
+   "package_sha256": "30001276ef312e22553e76621d2242b8e693278586446084c067cb60eebb04f1",
+   "compressed_bytes": 25664,
+   "installed_bytes": 478554,
+   "temporary_space_bytes": 319036,
+   "provides_units": 40,
+   "coverage": {
+    "by_text_kind": {
+     "full": 40
+    },
+    "by_unit_type": {
+     "hadith": 39,
+     "text_block": 1
+    },
+    "distinct_printed_numbers": 40,
+    "kind": "base_book",
+    "source_records": 40,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 40
+     },
+     "narrator_identity_status": {
+      "conflict": 3,
+      "verified": 37
+     },
+     "number_status": {
+      "verified": 40
+     },
+     "printed_page_status": {
+      "not_found": 40
+     },
+     "rights_status": {
+      "verified": 40
+     },
+     "semantic_review_status": {
+      "unreviewed": 40
+     },
+     "source_identity_status": {
+      "verified": 40
+     },
+     "text_preservation_status": {
+      "unreviewed": 40
+     },
+     "transport_integrity": {
+      "verified": 40
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [],
+   "names": [
+    "Qirq hadis qudsiy",
+    "The Forty Hadith Qudsi",
+    "qudsi40"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514067,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-qudsi40-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-riyad-assalihin-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "رياض الصالحين",
+    "en": "Riyad as-Salihin",
+    "uz": "Riyozus solihin"
+   },
+   "work_id": "w-riyad-assalihin",
+   "edition_id": "ed-riyad-assalihin-hj120",
+   "author_ids": [
+    "p-author-riyad-assalihin"
+   ],
+   "file": "paketlar/hm-riyad-assalihin-hj120-1.0.1.hmz",
+   "package_sha256": "cf9d65d845453ca6289ee68564ca86bfd0aa797ce9f4bc7d7a67c72924fb49da",
+   "compressed_bytes": 695398,
+   "installed_bytes": 20168511,
+   "temporary_space_bytes": 13445674,
+   "provides_units": 1896,
+   "coverage": {
+    "by_text_kind": {
+     "full": 1896
+    },
+    "by_unit_type": {
+     "hadith": 1839,
+     "text_block": 57
+    },
+    "distinct_printed_numbers": 2130,
+    "kind": "base_book",
+    "source_records": 1896,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 1896
+     },
+     "narrator_identity_status": {
+      "conflict": 565,
+      "verified": 1331
+     },
+     "number_status": {
+      "not_found": 2,
+      "verified": 1894
+     },
+     "printed_page_status": {
+      "not_found": 1896
+     },
+     "rights_status": {
+      "verified": 1896
+     },
+     "semantic_review_status": {
+      "unreviewed": 1896
+     },
+     "source_identity_status": {
+      "verified": 1896
+     },
+     "text_preservation_status": {
+      "unreviewed": 1896
+     },
+     "transport_integrity": {
+      "verified": 1896
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-riyad-assalihin",
+     "name_ar": "الإمام يحيى بن شرف النووي",
+     "name_en": null,
+     "name_uz": "Imam Yahya ibn Sharaf al-Nawawi"
+    }
+   ],
+   "names": [
+    "Riyad as-Salihin",
+    "Riyozus solihin",
+    "riyad_assalihin"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514068,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-riyad-assalihin-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-shahwaliullah40-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "أربعون ولي الله الدهلوي",
+    "en": "The Forty Hadith of Shah Waliullah",
+    "uz": "Shoh Valiyulloh qirq hadisi"
+   },
+   "work_id": "w-shahwaliullah40",
+   "edition_id": "ed-shahwaliullah40-hj120",
+   "author_ids": [
+    "p-author-shahwaliullah40"
+   ],
+   "file": "paketlar/hm-shahwaliullah40-hj120-1.0.1.hmz",
+   "package_sha256": "e194d78d7e5362d5c138bb59509345f0a081f3d5206b081fcf6df02629222a8e",
+   "compressed_bytes": 13113,
+   "installed_bytes": 319299,
+   "temporary_space_bytes": 212866,
+   "provides_units": 40,
+   "coverage": {
+    "by_text_kind": {
+     "fragment": 9,
+     "full": 31
+    },
+    "by_unit_type": {
+     "text_block": 40
+    },
+    "distinct_printed_numbers": 40,
+    "kind": "base_book",
+    "source_records": 40,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 40
+     },
+     "narrator_identity_status": {
+      "conflict": 40
+     },
+     "number_status": {
+      "verified": 40
+     },
+     "printed_page_status": {
+      "not_found": 40
+     },
+     "rights_status": {
+      "verified": 40
+     },
+     "semantic_review_status": {
+      "unreviewed": 40
+     },
+     "source_identity_status": {
+      "verified": 40
+     },
+     "text_preservation_status": {
+      "unreviewed": 40
+     },
+     "transport_integrity": {
+      "verified": 40
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-shahwaliullah40",
+     "name_ar": "الشاه ولي الدين الدهلوي",
+     "name_en": null,
+     "name_uz": "Shah Waliullah Dahlawi"
+    }
+   ],
+   "names": [
+    "Shoh Valiyulloh qirq hadisi",
+    "The Forty Hadith of Shah Waliullah",
+    "shahwaliullah40"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514073,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-shahwaliullah40-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-shamail-muhammadiyah-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "الشمائل المحمدية",
+    "en": "Shama'il Muhammadiyah",
+    "uz": "Shamoil"
+   },
+   "work_id": "w-shamail-muhammadiyah",
+   "edition_id": "ed-shamail-muhammadiyah-hj120",
+   "author_ids": [
+    "p-author-shamail-muhammadiyah"
+   ],
+   "file": "paketlar/hm-shamail-muhammadiyah-hj120-1.0.1.hmz",
+   "package_sha256": "e84776ec6d794667be9376717e3d6782086c175261742a709f4cacf1d82dadcb",
+   "compressed_bytes": 171930,
+   "installed_bytes": 4877781,
+   "temporary_space_bytes": 3251854,
+   "provides_units": 402,
+   "coverage": {
+    "by_text_kind": {
+     "full": 402
+    },
+    "by_unit_type": {
+     "athar_sahabi": 6,
+     "athar_tabii": 5,
+     "hadith": 391
+    },
+    "distinct_printed_numbers": 782,
+    "kind": "base_book",
+    "source_records": 402,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 402
+     },
+     "narrator_identity_status": {
+      "conflict": 119,
+      "verified": 283
+     },
+     "number_status": {
+      "verified": 402
+     },
+     "printed_page_status": {
+      "not_found": 402
+     },
+     "rights_status": {
+      "verified": 402
+     },
+     "semantic_review_status": {
+      "unreviewed": 402
+     },
+     "source_identity_status": {
+      "verified": 402
+     },
+     "text_preservation_status": {
+      "unreviewed": 402
+     },
+     "transport_integrity": {
+      "verified": 402
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-shamail-muhammadiyah",
+     "name_ar": "الإمام الترمذي",
+     "name_en": null,
+     "name_uz": "Imam Tirmidhi"
+    }
+   ],
+   "names": [
+    "Shama'il Muhammadiyah",
+    "Shamoil",
+    "shamail_muhammadiyah"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514074,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-shamail-muhammadiyah-hj120-1.0.1.hmz"
+  },
+  {
+   "package_id": "hm-tirmidhi-hj120",
+   "kind": "base_book",
+   "package_version": "1.0.1",
+   "schema_version": "1.0.0",
+   "title": {
+    "ar": "جامع الترمذي",
+    "en": "Jami' al-Tirmidhi",
+    "uz": "Sunan at-Termiziy"
+   },
+   "work_id": "w-tirmidhi",
+   "edition_id": "ed-tirmidhi-hj120",
+   "author_ids": [
+    "p-author-tirmidhi"
+   ],
+   "file": "paketlar/hm-tirmidhi-hj120-1.0.1.hmz",
+   "package_sha256": "a6c32053d3409e242b9ae45b00d49173dad9094097dabc57ac35b0bb23629367",
+   "compressed_bytes": 2017310,
+   "installed_bytes": 52848123,
+   "temporary_space_bytes": 35232082,
+   "provides_units": 4053,
+   "coverage": {
+    "by_text_kind": {
+     "full": 4053
+    },
+    "by_unit_type": {
+     "hadith": 3859,
+     "text_block": 194
+    },
+    "distinct_printed_numbers": 3904,
+    "kind": "base_book",
+    "source_records": 4053,
+    "status_counts": {
+     "edition_identity_status": {
+      "limited": 4053
+     },
+     "narrator_identity_status": {
+      "conflict": 1040,
+      "verified": 3013
+     },
+     "number_status": {
+      "conflict": 6,
+      "not_found": 113,
+      "verified": 3934
+     },
+     "printed_page_status": {
+      "not_found": 4053
+     },
+     "rights_status": {
+      "verified": 4053
+     },
+     "semantic_review_status": {
+      "unreviewed": 4053
+     },
+     "source_identity_status": {
+      "verified": 4053
+     },
+     "text_preservation_status": {
+      "unreviewed": 4053
+     },
+     "transport_integrity": {
+      "verified": 4053
+     }
+    }
+   },
+   "requires_for_linked_reading": [],
+   "rights": [
+    {
+     "applies_to": "classical_body",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "metadata",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    },
+    {
+     "applies_to": "derived_index",
+     "rights_status": "approved",
+     "license_id": null,
+     "license_url": "https://sunnah.com",
+     "required_attribution": "Sunnah.com",
+     "commercial_use_allowed": null,
+     "share_alike_requirements": null
+    }
+   ],
+   "attribution": "Matn: sunnah.com (hadith-json 1.2.0 orqali); raqam/roviy tekshiruvi: foydalanuvchi loyihasi 0-Manba (dot-20261023-04)",
+   "channel": "public",
+   "authors": [
+    {
+     "person_id": "p-author-tirmidhi",
+     "name_ar": "الإمام أبو عيسى محمد بن عيسى الترمذي",
+     "name_en": null,
+     "name_uz": "Imam Abu Isa Muhammad ibn Isa al-Tirmidhi"
+    }
+   ],
+   "names": [
+    "Jami' al-Tirmidhi",
+    "Sunan at-Termiziy",
+    "Termiziy",
+    "tirmidhi"
+   ],
+   "names_origin": "source",
+   "work_type": "hadith_collection",
+   "commentary_on": null,
+   "is_test_fixture": false,
+   "release_asset_id": 669514230,
+   "download_url": "https://github.com/Nbeast19/vositalar/releases/download/hadis-manba-paketlar-v1/hm-tirmidhi-hj120-1.0.1.hmz"
+  }
+ ],
+ "note": "Faqat tarqatishga tasdiqlangan paketlar. Ommaviy demo to'liq mahalliy katalog bilan bir xil emas.",
+ "conditional_catalog": "catalog-shartli.json",
+ "release": {
+  "repo": "Nbeast19/vositalar",
+  "tag": "hadis-manba-paketlar-v1",
+  "url": "https://github.com/Nbeast19/vositalar/releases/tag/hadis-manba-paketlar-v1"
+ }
+}

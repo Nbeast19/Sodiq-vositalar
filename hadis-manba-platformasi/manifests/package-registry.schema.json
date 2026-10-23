@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PACKAGE-REGISTRY.json (hadis-manba audit natijasi)",
+  "type": "object",
+  "required": ["generated_at", "packages"],
+  "properties": {
+    "generated_at": {"type": "string"},
+    "packages": {"type": "array", "items": {
+      "type": "object",
+      "required": ["path", "file_name", "bytes", "sha256", "family", "status", "import_status", "rights_status"],
+      "properties": {
+        "path": {"type": "string"},
+        "file_name": {"type": "string"},
+        "bytes": {"type": "integer"},
+        "sha256": {"type": ["string", "null"]},
+        "members": {"type": "integer"},
+        "uncompressed_bytes": {"type": "integer"},
+        "crc_ok": {"type": "boolean"},
+        "unsafe_names": {"type": "array"},
+        "internal_manifest": {"type": ["object", "null"]},
+        "contains_code_files": {"type": "array"},
+        "family": {"type": ["string", "null"]},
+        "stage_number_in_name": {"type": ["integer", "null"]},
+        "status": {"enum": ["needs_semantic_comparison", "needs_review", "unclassified", "current", "historical"]},
+        "status_note": {"type": "string"},
+        "import_status": {"enum": ["not_imported", "imported", "quarantined"]},
+        "parent_package": {"type": ["string", "null"]},
+        "rights_status": {"enum": ["approved", "conditional", "unknown", "restricted"]},
+        "private_or_out_of_scope": {"type": "boolean"}
+      }}}
+  }
+}

@@ -1,0 +1,37 @@
+{
+ "note": "Ommaviy (allowlist) paketlar. web/catalog.json build-public bilan yaratiladi.",
+ "packages": [
+  {
+   "package_id": "namuna-asos-a",
+   "kind": "base_book",
+   "package_version": "1.0.0",
+   "package_sha256": "9228874a4e577ecddba7a00de7011a7fa529c0435e85c11a115bb2b237e611a0",
+   "channel": "public",
+   "is_test_fixture": true
+  },
+  {
+   "package_id": "namuna-asos-b",
+   "kind": "base_book",
+   "package_version": "1.0.0",
+   "package_sha256": "2fae5bd11326aeb6b3b9c5c7194c0d7d2e59f1b1cc8f963f41c71aa9b77ba159",
+   "channel": "public",
+   "is_test_fixture": true
+  },
+  {
+   "package_id": "namuna-sharh-1",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "package_sha256": "e998d96ff07cb714b9b12e45ed9dc3a2eb54aeb0d136c1684451f3877177ba6e",
+   "channel": "public",
+   "is_test_fixture": true
+  },
+  {
+   "package_id": "namuna-sharh-2",
+   "kind": "commentary",
+   "package_version": "1.0.0",
+   "package_sha256": "aed98467c3fc21a2c16f806cef8dddc2d7ef8a9c27e21de5d7690c0ef42ec4f4",
+   "channel": "public",
+   "is_test_fixture": true
+  }
+ ]
+}

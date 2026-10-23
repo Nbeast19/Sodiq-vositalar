@@ -1,0 +1,51 @@
+# GitHub Pages nashri: repo fayllari (avvalgidek, .nojekyll) + Hadis Manba paketlari.
+# Paketlar gitda emas — GitHub Release'dan olinadi, SHA-256 tekshiriladi va
+# hadis-manba-platformasi/web/paketlar/ ga qo'yiladi (brauzer Release'dan CORS sababli ololmaydi).
+# Talab: Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: hadis-manba-pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pages manbasini tekshirish (GitHub Actions bo'lishi kerak)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "build_type: $(gh api repos/$GITHUB_REPOSITORY/pages --jq .build_type)"
+          if [ "$(gh api repos/$GITHUB_REPOSITORY/pages --jq .build_type)" != "workflow" ]; then
+            gh api -X PUT repos/$GITHUB_REPOSITORY/pages -f build_type=workflow && echo "build_type -> workflow" || echo "::warning::Pages manbasini qo'lda 'GitHub Actions' ga o'tkazing"
+          fi
+      - name: Sayt papkasi (faqat gitdagi fayllar)
+        run: |
+          mkdir _site
+          git archive HEAD | tar -x -C _site
+          rm -rf _site/.github
+      - name: Paketlarni Release'dan olish va tekshirish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 hadis-manba-platformasi/scripts/fetch_release_packages.py --web _site/hadis-manba-platformasi/web
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.d.outputs.page_url }}
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4

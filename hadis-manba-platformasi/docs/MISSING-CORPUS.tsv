@@ -1,0 +1,13 @@
+ustuvorlik	band	toifa	aniq_yetishmayotgan	dalil	foyda	keyingi_qadam	bloklovchi
+1	To'liq hadis transferi (14 ZIP, 12366 fayl)	5-paket haqida xabar bor, fayli to'liq kelmagan	79/89 transport bo'lak (001–010 kelgan)	TRANSPORT-MANIFEST.json (704e0d2d… manifest)	butun korpus auditi va import	qolgan bo'laklarni olish, receive_transport.py	bo'laklar yetkazilishi
+2	NAWAWI-B-TEKSHIRILGAN-2026-10-23.zip va 5 ta V2 paket	5-paket haqida xabar bor, fayli yo'q	6 ZIP (MISSING-PACKAGES.md)	topshiriq 5.6	yangilangan B sharh qatlamlari	faylni topish, alohida tekshiruv	fayl yo'q
+3	Fathul Mulhim / Takmila	6-faqat havola/PDF metadata	to'liq mahalliy TXT	topshiriq 4-bo'lim	Muslim sharhi	huquqi aniq raqamli nusxa izlash	huquq va manba
+4	Maorifus sunan	6-faqat havola/PDF metadata	to'liq mahalliy TXT	topshiriq 4-bo'lim	Tirmiziy sharhi	matn holatini aniqlash	huquq va manba
+5	Riyoz, Bulug', Dorimiy, Adabul mufrod, Ahmad uchun sharhlar	3-asar matni bor, sharhi yo'q (joriy katalogda)	sharh katalogida yozuv yo'q	topshiriq 12-bo'lim	ko'p ishlatiladigan to'plamlar	mahalliy katalog qamrovini transferdan keyin qayta sanash	transfer
+6	Ahmad — eski qism va kattaroq Risola nusxasi	2-asar bor, tanlangan nashri/qismi yo'q	nashrlar ajratilmagan	topshiriq 12-bo'lim	Musnad Ahmad qamrovi	nashr kartalarini ajratish	transfer
+7	Tibiy j01 / j02 muqaddima qismlari	2-qism yo'q (o'rnatilgan nusxada)	j01; j02 muqaddimaning bir qismi	agent2-R1; TIBI-CUMULATIVE210 provenance/R1-META.json	klassik muqaddima	351 skan sahifa dalilini tekshirish, mualliflik xaritasi	skan dalili
+8	Sharh bor, kerakli hadisga bog'lama yo'q	4-bog'lama yo'q	Umdat/Mirqot/Tibiy/Tuhfa/Fath qisman qatlamlari tashqarisidagi hadislar	COVERAGE.md	sharhga o'tish	bosqichma-bosqich tekshiruv	ilmiy tekshiruv (bu sharh yozilmagan degani emas)
+9	Fath: Dar al-Ma'rifa va Salafiyya	7-boshqa nashrda parallel matn bor	Salafiyya to'liq XHTML/EPUB xom manbasi (ZIPda bo'lmasa)	topshiriq 5.4	nashrlarni to'g'ri ajratish	ikki edition_id; jim almashtirmaslik	xom manba
+10	Tahoviy — شرح معاني الآثار, شرح مشكل الآثار	1-asar umuman indekslanmagan (qayta tekshirilishi kerak)	mahalliy to'plam	topshiriq 12-bo'lim nomzodi	parallel rivoyatlar	mahalliy mavjudligini transferdan keyin tekshirish; tasodifiy iqtibos asar mavjudligi emas	metadata va huquq dalili
+11	Nasoiy — السنن الكبرى	1-asar umuman indekslanmagan (qayta tekshirilishi kerak)	mahalliy to'plam	topshiriq 12-bo'lim nomzodi	Nasoiy qamrovi	xuddi shu	metadata va huquq dalili
+12	Abu Ya'lo, Bazzor, Humaydiy musnadlari	1-asar umuman indekslanmagan (qayta tekshirilishi kerak)	mahalliy to'plamlar	topshiriq 12-bo'lim nomzodi	musnad qamrovi	xuddi shu	metadata va huquq dalili

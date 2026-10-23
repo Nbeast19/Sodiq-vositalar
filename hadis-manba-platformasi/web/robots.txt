@@ -1,0 +1,5 @@
+# Eslatma: crawlerlar faqat host ildizidagi /robots.txt ni o'qiydi. GitHub Pages project sahifasida
+# bu fayl ma'lumot uchun; sitemap'ni Search Console orqali yuboring.
+User-agent: *
+Allow: /
+Sitemap: https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/sitemap.xml

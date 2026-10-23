@@ -1,0 +1,11 @@
+build/
+dist/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+web/PUBLIC-BUILD-REPORT.json
+node_modules/
+web/paketlar/
+jonli-natija.json
+tests/live/jonli-natija.json
+tests/live/node_modules/

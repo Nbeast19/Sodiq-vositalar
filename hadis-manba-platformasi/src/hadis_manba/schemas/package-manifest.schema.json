@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hadis-manba/schemas/package-manifest-1.json",
+  "title": "Hadis Manba paket manifesti (package.json)",
+  "type": "object",
+  "required": ["package_id", "kind", "package_version", "schema_version", "title", "rights", "normalization_version", "compatible_app_versions"],
+  "properties": {
+    "package_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:\\-]{0,199}$"},
+    "kind": {"enum": ["base_book", "commentary", "selection"]},
+    "package_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "schema_version": {"type": "string", "pattern": "^1\\."},
+    "work_id": {"type": "string"},
+    "edition_id": {"type": "string"},
+    "source_revision": {"type": "string"},
+    "title": {"type": "object", "properties": {"uz": {"type": "string"}, "ar": {"type": "string"}}},
+    "author_ids": {"type": "array", "items": {"type": "string"}},
+    "compressed_bytes": {"type": ["integer", "null"]},
+    "installed_bytes": {"type": "integer"},
+    "temporary_space_bytes": {"type": "integer"},
+    "file_hashes": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "search_index_version": {"type": "string"},
+    "normalization_version": {"const": "ar-search-v1"},
+    "provides_units": {"type": "integer"},
+    "coverage": {"type": "object"},
+    "source_metadata": {"type": "array"},
+    "attribution": {"type": "string"},
+    "compatible_app_versions": {"type": "string"},
+    "rights": {"type": "array", "minItems": 1, "items": {
+      "type": "object",
+      "required": ["applies_to", "rights_status"],
+      "properties": {
+        "applies_to": {"enum": ["code", "classical_body", "translation", "editorial_notes", "scan", "metadata", "derived_index"]},
+        "rights_status": {"enum": ["approved", "conditional", "unknown", "restricted"]},
+        "license_id": {"type": ["string", "null"]},
+        "license_url": {"type": ["string", "null"]},
+        "license_evidence_file": {"type": ["string", "null"]},
+        "license_checked_at": {"type": ["string", "null"]},
+        "redistribution_allowed": {"type": ["boolean", "null"]},
+        "commercial_use_allowed": {"type": ["boolean", "null"]},
+        "required_attribution": {"type": ["string", "null"]},
+        "share_alike_requirements": {"type": ["string", "null"]},
+        "permission_evidence": {"type": ["string", "null"]},
+        "conditional_scope_clear": {"type": "boolean"}
+      }}},
+    "requires_for_linked_reading": {"type": "array", "items": {
+      "type": "object",
+      "required": ["target_work_id", "target_edition_id", "compatible_package_versions"],
+      "properties": {"target_work_id": {"type": "string"}, "target_edition_id": {"type": "string"},
+                     "compatible_package_versions": {"type": "array", "items": {"type": "string"}}}}},
+    "contains": {"type": "array", "items": {"type": "object",
+      "required": ["package_id", "package_version", "package_sha256", "kind"]}},
+    "is_test_fixture": {"type": "boolean"}
+  },
+  "allOf": [
+    {"if": {"properties": {"kind": {"const": "commentary"}}}, "then": {"required": ["work_id", "edition_id", "requires_for_linked_reading"]}},
+    {"if": {"properties": {"kind": {"const": "base_book"}}}, "then": {"required": ["work_id", "edition_id"]}},
+    {"if": {"properties": {"kind": {"const": "selection"}}}, "then": {"required": ["contains"]}}
+  ]
+}

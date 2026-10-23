@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+<title>Hadis Manba — app</title>
+<meta name="description" content="Offline reader for hadith sources and their commentaries. تطبيق لقراءة مصادر الحديث وشروحها بلا إنترنت.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1d5c4a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hadis Manba">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./ikonkalar/apple-touch-icon.png">
+<link rel="icon" href="./ikonkalar/ikonka-192.png">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<a class="otish" id="otish" href="#asosiy">Skip to content</a>
+<header>
+  <div class="sarlavha">
+    <a href="#/" class="logo">Hadis Manba</a>
+    <span id="tagline" class="kichik xira"></span>
+    <select id="til" class="til" aria-label="Language"></select>
+  </div>
+  <span id="tarmoq" class="kichik" role="status"></span>
+  <button id="yangilash" class="yashirin asosiy"></button>
+  <nav id="nav" aria-label="Sections"></nav>
+</header>
+<main id="asosiy" tabindex="-1"><p class="xira">Loading…</p></main>
+<footer id="futer" class="kichik xira"></footer>
+<script src="./js/i18n.js"></script>
+<script src="./js/arabic.js"></script>
+<script src="./js/zip.js"></script>
+<script src="./js/pkg.js"></script>
+<script src="./js/lib.js"></script>
+<script src="./js/notes.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>

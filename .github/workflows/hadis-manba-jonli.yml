@@ -1,0 +1,40 @@
+# Jonli sayt tekshiruvi: Pages nashridan keyin haqiqiy URL'da SEO + PWA oqimi (tests/live/live.pw.js).
+# Bu headless Chromium; real iPhone/Android/Windows/Mac sinovi emas.
+name: hadis-manba-jonli
+on:
+  workflow_run:
+    workflows: ["hadis-manba-pages"]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hadis-manba-platformasi/tests/live
+    env:
+      BASE: https://nbeast19.github.io/vositalar/hadis-manba-platformasi/web/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Sayt jonli bo'lishini kutish
+        run: |
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "${BASE}catalog.json")
+            echo "catalog.json → $code"; [ "$code" = 200 ] && exit 0; sleep 15
+          done; exit 1
+      - name: Jonli tekshiruv
+        run: node live.pw.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jonli-natija
+          path: hadis-manba-platformasi/tests/live/jonli-natija.json

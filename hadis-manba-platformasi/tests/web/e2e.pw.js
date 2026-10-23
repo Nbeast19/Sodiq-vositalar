@@ -95,7 +95,13 @@ async function searchCount(page, q, scope) {
 async function offline(ctx, page, on) { await ctx.setOffline(on); await page.reload(); await page.waitForSelector('html[data-tayyor="1"]'); }
 async function noHorizontalScroll(page) {
   const w = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
-  assert.ok(w[0] <= w[1] + 1, 'gorizontal siljish: ' + w.join(' > '));
+  if (w[0] <= w[1] + 1) return;
+  // qaysi element chiqib ketganini ko'rsatish (CI shriftlari lokaldagidan farq qiladi)
+  const who = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(e => {
+    const r = e.getBoundingClientRect(); return r.width && (r.right > window.innerWidth + 1 || r.left < -1);
+  }).slice(-6).map(e => e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + '.' + [...e.classList].join('.') + ' ' +
+    Math.round(e.getBoundingClientRect().left) + '..' + Math.round(e.getBoundingClientRect().right)));
+  assert.fail('gorizontal siljish: ' + w.join(' > ') + ' | ' + who.join(' ; '));
 }
 async function expectLang(page, lang) {
   const d = await page.evaluate(() => [document.documentElement.lang, document.documentElement.dir]);

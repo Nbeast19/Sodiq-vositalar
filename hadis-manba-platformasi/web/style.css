@@ -14,7 +14,7 @@
   --shadow-1: 0 1px 2px rgba(28, 29, 27, .06), 0 1px 3px rgba(28, 29, 27, .05);
   --shadow-2: 0 6px 24px rgba(28, 29, 27, .10);
   --radius: 14px; --radius-s: 10px; --radius-l: 20px;
-  --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Naskh Arabic", sans-serif;
   --ar: "Noto Naskh Arabic", "Amiri", "Scheherazade New", "Geeza Pro", "Traditional Arabic", serif;
   --read-size: 27px; --read-lh: 2.15; --col: 760px;
   color-scheme: light;
@@ -138,7 +138,7 @@ label.check { display: inline-flex; align-items: center; gap: 10px; cursor: poin
 .section { margin: 36px 0 0; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .section-head h2 { margin: 0; }
-.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; background: var(--surface-2); color: var(--ink-2); white-space: nowrap; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; background: var(--surface-2); color: var(--ink-2); max-width: 100%; white-space: normal; overflow-wrap: break-word; line-height: 1.35; }
 .pill.ok { background: var(--good-soft); color: var(--good); }
 .pill.accent { background: var(--accent-soft); color: var(--accent); }
 .pill.warn { background: var(--warn-soft); color: var(--warn); }
@@ -152,6 +152,14 @@ label.check { display: inline-flex; align-items: center; gap: 10px; cursor: poin
 .table th { color: var(--ink-3); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; }
 [lang="ar"] .table th, .table th:lang(ar) { text-transform: none; letter-spacing: 0; }
 .table-wrap { overflow-x: auto; }
+/* Dalil jadvali: tor ekranda har savol alohida blok (4 ustun 390px'ga sig'maydi) */
+@media (max-width: 720px) {
+  .ev-table thead { display: none; }
+  .ev-table tr { display: block; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .ev-table td { display: block; border: 0; padding: 3px 0; overflow-wrap: break-word; }
+  .ev-table td.q { font-weight: 600; color: var(--ink); padding-bottom: 6px; }
+  .ev-table td[data-label]::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: var(--ink-3); margin-top: 4px; }
+}
 dl.meta { display: grid; grid-template-columns: max-content 1fr; gap: 8px 18px; margin: 0; font-size: 14.5px; }
 dl.meta dt { color: var(--ink-3); } dl.meta dd { margin: 0; overflow-wrap: anywhere; }
 @media (max-width: 520px) { dl.meta { grid-template-columns: 1fr; gap: 2px; } dl.meta dd { margin-bottom: 8px; } }

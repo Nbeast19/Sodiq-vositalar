@@ -973,11 +973,11 @@
     if ('text_preservation_status' in st) r('text_preservation_status', t('evq.text_preservation_status'), st.text_preservation_status, t('evw.text', { sha: (u.current_text_sha256 || '').slice(0, 12) + '…' }), t('evl.text'));
     if ('semantic_review_status' in st) r('semantic_review_status', t('evq.semantic_review_status'), st.semantic_review_status, t('evw.review'), t('evl.review'));
     r('type', t('evq.type'), 'none', t('evw.type'), t('evl.type'));
-    var table = el('table', { cls: 'table' }, [el('thead', {}, [el('tr', {}, [el('th', { text: t('ev.q') }), el('th', { text: t('ev.r') }), el('th', { text: t('ev.why') }), el('th', { text: t('ev.left') })])]),
+    var table = el('table', { cls: 'table ev-table' }, [el('thead', {}, [el('tr', {}, [el('th', { text: t('ev.q') }), el('th', { text: t('ev.r') }), el('th', { text: t('ev.why') }), el('th', { text: t('ev.left') })])]),
       el('tbody', {}, rows.map(function (x) {
         var c = CLS[x[1]] || 'none';
-        return el('tr', { 'data-field': x[4] }, [el('td', { text: x[0] }), el('td', {}, [pill(t('evr.' + x[1]), c === 'none' ? '' : c), el('div', { cls: 'tiny faint' }, [idTxt(x[4] + '=' + x[1])])]),
-          el('td', {}, x[4] === 'narrator_identity_status' && narOk && narName ? [arSpan(narName), ' — ', x[2]] : [x[2]]), el('td', { cls: 'faint', text: x[3] })]);
+        return el('tr', { 'data-field': x[4] }, [el('td', { cls: 'q', text: x[0] }), el('td', { 'data-label': t('ev.r') }, [pill(t('evr.' + x[1]), c === 'none' ? '' : c), el('div', { cls: 'tiny faint' }, [idTxt(x[4] + '=' + x[1])])]),
+          el('td', { 'data-label': t('ev.why') }, x[4] === 'narrator_identity_status' && narOk && narName ? [arSpan(narName), ' — ', x[2]] : [x[2]]), el('td', { cls: 'faint', 'data-label': t('ev.left'), text: x[3] })]);
       }))]);
     var tech = el('div', { cls: 'small' }, [
       el('p', {}, [idTxt(u.unit_id + ' @ ' + u.pkgv)]),

@@ -43,8 +43,8 @@ ATTRIBUTION_KINDS = ("marfu", "mawquf", "maqtu", "mursal", "balagh", "not_applic
 
 TEXT_KINDS = ("full", "fragment", "empty", "heading")
 
-COMMENTARY_LINK_KINDS = ("mustaqil", "umumiy", "qisqa_izoh", "havola")
-LEMMA_KINDS = ("iqtibos", "parcha", "iqtibos_yoq")
+COMMENTARY_LINK_KINDS = ("mustaqil", "umumiy", "qisqa_izoh", "havola", "tekshirilmagan")  # oxirgisi: eski qatlam, turi aniqlanmagan
+LEMMA_KINDS = ("iqtibos", "parcha", "iqtibos_yoq", "matn_boshi", "qisqa_iqtibos", "tekshirilmagan")
 COMMENTARY_SCOPES = ("full_section", "preview_window", "fragment")
 SEGMENT_ROLES = ("hadith_text", "commentator", "quoted_scholar", "editor_note", "attribution_unresolved")
 

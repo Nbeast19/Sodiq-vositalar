@@ -356,11 +356,11 @@ class Core:
             hits, capped, used_q = search.find(self.con, query, mode, scope, pkg_ids)
         except ValueError as e:
             raise ApiError("invalid_parameter", str(e)) from None
-        results = []
+        # 1-bosqich: yengil filtr (faqat kerakli ustunlar); 2-bosqich: to'liq natija faqat joriy sahifa uchun.
+        accepted = []
         for kind, tid, positions, length in hits:
-            start = positions[0]
             if kind == "unit":
-                r = self._unit_row(tid)
+                r = self.con.execute("SELECT unit_type, statuses FROM text_units WHERE unit_id=?", (tid,)).fetchone()
                 if numbering_scheme and not self.con.execute(
                         "SELECT 1 FROM number_assertions WHERE unit_id=? AND scheme_id=?", (tid, numbering_scheme)).fetchone():
                     continue
@@ -370,24 +370,36 @@ class Core:
                 if filters.get("verified_only") and any(v != "verified" for k, v in st.items()
                                                         if k in ("text_preservation_status", "number_status")):
                     continue
+                accepted.append((kind, tid, positions[0], length, None))
+            else:
+                o = self.con.execute("SELECT statuses, segments, text_ar FROM commentary_occurrences "
+                                     "WHERE occurrence_id=?", (tid,)).fetchone()
+                if filters.get("verified_only") and _loads(o["statuses"], {}).get("commentary_link_status") != "verified":
+                    continue
+                chosen = positions[0]
+                if filters.get("author_id"):
+                    chosen = None
+                    for start in positions:  # aynan muallifning o'z nasridagi birinchi moslik
+                        sn = search.make_snippet(o["text_ar"], start, length, mode)
+                        seg = search.segment_role_at(o["segments"], sn.get("original_offset", 0) + (sn["match_start"] or 0))
+                        if seg and seg.get("role") == "commentator" and seg.get("person_id") == filters["author_id"]:
+                            chosen = start
+                            break
+                    if chosen is None:
+                        continue
+                accepted.append((kind, tid, chosen, length, None))
+        results = []
+        for kind, tid, start, length, _ in accepted[off:off + lim]:
+            if kind == "unit":
+                r = self._unit_row(tid)
                 item = self._unit_brief(r)
                 item.update(kind="unit", match_layer="hadith_body",
                             snippet=search.make_snippet(r["text_ar"], start, length, mode))
             else:
                 o = self.con.execute("SELECT * FROM commentary_occurrences WHERE occurrence_id=?", (tid,)).fetchone()
-                sn = seg = None
-                for start in positions:  # muallif filtri bo'lsa, aynan uning nasridagi birinchi moslik olinadi
-                    sn = search.make_snippet(o["text_ar"], start, length, mode)
-                    orig_pos = sn.get("original_offset", 0) + (sn["match_start"] or 0)
-                    seg = search.segment_role_at(o["segments"], orig_pos)
-                    if not filters.get("author_id") or (seg and seg.get("role") == "commentator"
-                                                        and seg.get("person_id") == filters["author_id"]):
-                        break
-                else:
-                    continue
+                sn = search.make_snippet(o["text_ar"], start, length, mode)
+                seg = search.segment_role_at(o["segments"], sn.get("original_offset", 0) + (sn["match_start"] or 0))
                 st = _loads(o["statuses"], {})
-                if filters.get("verified_only") and st.get("commentary_link_status") != "verified":
-                    continue
                 item = {"kind": "occurrence", "occurrence_id": tid, "work": self._work_brief(o["work_id"]),
                         "edition_id": o["edition_id"], "volume": o["volume"], "page": o["page"],
                         "match_layer": seg["role"] if seg else "unsegmented",
@@ -395,8 +407,8 @@ class Core:
                         "snippet": sn, "scope": o["scope"], "statuses": st,
                         "limitations": _loads(o["limitations"], [])}
             results.append(item)
-        total = len(results)
-        page = results[off:off + lim]
+        total = len(accepted)
+        page = results
         if capped:
             limitations.append(f"natijalar {search.MAX_MATCHES} ta bilan cheklandi; so'rovni aniqlashtiring")
         if total > 25 and len(used_q) < 8:

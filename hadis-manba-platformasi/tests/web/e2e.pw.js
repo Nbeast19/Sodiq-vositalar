@@ -12,6 +12,7 @@ const PROJECT = path.resolve(__dirname, '..', '..');
 const SERVE_ROOT = path.join(PROJECT, 'build', 'demo');    // build_demo.py: GitHub project path ko'rinishida
 const BASE_PATH = '/' + path.basename(PROJECT) + '/web/';
 const V110 = path.join(PROJECT, 'build/test-paketlar/namuna-asos-a-1.1.0.hmz');
+const OVERLAY = path.join(PROJECT, 'build/test-paketlar/namuna-overlay-a-1.0.0.hmz');
 const SELECTION = path.join(PROJECT, 'dist/namuna-kitob-va-sharhlar-1.0.0.hmz');
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json',
   '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.hmz': 'application/zip', '.xml': 'application/xml' };
@@ -144,7 +145,7 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
       assert.ok(await searchCount(A.page, 'طلب العلم') >= 2);
       await go(A.page, '#/read/namuna-asos-a');
       assert.ok(await A.page.locator('[data-act=toc-item]').count() >= 1);
-      const total = (await A.page.locator('.toc-ch .c').allTextContents()).reduce((a, x) => a + Number(x), 0);
+      const total = (await A.page.locator('.cv-side .tk .cnt').allTextContents()).reduce((a, x) => a + Number(x), 0);
       assert.ok(total >= 12, 'mundarija: ' + total);
       await go(A.page, '#/search');
       await A.page.fill('[data-act=num-number]', '5');
@@ -318,6 +319,99 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
       assert.deepStrictEqual(D.errors, []);
       await D.ctx.close();
     });
+    // ------------------------------------------------ V7: mahalliy qatlam (sun'iy sinov ma'lumoti)
+    const E = await newApp(browser, URL0, viewport, lang);
+    await step(label + ' 13: local layer -> book/chapter tree, chapter groups, unplaced records shown', async () => {
+      await installFromCatalog(E.page, 'namuna-asos-a');
+      await importFile(E.page, OVERLAY);
+      await poll(E.page, () => Lib.overlayState('ed-namuna-a').then(s => s.state === 'active'));
+      await go(E.page, '#/installed');
+      assert.strictEqual(await E.page.locator('[data-act=overlay-state]').getAttribute('data-state'), 'active');
+      await go(E.page, '#/w/' + WORK);
+      assert.strictEqual(await E.page.locator('[data-act=layer-note]').getAttribute('data-state'), 'active');
+      await go(E.page, '#/c/namuna-asos-a?k=0');
+      assert.strictEqual(await E.page.locator('section.bgroup[data-bab=b1] .hrow').count(), 6);
+      assert.strictEqual(await E.page.locator('section.bgroup[data-bab=b2] .hrow').count(), 5);
+      assert.strictEqual(await E.page.locator('section.bgroup[data-bab=unplaced] .hrow').count(), 1);
+      assert.ok((await E.page.locator('section.bgroup[data-bab=b2] .warn-t').count()) >= 1);   // tekshirilmagan sarlavha belgisi
+      assert.strictEqual(await E.page.locator('.cv-side a.tb').count(), 2);
+      await E.page.evaluate(() => document.querySelector('.cv-side .tk-item.cur > a.tk').click());
+      assert.strictEqual(await E.page.evaluate(() => document.querySelector('.cv-side .tk-item.cur .tb-list').hidden), true);
+      await E.page.evaluate(() => document.querySelector('.cv-side .tk-item.cur > a.tk').click());
+      assert.strictEqual(await E.page.evaluate(() => document.querySelector('.cv-side .tk-item.cur .tb-list').hidden), false);
+      // yopiq mobil menyu fokus/accessibility daraxtidan chiqadi
+      assert.strictEqual(await E.page.evaluate(() => document.querySelector('[data-act=tree-drawer]').hidden), true);
+      if (viewport.width < 600) {
+        await E.page.click('[data-act=open-tree]');
+        assert.strictEqual(await E.page.evaluate(() => document.querySelector('[data-act=tree-drawer]').hidden), false);
+        await E.page.keyboard.press('Escape');
+        assert.strictEqual(await E.page.evaluate(() => document.querySelector('[data-act=tree-drawer]').hidden), true);
+        assert.strictEqual(await E.page.evaluate(() => document.activeElement.getAttribute('data-act')), 'open-tree');
+      }
+      await noHorizontalScroll(E.page);
+    });
+    await step(label + ' 14: reader -> chain positions toggle; source text/hash and copy unchanged; settings within screen', async () => {
+      await go(E.page, '#/r/namuna-asos-a?k=0&u=' + encodeURIComponent(A1));
+      const art = '#u-' + A1.replace(':', '\\:');
+      assert.ok((await E.page.locator(art + ' sup.ord').count()) >= 1);
+      const before = await E.page.evaluate(sel => document.querySelector(sel + ' .src').textContent.replace(/[0-9A-Z,]+/g, ''), art);
+      await E.page.click('[data-act=settings]');
+      const r = await E.page.evaluate(() => { const b = document.querySelector('.sheet').getBoundingClientRect(); return [b.left, b.right, b.top, b.bottom, innerWidth, innerHeight]; });
+      assert.ok(r[0] >= 0 && r[1] <= r[4] && r[2] >= 0 && r[3] <= r[5] + 1, 'sozlamalar ekrandan chiqdi: ' + r.join(','));
+      await E.page.uncheck('[data-set=ord]');
+      assert.strictEqual(await E.page.locator(art + ' sup.ord').count(), 0);
+      await E.page.fill('[data-set=fs]', '10'); await E.page.dispatchEvent('[data-set=fs]', 'input');
+      assert.strictEqual(await E.page.evaluate(() => getComputedStyle(document.querySelector('.hadith .src')).fontSize), '10px');
+      await E.page.keyboard.press('Escape');
+      assert.strictEqual(await E.page.locator('.sheet').count(), 0);
+      const after = await E.page.evaluate(sel => document.querySelector(sel + ' .src').textContent, art);
+      assert.strictEqual(after, before);   // raqamlar yashirilgach matn aynan o'sha
+      const ok = await E.page.evaluate(id => Lib.unit(id).then(u => Pkg.sha256Hex(new TextEncoder().encode(u.text_ar)).then(h => h === u.current_text_sha256)), A1);
+      assert.ok(ok);
+      await E.page.evaluate(() => { localStorage.setItem('hadith-library.reading', JSON.stringify({ fs: 26, ord: true, full: true, marks: true })); });
+    });
+    await step(label + ' 15: narrator -> paginated index (>20), grouping keeps count, single hadith highlight, back chain', async () => {
+      await go(E.page, '#/r/namuna-asos-a?k=0&u=' + encodeURIComponent(A1));
+      await E.page.evaluate(() => window.scrollBy(0, 30));
+      const art = '#u-' + A1.replace(':', '\\:');
+      await E.page.click(art + ' .nm[data-person="901"]');
+      await E.page.waitForSelector('[data-act=narrator-panel]');
+      await E.page.locator('[data-act=narrator-hadiths]').scrollIntoViewIfNeeded();
+      const y0 = await E.page.evaluate(() => Math.round(scrollY));   // chiqib ketish paytidagi joy
+      await E.page.click('[data-act=narrator-hadiths]');
+      await E.page.waitForFunction(() => document.querySelector('#asosiy').getAttribute('data-route') === 'n' && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
+      assert.strictEqual(await E.page.locator('.nrow').count(), 20);
+      const total = await E.page.locator('[data-act=ni-total]').textContent();
+      await E.page.click('[data-act=ni-next]');
+      await E.page.waitForFunction(() => /p=2/.test(location.hash) && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
+      assert.ok((await E.page.locator('.nrow').count()) >= 1);
+      await E.page.click('[data-act=ni-group]');
+      await E.page.waitForFunction(() => /g=1/.test(location.hash) && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
+      assert.strictEqual(await E.page.locator('[data-act=ni-total]').textContent(), total);
+      assert.ok((await E.page.locator('.ng-k').count()) >= 1);
+      const listHash = await E.page.evaluate(() => location.hash);
+      await E.page.locator('.nrow a').first().click();
+      await E.page.waitForFunction(() => document.querySelector('#asosiy').getAttribute('data-route') === 'h' && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
+      await E.page.waitForSelector('[data-act=back-list]');
+      await E.page.click('[data-act=back-list]');
+      await E.page.waitForFunction(h => location.hash === h && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1', listHash);
+      await E.page.click('[data-act=back-hadith]');
+      await E.page.waitForFunction(() => document.querySelector('#asosiy').getAttribute('data-route') === 'r' && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
+      assert.strictEqual(await E.page.evaluate(() => Math.round(scrollY)), y0);
+      await E.page.goForward(); await E.page.waitForFunction(() => document.querySelector('#asosiy').getAttribute('data-route') === 'n' && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
+      assert.ok(/p=2&g=1/.test(await E.page.evaluate(() => location.hash)));
+      await noHorizontalScroll(E.page);
+    });
+    await step(label + ' 16: base book updated -> layer quarantined (not applied), no chain marks', async () => {
+      await importFile(E.page, V110);
+      await poll(E.page, () => Lib.overlayState('ed-namuna-a').then(s => s.state === 'mismatch'));
+      await go(E.page, '#/h/' + A1);
+      assert.strictEqual(await E.page.locator('.tslot sup.ord').count(), 0);
+      await go(E.page, '#/w/' + WORK);
+      assert.strictEqual(await E.page.locator('[data-act=layer-note]').getAttribute('data-state'), 'mismatch');
+      assert.deepStrictEqual(E.errors, []);
+    });
+    await E.ctx.close();
     await step(label + ': no console errors', async () => {
       assert.deepStrictEqual(B.errors.filter(e => !/net::ERR|ERR_INTERNET_DISCONNECTED/.test(e)), []);
     });

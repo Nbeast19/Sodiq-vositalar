@@ -95,7 +95,7 @@
     return { quota: e.quota, usage: e.usage, free: e.quota - e.usage };
   }
 
-  // onState(holat, izoh): 'tekshirish' | 'joy' | 'staging' | 'faollashtirish' | 'tayyorlik' | 'tayyor'
+  // onState(holat, izoh[, ulush 0–1]): 'tekshirish' | 'joy' | 'staging' | 'faollashtirish' | 'tayyorlik' | 'tayyor'
   async function install(buf, onState, opts) {
     onState = onState || function () {};
     opts = opts || {};
@@ -156,7 +156,7 @@
       var t = db.transaction(ROW_STORES, 'readwrite');
       part.forEach(function (r) { t.objectStore(r[0]).put(r[1]); });
       await done(t);
-      onState('staging', 'Yozildi: ' + Math.min(i + CHUNK, rows.length) + ' / ' + rows.length);
+      onState('staging', 'Yozildi: ' + Math.min(i + CHUNK, rows.length) + ' / ' + rows.length, .6 + .3 * Math.min(i + CHUNK, rows.length) / rows.length);
     }
     onState('faollashtirish', 'Faollashtirilmoqda');
     var t2 = db.transaction(['packages', 'versions'], 'readwrite');

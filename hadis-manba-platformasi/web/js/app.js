@@ -606,7 +606,7 @@
     return {
       set: function (s, msg, frac) {
         // Lib.install o'zbekcha texnik izoh yuboradi — foydalanuvchiga faqat bosqich nomi ko'rsatiladi.
-        line.textContent = t(STATE_KEY[s] || s) + (s === 'download' && msg ? ' ' + msg : '');
+        line.textContent = t(STATE_KEY[s] || s) + (s === 'download' && msg ? ' ' + msg : '') + (s === 'staging' && frac != null ? ' · ' + Math.round(frac * 100) + '%' : '');
         var f = frac != null ? frac : STATE_PROGRESS[s];
         if (f != null) bar.style.width = Math.round(f * 100) + '%';
       },

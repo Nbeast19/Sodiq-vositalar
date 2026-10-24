@@ -1,6 +1,22 @@
-# HANDOFF — Hadis Manba (2026-10-23)
+# HANDOFF — Hadis Manba (2026-10-24)
 
 Bu fayl keyingi sessiya/agent uchun: nima qilingan, nima qolgan, qayerda nima turibdi. Foydalanuvchi bilan muloqot **o‘zbek tilida**.
+
+## V7 — mahalliy preview (2026-10-24) — **DEPLOY QILINMAGAN**
+
+Foydalanuvchining HADITH-LIBRARY-AUDIT-20261024 topshirig‘i (CLAUDE-YAGONA-TOPSHIRIQ §0–§24, DIZAYN-QARORI-V6, A01–A64). **Qat’iy shart:** foydalanuvchi natijani ko‘rib, nashrga aniq ruxsat bermaguncha deploy, push/merge, Release va paket e’loni yo‘q. Commitlar faqat lokal `claude/new-session-f9jsvi` branchida.
+
+- Oqim: Kitoblar → to‘plam (Kitob gridi) → Kitob mundarijasi `#/c/<pkg>?k=&b=` → reader `#/r/<pkg>?k=&u=|b=` → roviy indeksi `#/n/<person>?e=&from=&p=&g=` → yagona hadis `#/h/<unit>?p=&list=` → bog‘lanish stoli `#/desk/<work>?n=`.
+- Mahalliy qatlam: `scripts/build_overlay.py --raw <…/hadis-raqamlar/raw> --package <hm-bukhari-hj120-1.0.1.hmz> --out <repodan tashqari> --uz-draft <prototype-v6-source-data.json>`. U faqat mahalliy (QARORLAR 38–41) va katalogda yo‘q; Kutubxonam → «Fayldan o‘rnatish» orqali o‘rnatiladi.
+- Qabul jadvali: `docs/V7-QABUL-A01-A64.md`. Hisobot: `docs/V7-HISOBOT.md`.
+- Ochiq ishlar:
+  - o‘zbekcha tarjima qamrovi;
+  - harakatli sharh qatlami;
+  - boshqa to‘plamlar uchun bob va sanad indeksi;
+  - Nabiy ﷺ so‘zlari va dialog rollari;
+  - bobga sharh bog‘lash;
+  - statik sayt va Release registri (nashr ruxsatidan keyin);
+  - haqiqiy qurilmalar.
 
 ## 0. 27-bo‘lim — ENG MUHIM (2026-10-23)
 

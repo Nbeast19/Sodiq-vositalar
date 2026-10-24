@@ -3,6 +3,8 @@
    Ranglar faqat tokenlar orqali; mantiqiy xossalar (inline-start/end) RTL/LTR uchun. */
 @font-face { font-family: "Noto Naskh Arabic"; src: url("./fonts/NotoNaskhArabic-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Noto Naskh Arabic"; src: url("./fonts/NotoNaskhArabic-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+/* ﷺ ﷽ ﷲ — interfeys matnida ham ilovaning o'z shrifti (tizim shriftidagi bitmap/bo'sh kvadrat o'rniga) */
+@font-face { font-family: "HL Ligatures"; src: url("./fonts/NotoNaskhArabic-400.woff2") format("woff2"); unicode-range: U+FDF2, U+FDFA, U+FDFD; font-display: swap; }
 
 :root {
   --bg: #f6f4ef; --surface: #ffffff; --surface-2: #f1eee7; --surface-3: #e9e5dc;
@@ -14,7 +16,7 @@
   --shadow-1: 0 1px 2px rgba(28, 29, 27, .06), 0 1px 3px rgba(28, 29, 27, .05);
   --shadow-2: 0 6px 24px rgba(28, 29, 27, .10);
   --radius: 14px; --radius-s: 10px; --radius-l: 20px;
-  --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Naskh Arabic", sans-serif;
+  --ui: "HL Ligatures", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Naskh Arabic", sans-serif;
   --ar: "Noto Naskh Arabic", "Amiri", "Scheherazade New", "Geeza Pro", "Traditional Arabic", serif;
   --read-size: 26px; --read-lh: 2.05; --tr-size: 16px; --col: 760px; --bk: var(--accent);
   color-scheme: light;

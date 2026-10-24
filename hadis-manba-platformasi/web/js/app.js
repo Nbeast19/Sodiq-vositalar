@@ -1483,6 +1483,8 @@
     return el('p', { cls: 'note small', 'data-act': 'layer-note', 'data-state': s.state }, [icon('info'), ' ', txt]);
   }
   function babLabel(b) { return t('cv.bab') + ' · ' + t('cv.order', { o: b.order }); }
+  // Bob sarlavhasining manbadagi joyi: bosma nashr juz/bet (Shamela 1681 sahifasi bo'yicha); raqam emas, joy
+  function babSrc(b) { var s = b.source || {}; return s.part && s.page_num ? el('span', { cls: 'faint', title: 'Shamela 1681 · ' + s.page, text: t('cv.srcPage', { v: s.part, p: s.page_num }) }) : null; }
 
   // -------------------------------------------------------------- Kitob mundarijasi: chap daraxt + o'ngda ixcham bob guruhlari
   async function viewContents(pkgId, params) {
@@ -1571,7 +1573,7 @@
         var b = g.bab;
         sec.id = 'bab-' + b.id;
         sec.appendChild(el('div', { cls: 'bmeta' }, [el('span', { text: babLabel(b) }), el('span', { text: g.rows.length ? t('cv.hadithN', { n: g.rows.length }) : t('cv.noHadith') }),
-          b.evidence === 'line_pattern_unverified' ? el('span', { cls: 'warn-t', text: t('cv.unverified') }) : null]));
+          babSrc(b), b.evidence === 'line_pattern_unverified' ? el('span', { cls: 'warn-t', text: t('cv.unverified') }) : null]));
         sec.appendChild(el('h2', { cls: 'btitle' }, [el('a', { href: readBase + '&b=' + b.id, 'data-act': 'open-bab', lang: 'ar', dir: 'rtl', text: b.title_ar })]));
         if (b.intro && b.intro.length) {
           var d = el('details', { cls: 'bintro disclose' }, [el('summary', {}, [icon('chevR', 'chev'), t('cv.introN', { n: b.intro.length })])]);
@@ -1668,7 +1670,7 @@
         var b = g.bab;
         sec.id = 'bab-' + b.id;
         sec.appendChild(el('div', { cls: 'bmeta' }, [el('span', { text: babLabel(b) }), el('span', { text: g.rows.length ? t('cv.hadithN', { n: g.rows.length }) : t('cv.noHadith') }),
-          b.evidence === 'line_pattern_unverified' ? el('span', { cls: 'warn-t', text: t('cv.unverified') }) : null]));
+          babSrc(b), b.evidence === 'line_pattern_unverified' ? el('span', { cls: 'warn-t', text: t('cv.unverified') }) : null]));
         sec.appendChild(el('h2', { cls: 'btitle', lang: 'ar', dir: 'rtl', text: b.title_ar }));
         var trb = trBlock(trs[b.id], pr, 'bab'); if (trb && trs[b.id]) sec.appendChild(trb);
         if (b.intro && b.intro.length) {

@@ -50,6 +50,9 @@ MARKS = re.compile("[ً-ٰٟـ]")
 HEAD_WORD = re.compile(r"^(?:باب|كتاب|أبواب|ابواب)(?:\s|:|$)")
 PARA_RE = re.compile(r"^\s*([٠-٩]+)\s*-\s")
 KITAB_WORD = re.compile(r"^(?:كتاب|أبواب|ابواب)(?:\s|$)")
+# toc raqamisiz sarlavha span'i — Shamela'da nashrning old qismi bo'limlari ("(هذا نص التقرير)", "مقدمة"); bob emas
+FRONT_TITLE_RE = re.compile(r"<span data-type=['\"]title['\"]\s*>(.*?)</span>", re.S)
+BISM = {"﷽", "بسم الله الرحمن الرحيم"}
 
 
 def sha(b: bytes) -> str:
@@ -92,8 +95,33 @@ def scan(pages: list[dict]) -> list[dict]:
             if HEAD_WORD.match(bare):
                 ev.append({"t": "head", "toc": None, "tagged": None, "text": text, "evidence": "line_pattern", **pos})
                 continue
-            ev.append({"t": "text", "text": text, **pos})
+            ev.append({"t": "text", "text": text, "front_title": bool(FRONT_TITLE_RE.search(line)), **pos})
     return ev
+
+
+def is_bism(text: str) -> bool:
+    return MARKS.sub("", text).strip() in BISM
+
+
+def opening_blocks(preface: list[dict]) -> list[dict]:
+    """Birinchi raqamli hadisdan oldingi manba matnini manbadagi belgilar bo'yicha bo'laklash.
+
+    Yangi bo'lak: toc'siz sarlavha span'i, Shamela `part` o'zgarishi yoki sahifa boshidagi alohida ﷽ satri.
+    `part == "المقدمة"` yoki toc'siz sarlavha bilan boshlangan bo'lak — nashrning old qismi (muallif matni emas).
+    """
+    blocks = []
+    for blk in preface:
+        front_title = blk.pop("front_title", False)
+        if (not blocks or front_title or blk["part"] != blocks[-1]["source"]["part"]
+                or (blk["line"] == 0 and is_bism(blk["text_ar"]))):
+            front = blk["part"] == "المقدمة" or front_title
+            blocks.append({"title_ar": blk["text_ar"] if front_title else None,
+                           "evidence": "edition_front_matter" if front else "source_opening_before_first_hadith",
+                           "front_matter": front, "source": {"page": blk["page"], "part": blk["part"], "line": blk["line"]}, "intro": []})
+            if front_title:
+                continue    # sarlavha satri title_ar'da (manba joyi source'da)
+        blocks[-1]["intro"].append(blk)
+    return blocks
 
 
 def verify_untagged(ev: list[dict]) -> Counter:
@@ -178,6 +206,9 @@ def align_mentions(text: str, anchors: list[tuple[int, str]]):
     return out
 
 
+SAMPLE_KITAB_NAMES = {"iman": {"uz": "Imon kitobi", "en": "Book of Belief"}, "ilm": {"uz": "Ilm kitobi", "en": "Book of Knowledge"}}
+
+
 def build(raw: Path, package: Path, uz_draft: Path | None = None) -> dict:
     pages = load_pages(raw)
     ev = scan(pages)
@@ -215,13 +246,16 @@ def build(raw: Path, package: Path, uz_draft: Path | None = None) -> dict:
     # Sarlavhalar -> boblar (Kitob sarlavhalari alohida), kirish matni — keyingi sarlavha yoki paragrafgacha.
     babs, shamela_kitabs = [], []
     cur_bab, cur_kit, intro_open = None, None, None
-    preface = []    # birinchi sarlavhadan oldingi manba matni (masalan, Vahiy boshi)
+    preface = []    # birinchi raqamli hadisdan oldingi manba matni (nashr old qismi + Vahiy boshi); hadis davomi satrlari emas
+    preface_open = True
+    carry = []      # Kitob sarlavhasidan bevosita oldingi ﷽ — o'sha Kitobga tegishli (manbadagi qo'shnilik)
     for i, e in enumerate(ev):
         if e["t"] == "head":
             src = {k: e[k] for k in ("page", "part", "page_num", "body_sha256")} | {"line": e["li"]}
             if KITAB_WORD.match(MARKS.sub("", e["text"])):
                 cur_kit = {"id": f"sk{len(shamela_kitabs) + 1}", "title_ar": e["text"], "toc": e["toc"], "evidence": e["evidence"],
-                           "source": src, "ev_index": i, "intro": []}
+                           "source": src, "ev_index": i, "intro": carry}
+                carry = []
                 shamela_kitabs.append(cur_kit)
                 intro_open = cur_kit
                 cur_bab = None
@@ -233,12 +267,16 @@ def build(raw: Path, package: Path, uz_draft: Path | None = None) -> dict:
             intro_open = cur_bab
         elif e["t"] == "para":
             intro_open = None
+            preface_open = False
         elif e["t"] == "text":
             blk = {"text_ar": e["text"], "page": e["page"], "part": e["part"], "page_num": e["page_num"], "line": e["li"]}
-            if intro_open is not None:
+            nxt = ev[i + 1] if i + 1 < len(ev) else None
+            if is_bism(e["text"]) and nxt and nxt["t"] == "head" and KITAB_WORD.match(MARKS.sub("", nxt["text"])):
+                carry.append({**blk, "placement": "bismillah_before_kitab_heading"})
+            elif intro_open is not None:
                 intro_open["intro"].append(blk)
-            elif cur_bab is None and cur_kit is None:
-                preface.append(blk)
+            elif cur_bab is None and cur_kit is None and preface_open:
+                preface.append({**blk, "front_title": e.get("front_title", False)})
 
     # Hadis -> bob (hujjat pozitsiyasi bo'yicha oxirgi sarlavha)
     bab_starts = [b["ev_index"] for b in babs]
@@ -300,8 +338,7 @@ def build(raw: Path, package: Path, uz_draft: Path | None = None) -> dict:
             kit_by_id[k].setdefault("shamela_headings", []).append(
                 {"title_ar": sk["title_ar"], "evidence": sk["evidence"], "source": sk["source"], "intro": sk["intro"]})
     if preface and kitabs:
-        kitabs[0].setdefault("shamela_headings", []).append({"title_ar": None, "evidence": "source_opening_before_first_heading",
-                                                            "source": {"page": preface[0]["page"]}, "intro": preface})
+        kitabs[0].setdefault("shamela_headings", [])[:0] = opening_blocks(preface)
     for k in kitabs:
         k["bab_ids"] = [b["id"] for b in babs if b["kitab_id"] == k["id"]]
         k["unit_count"] = len(k["unit_ids"])
@@ -405,6 +442,14 @@ def build(raw: Path, package: Path, uz_draft: Path | None = None) -> dict:
             if not tgt:
                 continue
             translations.append({"target": tgt["id"], "target_kind": "bab", "title": t.get("title"), "intro": t.get("intro") or []})
+        # Kitob nomlari: foydalanuvchining dizayn namunasidagi UI nomlari (DIZAYN-PROTOTIP.html, kalitlar iman/ilm).
+        # Tarjima emas — namunada berilgan ko'rsatma nomlar; faqat qoralama bilan birga va provenance bilan.
+        for k0 in d.get("kitabs", []):
+            names = SAMPLE_KITAB_NAMES.get(k0.get("name_key"))
+            tgt = next((k for k in kitabs if normalize(k["title_ar"]) == normalize(k0.get("title_ar") or "")), None)
+            if names and tgt:
+                tgt["names"] = {**names, "origin": "Hadith Library design sample V6 UI names (HADITH-LIBRARY-AUDIT-20261024)",
+                                "status": "user-provided-sample-name"}
         for num, t in (tv.get("hadiths") or {}).items():
             u = next((u for u in units if any(str(n.get("number_text")) == num for n in u.get("numbers") or [])), None)
             if u:

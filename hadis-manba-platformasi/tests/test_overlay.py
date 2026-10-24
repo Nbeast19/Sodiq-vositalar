@@ -22,8 +22,11 @@ def a(i, t):
 
 T = "<span data-type='title' id=toc-{n}>{t}</span>"
 PAGES = {
+    1: '<span data-type="title">(هذا نص التقرير) </span>\rنَصُّ تَقْدِيمٍ تَجْرِيبِيٍّ لِلطَّبْعَةِ',   # nashr old qismi (part المقدمة)
+    5: '<span data-type="title">مقدمة </span>\r﷽\rمُقَدِّمَةٌ تَجْرِيبِيَّةٌ لِلنَّاشِرِ',                     # toc'siz sarlavha — nashr muqaddimasi
     9: "﷽\rقَالَ الشَّيْخُ: كَيْفَ كَانَ بَدْءُ الْوَحْيِ.",
     10: "١ - حَدَّثَنَا " + a(10, "الْحُمَيْدِيُّ") + " عَنْ " + a(11, "عُمَرَ") + ": <hadeeth-1>«الْأَعْمَالُ بِالنِّيَّاتِ»",
+    11: "⦗٧⦘\rقَالَتْ عَائِشَةُ: وَلَقَدْ رَأَيْتُهُ",                                                  # hadis davomi — ochilish matni emas
     17: "﷽\r" + T.format(n=5, t="كِتَابُ الْإِيمَانِ") + "\rبَابُ الْإِيمَانِ وَقَوْلِ النَّبِيِّ ﷺ\rوَهُوَ قَوْلٌ وَفِعْلٌ",   # toc-6 belgisiz
     18: T.format(n=7, t="بَابٌ: دُعَاؤُكُمْ إِيمَانُكُمْ"),
     19: "٨ - حَدَّثَنَا " + a(4210, "عُبَيْدُ اللهِ بْنُ مُوسَى") + " قَالَ: أَخْبَرَنَا " + a(1681, "حَنْظَلَةُ") + " عَنْ " + a(4454, "عِكْرِمَةَ بْنِ خَالِدٍ")
@@ -47,7 +50,7 @@ def fixture(tmp_path):
     raw = tmp_path / "raw"
     (raw / "shamela-bukhari").mkdir(parents=True)
     (raw / "task2").mkdir()
-    rows = [{"book_id": 1458, "shamela_page_id": k, "part": "1", "page_num": k, "body": v} for k, v in PAGES.items()]
+    rows = [{"book_id": 1458, "shamela_page_id": k, "part": "المقدمة" if k == 1 else "1", "page_num": k, "body": v} for k, v in PAGES.items()]
     (raw / "shamela-bukhari" / "pages.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in reversed(rows)), "utf-8")
     isn = [{"id": 1, "book_id": 1458, "shamela_page_id": 10, "hadeeth_key": 1, "narrator_ids": [11, 10, 5495]},
            {"id": 2, "book_id": 1458, "shamela_page_id": 19, "hadeeth_key": 8, "narrator_ids": [3807, 4454, 1681, 4210, 5495]},
@@ -138,3 +141,30 @@ def test_persons_by_exact_id_and_output_outside_repo(tmp_path):
     assert m["kind"] == "overlay" and m["channel"] == "local_only" and m["rights"][0]["redistribution"] is False
     sums = dict(reversed(line.split("  ")) for line in z.read("SHA256SUMS").decode().splitlines())
     assert all(hashlib.sha256(z.read(n)).hexdigest() == h for n, h in sums.items())
+
+
+def test_kitab_names_only_from_sample_with_provenance(tmp_path):
+    raw, pkg, ov = fixture(tmp_path)
+    assert all("names" not in k for k in ov["kitabs"])                 # qoralamasiz — nom yo'q, o'ylab topilmaydi
+    draft = tmp_path / "draft.json"
+    draft.write_text(json.dumps({"kitabs": [{"title_ar": "كِتَابُ الْإِيمَانِ", "name_key": "iman", "babs": []},
+                                            {"title_ar": "كِتَابُ الْعِلْمِ", "name_key": "ilm", "babs": []}],
+                                 "translations_v4": {}}, ensure_ascii=False), "utf-8")
+    ov2 = bo.build(raw, pkg, draft)
+    k = next(k for k in ov2["kitabs"] if k["title_ar"] == "كتاب الإيمان")
+    assert k["names"]["uz"] == "Imon kitobi" and k["names"]["status"] == "user-provided-sample-name" and k["names"]["origin"]
+    assert all("names" not in x for x in ov2["kitabs"] if x is not k)  # paketda Ilm kitobi yo'q — boshqa Kitobga yopishmaydi
+
+
+def test_source_opening_split_from_edition_front_matter_and_bismillah_to_kitab(tmp_path):
+    _, _, ov = fixture(tmp_path)
+    k1, k2 = ov["kitabs"][0], ov["kitabs"][1]
+    heads = k1["shamela_headings"]
+    assert [(h["evidence"], h["title_ar"]) for h in heads] == [("edition_front_matter", "(هذا نص التقرير)"), ("edition_front_matter", "مقدمة"),
+                                                               ("source_opening_before_first_hadith", None)]
+    assert [x["text_ar"] for x in heads[2]["intro"]] == ["﷽", "قَالَ الشَّيْخُ: كَيْفَ كَانَ بَدْءُ الْوَحْيِ."]
+    text = json.dumps(k1, ensure_ascii=False)
+    assert "وَلَقَدْ رَأَيْتُهُ" not in text                             # hadis davomi satri ochilishga qo'shilmaydi
+    assert text.count("﷽") == 2                                          # muqaddima va Vahiy boshi; Imon ﷽ i bu yerda emas
+    kh = k2["shamela_headings"][0]
+    assert kh["intro"][0]["text_ar"] == "﷽" and kh["intro"][0]["placement"] == "bismillah_before_kitab_heading"

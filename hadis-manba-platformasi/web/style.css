@@ -420,11 +420,12 @@ body.no-scroll { overflow: hidden; }
 
 /* to'plamning ichki Kitoblari: ixcham ko'p ustunli ro'yxat */
 .kgrid { list-style: none; margin: 12px 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2px 14px; }
-.kcell { display: grid; grid-template-columns: 34px 1fr; grid-template-areas: "no kt" "no km"; gap: 0 10px; align-items: center; padding: 10px 12px; border-radius: 12px;
+.kcell { display: grid; grid-template-columns: 34px 1fr; grid-template-areas: "no kt" "no kn" "no km"; gap: 0 10px; align-items: center; padding: 10px 12px; border-radius: 12px;
   text-decoration: none; color: inherit; border: 1px solid transparent; }
 .kcell:hover { background: var(--surface); border-color: var(--line); }
 .kcell .no { grid-area: no; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: var(--surface-2); color: var(--ink-3); font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .kcell .kt { grid-area: kt; font-family: var(--ar); font-size: 19px; line-height: 1.55; direction: rtl; text-align: right; color: var(--ink); overflow-wrap: anywhere; }
+.kcell .kn { grid-area: kn; font-size: 13px; font-weight: 600; color: var(--bk); text-align: end; }
 .kcell .km { grid-area: km; font-size: 12.5px; color: var(--ink-3); text-align: end; }
 .kcell:hover .no { background: color-mix(in srgb, var(--bk) 18%, var(--surface-2)); color: var(--bk); }
 
@@ -461,7 +462,7 @@ body.no-scroll { overflow: hidden; }
 .locspace { height: 60px; }
 .locbar { position: absolute; inset-inline: 0; top: 0; display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 12px; min-height: 46px;
   background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--line); }
-.locbar .loc-text { flex: 1; min-width: 0; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.locbar .loc-text { flex: 1 1 120px; min-width: 0; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
 .locbar .loc-bab { font-family: var(--ar); font-size: 16px; }
 .locbar .sep { color: var(--ink-3); }
 .locbar .loc-tools { display: flex; gap: 6px; align-items: center; flex: none; }
@@ -470,6 +471,8 @@ body.no-scroll { overflow: hidden; }
 .kit-head { padding: 6px 2px 14px; border-bottom: 2px solid color-mix(in srgb, var(--bk) 55%, var(--line)); margin-bottom: 8px; }
 .kit-head .eyebrow { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-3); }
 .bk-dot { width: 10px; height: 10px; border-radius: 3px; background: var(--bk); flex: none; }
+.kit-head .kit-name { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: var(--bk); text-align: end; }
+.loc-kit { font-weight: 600; }
 .kit-head h1 { font-family: var(--ar); font-weight: 700; font-size: 34px; line-height: 1.6; margin: 4px 0 2px; }
 
 /* bob guruhi (mundarija): to'liq sarlavha, ixcham kirish, neytral hadis qatorlari */
@@ -494,6 +497,14 @@ body.no-scroll { overflow: hidden; }
 .hrow .ex { font-family: var(--ar); font-size: 18.5px; line-height: 1.85; direction: rtl; text-align: right; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .hrow .tag { color: var(--ink-3); }
 .hrow svg.go { width: 16px; height: 16px; color: var(--ink-3); margin-top: 8px; }
+
+/* mundarija ko'rinish rejimlari */
+.cv-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin: 6px 0 4px; }
+.cv-main[data-mode="compact"] .hrow .ex, .cv-main[data-mode="compact"] .hrow .tag { display: none; }
+.cv-main[data-mode="compact"] .hrow { padding: 6px 10px; }
+.cv-main[data-mode="full"] .hrow .tag { display: none; }
+.hrow .ex.full.src { display: block; -webkit-line-clamp: unset; overflow: visible; font-family: var(--ar); font-size: 18.5px; line-height: 1.95; direction: rtl; text-align: right; white-space: pre-line; margin: 0; }
+.hrow .ex.full .nm { pointer-events: none; }
 
 /* batafsil o'qish */
 .reading .rbab { padding: 26px 0 8px; border-top: 3px solid color-mix(in srgb, var(--bk) 45%, var(--line)); scroll-margin-top: 130px; }
@@ -562,7 +573,8 @@ dl.ar-meta dt { color: var(--ink-3); }
 .nrow .nm-as { font-family: var(--ar); font-size: 18px; line-height: 1.7; direction: rtl; text-align: right; }
 .nrow .rp { color: var(--ink-2); white-space: nowrap; }
 .nrow .go { color: var(--accent); display: inline-flex; align-items: center; gap: 2px; }
-.ng-k { padding: 12px 14px 4px; font-family: var(--ar); font-size: 19px; font-weight: 700; background: var(--surface-2); border-top: 1px solid var(--line); }
+.ng-k { padding: 12px 14px 4px; font-family: var(--ar); font-size: 19px; font-weight: 700; background: var(--surface-2); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; direction: rtl; }
+.ng-k .ng-kn { font-family: var(--ui); font-size: 13px; font-weight: 600; color: var(--ink-2); direction: ltr; }
 .ng-b { display: flex; flex-direction: column; gap: 0; padding: 4px 14px 8px; background: var(--surface-2); color: var(--ink-2); }
 .ng-b .ng-l { color: var(--bk); font-weight: 600; }
 .ng-b .ng-t { font-family: var(--ar); font-size: 16px; line-height: 1.7; direction: rtl; text-align: right; }
@@ -585,7 +597,7 @@ dl.ar-meta dt { color: var(--ink-3); }
 .dk-status li[data-state="dk.stLinked"] b { color: var(--good); }
 .dk-pick { margin-inline-start: 10px; }
 .dk-compare { margin-top: 18px; }
-.dk-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+.dk-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 14px; }
 .dk-col { padding: 14px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); min-width: 0; }
 .dk-col .src.sm { max-height: 520px; overflow: auto; }
 
@@ -627,7 +639,7 @@ dl.ar-meta dt { color: var(--ink-3); }
   .reading .btitle { font-size: 21px; }
   .hadith { padding: 14px 14px; margin-inline: -4px; }
   .h-tools .btn .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .locbar .loc-tools .btn .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .locbar .loc-tools .btn .lbl, .locbar .menu-btn .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .nrow > a { grid-template-columns: 54px minmax(0, 1fr); }
   .nrow .rp, .nrow .go { grid-column: 2; white-space: normal; }
   .kgrid { grid-template-columns: 1fr; }
@@ -636,3 +648,8 @@ dl.ar-meta dt { color: var(--ink-3); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media print { .appbar, .tabbar, .foot, .nav-pn, .actions, .inspector, .toolbar { display: none !important; } .text-card { border: 0; box-shadow: none; } }
+/* Kitob ostidagi ﷽ (asl holida) va nashrning old qismi */
+.kit-head .bism { font-family: var(--ar); font-size: 26px; line-height: 1.6; margin: 0 0 6px; color: var(--ink-2); direction: rtl; text-align: right; }
+.front-matter > summary { color: var(--ink-3); }
+.front-matter .fm-title { font-family: var(--ar); font-size: 18px; font-weight: 700; margin: 12px 0 4px; direction: rtl; text-align: right; color: var(--ink-2); }
+.drawer .tree-head h2 { display: none; }

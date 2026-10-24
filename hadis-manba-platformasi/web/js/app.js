@@ -136,7 +136,14 @@
     b.setAttribute('aria-label', t('theme.label') + ': ' + t('theme.' + v)); b.title = t('theme.label') + ': ' + t('theme.' + v);
   }
   // Harakatlarni faqat ko'rinishda yashirish; manba matni va nusxalash o'zgarmaydi.
-  function displayText(s, marks) { return marks ? s : s.replace(/[ؐ-ًؚ-ٰٟۖ-ۭ]/g, ''); }
+  function displayText(s, marks) { s = sawText(s); return marks ? s : s.replace(/[ؐ-ًؚ-ٰٟۖ-ۭ]/g, ''); }
+  // "صلى الله عليه وسلم" → ﷺ faqat ko'rinishda (manba matni, nusxa va eksport o'zgarmaydi); tanlov o'qish sozlamalarida.
+  var SAW_RE = (function () {
+    var M = '[\\u0610-\\u061A\\u064B-\\u065F\\u0670]*';
+    return new RegExp(['ص', 'ل', 'ى'].join(M) + M + '\\s+' + ['ا', 'ل', 'ل', 'ه'].join(M) + M + '\\s+' + ['ع', 'ل', 'ي', 'ه'].join(M) + M + '\\s+' + ['و', 'س', 'ل', 'م'].join(M) + M, 'g');
+  })();
+  var sawOn = false;
+  function sawText(s) { return sawOn ? s.replace(SAW_RE, 'ﷺ') : s; }
 
   // ---------------------------------------------------------------- nomlar
   function titleOf(c) {
@@ -466,6 +473,7 @@
           grid.appendChild(el('li', {}, [el('a', { cls: 'kcell', href: '#/c/' + encodeURIComponent(base.package_id) + '?k=' + i, 'data-act': 'chapter' }, [
             el('span', { cls: 'no', text: String(i + 1) }),
             el('span', { cls: 'kt', lang: 'ar', dir: 'rtl', text: c.title || t('rd.all') }),
+            kit && kit.name ? el('span', { cls: 'kn', text: kit.name }) : null,
             el('span', { cls: 'km' }, [t('col.rec', { n: c.count }), kit && kit.babs ? ' · ' + (kit.babs.length ? t('col.babs', { n: kit.babs.length }) : t('col.noBabHead')) : '', c.first ? ' · ' + t('col.first', { n: c.first }) : ''])])]));
         });
         panel.appendChild(tint(grid, workId));
@@ -709,7 +717,7 @@
     var contentsHref = pk ? '#/c/' + encodeURIComponent(pk.package_id) + '?k=' + chIdx : '#/w/' + encodeURIComponent(u.work_id);
     var readerHref = pk ? '#/r/' + encodeURIComponent(pk.package_id) + '?k=' + chIdx + '&u=' + encodeURIComponent(u.unit_id) : null;
     var cr = [{ text: t('bk.books'), href: '#/books' }, { text: title, ar: true, href: '#/w/' + encodeURIComponent(u.work_id) }];
-    if (u.chapter_ar) cr.push({ text: u.chapter_ar, ar: true, href: contentsHref });
+    if (u.chapter_ar) cr.push(place && place.kit && place.kit.name ? { text: place.kit.name, href: contentsHref } : { text: u.chapter_ar, ar: true, href: contentsHref });
     if (place && place.bab) cr.push({ text: place.bab.title_ar, ar: true, href: contentsHref + '&b=' + place.bab.id });
     else if (bd && bd.ov) cr.push({ text: place && place.opening ? t('cv.opening') : t('oc.unknownBab') });
     cr.push({ text: heading });
@@ -1141,13 +1149,14 @@
   // (Lib.overlayState === 'active' bo'lsagina). Qatlam yo'q bo'lsa faqat Kitob darajasi ko'rsatiladi, hech narsa taxmin qilinmaydi.
   var RP_KEY = 'hadith-library.reading';
   function rprefs() {
-    var p = { fs: 26, wide: false, marks: true, full: true, ord: true, tropen: false };
+    var p = { fs: 26, wide: false, marks: true, full: true, ord: true, tropen: false, saw: false, cmode: 'text' };
     try { Object.assign(p, JSON.parse(localStorage.getItem(RP_KEY) || '{}')); } catch (e) { /* standart */ }
     p.fs = Math.max(10, Math.min(36, Number(p.fs) || 26));
     return p;
   }
   function saveRprefs(p) { try { localStorage.setItem(RP_KEY, JSON.stringify(p)); } catch (e) { /* xususiy rejim */ } applyRprefs(p); }
   function applyRprefs(p) {
+    sawOn = !!p.saw;
     var r = document.documentElement.style;
     r.setProperty('--read-size', p.fs + 'px');
     r.setProperty('--tr-size', Math.max(10, Math.round(p.fs * 0.62)) + 'px');
@@ -1176,8 +1185,26 @@
     var k = bd.ov ? bd.ov.kitabs[i] : null;
     // qatlam va toc bir xil chapter_ar guruhlariga tayanadi; mos kelmasa qatlam Kitob uchun ishlatilmaydi
     if (k && k.title_ar !== ch.title) k = null;
-    return { i: i, ch: ch, ov: k, title: ch.title, count: ch.count, first: ch.first,
+    var bh = k ? (k.shamela_headings || []).filter(bismOnly)[0] : null;
+    return { i: i, ch: ch, ov: k, title: ch.title, count: ch.count, first: ch.first, name: kitName(k), bism: bh ? bh.intro[0].text_ar : null,
       babs: k ? k.bab_ids.map(function (b) { return bd.ov.bab[b]; }) : null };
+  }
+  // Kitob nomi joriy tilda — faqat qatlamda manbasi (foydalanuvchi namunasi) bilan berilgan bo'lsa; arab UI'da yo'q
+  // Faqat ﷽ dan iborat Kitob kirishi — sarlavha ostida asl holida (tarjima paneli yo'q)
+  function bismOnly(h) { return (h.intro || []).length > 0 && h.intro.every(function (x) { return /^\s*(﷽|بسم الله الرحمن الرحيم)\s*$/.test(x.text_ar.replace(/[\u064B-\u0670\u0640]/g, '')); }); }
+  function kitName(k) { var n = k && k.names; return n && I18N.lang() !== 'ar' ? (n[I18N.lang()] || null) : null; }
+  // Nashrning old qismi (Shamela «المقدمة» va toc'siz sarlavhali sahifalar) — muallif matnidan alohida, yig'ilgan holda
+  function frontMatter(heads, cls) {
+    var fm = heads.filter(function (h) { return h.front_matter; });
+    if (!fm.length) return null;
+    var n = fm.reduce(function (a, h) { return a + h.intro.length; }, 0);
+    var d = el('details', { cls: 'bintro disclose front-matter', 'data-act': 'front-matter' }, [el('summary', {}, [icon('chevR', 'chev'), t('cv.frontMatter', { n: n })]),
+      el('p', { cls: 'tiny faint', text: t('cv.frontNote') })]);
+    fm.forEach(function (h) {
+      if (h.title_ar) d.appendChild(el('h3', { cls: 'fm-title', lang: 'ar', dir: 'rtl', text: h.title_ar }));
+      h.intro.forEach(function (x) { d.appendChild(arP(x.text_ar, cls)); });
+    });
+    return d;
   }
   // Kitob ichidagi guruhlar: [ochilish] + boblar + [bobi aniqlanmagan]. Qatlam yo'q bo'lsa bitta guruh.
   function kitabGroups(bd, kit) {
@@ -1191,7 +1218,7 @@
       else unplaced.push(r);
     });
     var out = [];
-    var heads = (kit.ov.shamela_headings || []).filter(function (h) { return (h.intro || []).length; });
+    var heads = (kit.ov.shamela_headings || []).filter(function (h) { return (h.intro || []).length && !bismOnly(h); });
     if (opening.length || heads.length) out.push({ kind: 'opening', rows: opening, heads: heads });
     kit.babs.forEach(function (b) { out.push({ kind: 'bab', bab: b, rows: byBab[b.id] || [] }); });
     // boshqa Kitobga yozilgan bobning hadisi (bab_hadiths_in_two_kitabs) shu Kitobda qolsa — aniqlanmagan guruhga
@@ -1247,7 +1274,8 @@
       var rs = info[m.mid] || [];
       var cls = 'nm' + (m.mid === term ? ' term' : '') + (opts.highlight != null && String(m.person) === String(opts.highlight) ? ' sel' : '') + (rs.length ? '' : ' off');
       var lbl = m.as_written + (rs.length ? ' — ' + rs.map(function (x) { return t('np.position', { p: x.pos, n: x.of }) + (multi ? ' (' + t('np.route', { r: x.label }) + ')' : ''); }).join('; ') : '');
-      var b = el('button', { type: 'button', cls: cls, 'data-act': 'narrator', 'data-person': String(m.person), 'data-mid': m.mid, 'aria-label': lbl, title: lbl }, [displayText(chars.slice(m.span[0], m.span[1]).join(''), pr.marks)]);
+      var b = opts.plain ? el('span', { cls: cls, 'data-person': String(m.person), title: lbl }, [displayText(chars.slice(m.span[0], m.span[1]).join(''), pr.marks)])
+        : el('button', { type: 'button', cls: cls, 'data-act': 'narrator', 'data-person': String(m.person), 'data-mid': m.mid, 'aria-label': lbl, title: lbl }, [displayText(chars.slice(m.span[0], m.span[1]).join(''), pr.marks)]);
       if (opts.onNarrator) b.addEventListener('click', function () { opts.onNarrator(m, rs, b); });
       p.appendChild(b);
       if (pr.ord && rs.length) p.appendChild(el('sup', { cls: 'ord', 'aria-hidden': 'true', text: rs.map(function (x) { return ordText(x, multi); }).join(',') }));
@@ -1317,6 +1345,7 @@
       check('ord', t('set2.ordinals'), t('set2.ordNote')),
       check('tropen', t('set2.translations')),
       check('marks', t('set.marks'), t('set.marksNote')),
+      check('saw', t('set2.saw'), t('set2.sawNote')),
       el('div', { cls: 'set-row' }, [el('span', { text: t('set2.size') }), el('div', { cls: 'fs' }, [
         el('button', { type: 'button', cls: 'icon-btn', 'aria-label': 'A−', 'data-act': 'fs-minus', text: 'A−', on: { click: function () { setFs(pr.fs - 1); } } }),
         range, el('button', { type: 'button', cls: 'icon-btn', 'aria-label': 'A+', 'data-act': 'fs-plus', text: 'A+', on: { click: function () { setFs(pr.fs + 1); } } }), out])]),
@@ -1372,7 +1401,7 @@
         sub.appendChild(el('li', { cls: 'tiny faint', text: t('col.babs', { n: kit.babs.length }) }));
       }
       li.appendChild(sub);
-      items.push({ li: li, text: fold(kit.title) });
+      items.push({ li: li, text: fold(kit.title + ' ' + (kit.name || '')) });
       list.appendChild(li);
     });
     filterBox.addEventListener('input', function () { var q = fold(filterBox.value); items.forEach(function (x) { x.li.classList.toggle('yashirin', !!q && x.text.indexOf(q) < 0); }); });
@@ -1407,7 +1436,7 @@
     scrim.hidden = true;
     var opener = null;
     var tv = tree(bd, activeK, mode, function (b) { close(); if (onBab) onBab(b); });
-    panel.appendChild(el('div', { cls: 'drawer-head' }, [el('b', { text: t('cv.menu') }), el('button', { type: 'button', cls: 'icon-btn', 'aria-label': t('cv.close'), 'data-act': 'drawer-close', on: { click: function () { close(); } } }, [icon('x')])]));
+    panel.appendChild(el('div', { cls: 'drawer-head' }, [el('b', { text: t('cv.tree') }), el('button', { type: 'button', cls: 'icon-btn', 'aria-label': t('cv.close'), 'data-act': 'drawer-close', on: { click: function () { close(); } } }, [icon('x')])]));
     panel.appendChild(tv.node);
     function esc(e) { if (e.key === 'Escape') { e.preventDefault(); close(); } }
     function open(btnEl) {
@@ -1474,13 +1503,13 @@
     var tv = tree(bd, ki, 'c', function (b) { goBab(b); });
     var loc = el('div', { cls: 'locbar', 'data-act': 'locbar', 'aria-live': 'polite' });
     var locText = el('div', { cls: 'loc-text' });
-    var menuBtn = el('button', { type: 'button', cls: 'btn sm menu-btn', 'data-act': 'open-tree', 'aria-label': t('cv.menu') }, [icon('list'), el('span', { cls: 'lbl', text: t('cv.menu') })]);
+    var menuBtn = el('button', { type: 'button', cls: 'btn sm menu-btn', 'data-act': 'open-tree', 'aria-label': t('cv.tree') }, [icon('books'), el('span', { cls: 'lbl', text: t('cv.tree') })]);
     menuBtn.addEventListener('click', function () { mm.open(menuBtn); });
     loc.appendChild(menuBtn); loc.appendChild(locText);
     function setLoc(b) {
       locText.textContent = '';
       locText.appendChild(el('span', { cls: 'tiny faint', text: t('cv.now') + ': ' }));
-      locText.appendChild(arSpan(kit.title));
+      locText.appendChild(kit.name ? el('span', { cls: 'loc-kit', title: kit.title, text: kit.name }) : arSpan(kit.title));
       if (b) { locText.appendChild(el('span', { cls: 'sep', text: ' › ' })); locText.appendChild(el('span', { cls: 'loc-bab', lang: 'ar', dir: 'rtl', text: b.title_ar })); locText.appendChild(el('span', { cls: 'tiny faint', text: ' · ' + t('cv.order', { o: b.order }) })); }
     }
     setLoc(null);
@@ -1489,13 +1518,32 @@
     tint(body, bd.work);
     body.appendChild(el('header', { cls: 'kit-head' }, [
       el('div', { cls: 'eyebrow' }, [el('span', { cls: 'bk-dot', 'aria-hidden': 'true' }), arSpan(bd.title)]),
-      el('h1', { lang: 'ar', dir: 'rtl', text: kit.title }),
-      el('p', { cls: 'small muted' }, [kit.babs ? t('cv.kitabStats', { b: kit.babs.length, n: kit.count }) : t('col.rec', { n: kit.count }),
+      el('h1', { lang: 'ar', dir: 'rtl', text: kit.title }), kit.name ? el('p', { cls: 'kit-name', text: kit.name }) : null,
+      kit.bism ? el('p', { cls: 'bism', lang: 'ar', dir: 'rtl', 'data-act': 'kitab-bismillah', text: kit.bism }) : null,
+      el('p', { cls: 'small muted' }, [kit.babs && kit.babs.length ? t('cv.kitabStats', { b: kit.babs.length, n: kit.count }) : (kit.babs ? t('col.noBabHead') + ' · ' : '') + t('col.rec', { n: kit.count }),
         kit.first ? ' · ' + t('col.first', { n: kit.first }) : '']),
       el('div', { cls: 'btns' }, [link(t('cv.read'), readBase, 'read-kitab', 'primary sm', 'books'), link(t('cv.overview'), '#/w/' + encodeURIComponent(bd.work), 'overview', 'ghost sm', 'list')])]));
     var note = overlayNote(bd); if (note) body.appendChild(note);
     if (kit.babs) body.appendChild(el('p', { cls: 'tiny faint', text: t('cv.scope') }));
+    // Ko'rinish rejimi (A01): ixcham / roviy va matn / to'liq manba va sanad — tanlov eslab qolinadi
+    var cpr = rprefs();
+    var modeSeg = el('div', { cls: 'seg', role: 'group', 'aria-label': t('cv.mode') }, [['compact', t('cv.mCompact')], ['text', t('cv.mText')], ['full', t('cv.mFull')]].map(function (o) {
+      return el('button', { type: 'button', 'aria-pressed': String(cpr.cmode === o[0]), 'data-act': 'cmode-' + o[0], text: o[1], on: { click: function (e) {
+        cpr = rprefs(); cpr.cmode = o[0]; saveRprefs(cpr);
+        modeSeg.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === e.currentTarget)); });
+        body.setAttribute('data-mode', o[0]);
+        body.querySelectorAll('.hrow').forEach(function (a) { fillRow(a); });
+      } } });
+    }));
+    body.setAttribute('data-mode', cpr.cmode);
+    body.appendChild(el('div', { cls: 'cv-tools' }, [el('span', { cls: 'small faint', text: t('cv.mode') }), modeSeg]));
 
+    function fillRow(a) {
+      var id = a.getAttribute('data-unit'), u = ub[id], rec = recs[id] || null, slot = a.querySelector('.ex');
+      if (!u || !slot) return;
+      if (body.getAttribute('data-mode') === 'full') { var full = markedText(u, rec, Object.assign({}, rprefs(), { full: true }), { plain: true }); full.className = 'ex full src'; slot.replaceWith(full); }
+      else { var ex = excerptAfterTerminal(u, rec); slot.replaceWith(el('span', { cls: 'ex', lang: 'ar', dir: 'rtl', text: displayText(ex.text, true) })); }
+    }
     function row(r) {
       var u = ub[r.id] || { text_ar: r.ex };
       var rec = recs[r.id] || null;
@@ -1506,13 +1554,15 @@
         termName = m ? m.as_written : null;
       }
       var nl = numLabel(r);
-      return el('li', {}, [el('a', { cls: 'hrow', href: readBase + '&u=' + encodeURIComponent(r.id), 'data-act': 'toc-item', 'data-unit': r.id }, [
+      var a0 = el('a', { cls: 'hrow', href: readBase + '&u=' + encodeURIComponent(r.id), 'data-act': 'toc-item', 'data-unit': r.id }, [
         el('span', { cls: 'num' + (nl ? '' : ' none'), text: nl || en('unitType', r.type) }),
         el('span', { cls: 'hb' }, [
           termName ? el('span', { cls: 'who', lang: 'ar', dir: 'rtl', title: t('cv.terminal'), text: termName }) : null,
-          el('span', { cls: 'ex', lang: 'ar', dir: 'rtl', text: ex.text }),
+          el('span', { cls: 'ex', lang: 'ar', dir: 'rtl', text: displayText(ex.text, true) }),
           el('span', { cls: 'tag tiny', text: t('cv.excerpt') })]),
-        icon('chevR', 'go')])]);
+        icon('chevR', 'go')]);
+      if (cpr.cmode === 'full') fillRow(a0);
+      return el('li', {}, [a0]);
     }
     var sections = [];
     groupsK.forEach(function (g) {
@@ -1530,8 +1580,9 @@
         }
       } else if (g.kind === 'opening') {
         sec.appendChild(el('div', { cls: 'bmeta' }, [el('span', { text: t('cv.opening') })]));
+        var fm = frontMatter(g.heads, 'src sm'); if (fm) sec.appendChild(fm);
         g.heads.forEach(function (h) {
-          if (!h.intro.length) return;
+          if (!h.intro.length || h.front_matter) return;
           var d = el('details', { cls: 'bintro disclose' }, [el('summary', {}, [icon('chevR', 'chev'), t('cv.introN', { n: h.intro.length })])]);
           h.intro.forEach(function (x) { d.appendChild(arP(x.text_ar, 'src sm')); });
           sec.appendChild(d);
@@ -1587,7 +1638,7 @@
     var tv = tree(bd, ki, 'r', function (b) { goBab(b); });
     var loc = el('div', { cls: 'locbar', 'data-act': 'locbar', 'aria-live': 'polite' });
     var locText = el('div', { cls: 'loc-text' });
-    var menuBtn = el('button', { type: 'button', cls: 'btn sm menu-btn', 'data-act': 'open-tree', 'aria-label': t('cv.menu') }, [icon('list'), el('span', { cls: 'lbl', text: t('cv.menu') })]);
+    var menuBtn = el('button', { type: 'button', cls: 'btn sm menu-btn', 'data-act': 'open-tree', 'aria-label': t('cv.tree') }, [icon('books'), el('span', { cls: 'lbl', text: t('cv.tree') })]);
     menuBtn.addEventListener('click', function () { mm.open(menuBtn); });
     var blocks = [];
     var setBtn = settingsButton(function (p2, k) { pr = p2; if (k !== 'fs' && k !== 'wide' && k !== 'theme') blocks.forEach(function (f) { f(); }); if (k === 'theme') main.querySelectorAll('.cv-main').forEach(function (x) { tint(x, bd.work); }); });
@@ -1596,7 +1647,7 @@
     function setLoc(b) {
       locText.textContent = '';
       locText.appendChild(el('span', { cls: 'tiny faint', text: t('cv.now') + ': ' }));
-      locText.appendChild(arSpan(kit.title));
+      locText.appendChild(kit.name ? el('span', { cls: 'loc-kit', title: kit.title, text: kit.name }) : arSpan(kit.title));
       if (b) { locText.appendChild(el('span', { cls: 'sep', text: ' › ' })); locText.appendChild(el('span', { cls: 'loc-bab', lang: 'ar', dir: 'rtl', text: b.title_ar })); }
     }
     setLoc(null);
@@ -1605,8 +1656,9 @@
     tint(body, bd.work);
     body.appendChild(el('header', { cls: 'kit-head' }, [
       el('div', { cls: 'eyebrow' }, [el('span', { cls: 'bk-dot', 'aria-hidden': 'true' }), arSpan(bd.title)]),
-      el('h1', { lang: 'ar', dir: 'rtl', text: kit.title }),
-      el('p', { cls: 'small muted' }, [kit.babs ? t('cv.kitabStats', { b: kit.babs.length, n: kit.count }) : t('col.rec', { n: kit.count })])]));
+      el('h1', { lang: 'ar', dir: 'rtl', text: kit.title }), kit.name ? el('p', { cls: 'kit-name', text: kit.name }) : null,
+      kit.bism ? el('p', { cls: 'bism', lang: 'ar', dir: 'rtl', 'data-act': 'kitab-bismillah', text: kit.bism }) : null,
+      el('p', { cls: 'small muted' }, [kit.babs && kit.babs.length ? t('cv.kitabStats', { b: kit.babs.length, n: kit.count }) : (kit.babs ? t('col.noBabHead') + ' · ' : '') + t('col.rec', { n: kit.count })])]));
     var note = overlayNote(bd); if (note) body.appendChild(note);
 
     var sections = [], openers = {};
@@ -1627,7 +1679,8 @@
         sections.push(sec);
       } else if (g.kind === 'opening') {
         sec.appendChild(el('div', { cls: 'bmeta' }, [el('span', { text: t('cv.opening') })]));
-        g.heads.forEach(function (h) { h.intro.forEach(function (x) { sec.appendChild(arP(x.text_ar, 'src')); }); });
+        var fm = frontMatter(g.heads, 'src'); if (fm) sec.appendChild(fm);
+        g.heads.forEach(function (h) { if (!h.front_matter) h.intro.forEach(function (x) { sec.appendChild(arP(x.text_ar, 'src')); }); });
       } else if (g.kind === 'unplaced') {
         sec.appendChild(el('div', { cls: 'bmeta warn-t' }, [el('span', { text: t('cv.unplaced') })]));
         sec.appendChild(el('p', { cls: 'tiny faint', text: t('cv.unplacedNote') }));
@@ -1816,7 +1869,7 @@
       rows.forEach(function (r) {
         if (grouped) {
           var kit = bd.ov.kit[r.kitab_id], bab = r.bab_id ? bd.ov.bab[r.bab_id] : null;
-          if (r.kitab_id !== lastK) { list.appendChild(el('li', { cls: 'ng-k', lang: 'ar', dir: 'rtl', text: kit ? kit.title_ar : '—' })); lastK = r.kitab_id; lastB = null; }
+          if (r.kitab_id !== lastK) { var kn = kitName(kit); list.appendChild(el('li', { cls: 'ng-k' }, [el('span', { lang: 'ar', dir: 'rtl', text: kit ? kit.title_ar : '—' }), kn ? el('span', { cls: 'ng-kn', text: kn }) : null])); lastK = r.kitab_id; lastB = null; }
           if ((r.bab_id || 'x') !== lastB) { list.appendChild(el('li', { cls: 'ng-b' }, [el('span', { cls: 'ng-l tiny', text: bab ? babLabel(bab) : t('oc.unknownBab') }), bab ? el('span', { cls: 'ng-t', lang: 'ar', dir: 'rtl', text: bab.title_ar }) : null])); lastB = r.bab_id || 'x'; }
         }
         var pos = r.routes.length ? r.routes.map(function (x) { return (r.routes.length > 1 || x.label !== 'A' ? t('ni.route', { r: x.label }) + ' · ' : '') + t('ni.pos', { p: x.pos, n: x.of }); }).join('; ') : t('ni.noPos');
@@ -2122,7 +2175,9 @@
       });
       var pct = den && den.verified && den.value && c.source_records != null ? t('cov.pct', { p: (100 * c.source_records / den.value).toFixed(1), d: den.value }) : t('cov.noPct');
       var tt = titleOf(p.manifest);
-      main.appendChild(el('section', { cls: 'card' }, [el('h2', {}, [tt.ar ? arSpan(tt.ar) : tt.other]), el('p', { cls: 'small muted', text: pct }), el('div', { cls: 'table-wrap' }, [el('table', { cls: 'table' }, rows)])]));
+      // Xom manifest qamrovi texnik tafsilot sifatida yig'ilgan holda (ma'lumot yashirilmaydi, ochib ko'rish mumkin)
+      main.appendChild(el('section', { cls: 'card' }, [el('h2', {}, [tt.ar ? arSpan(tt.ar) : tt.other]), el('p', { cls: 'small muted' }, [c.source_records != null ? t('cov.trUnits') + ': ' + c.source_records + ' · ' : '', pct]),
+        el('details', { cls: 'disclose' }, [el('summary', {}, [icon('chevR', 'chev'), t('ev.tech')]), el('div', { cls: 'table-wrap' }, [el('table', { cls: 'table' }, rows)])])]));
     }
   }
   function viewAi() {

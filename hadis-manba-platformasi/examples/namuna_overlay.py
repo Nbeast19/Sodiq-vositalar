@@ -49,7 +49,10 @@ def build(base_hmz: Path) -> tuple[bytes, dict]:
                 mentions.append({"mid": f"{u['unit_id']}#m{len(mentions) + 1}", "person": pid, "as_written": w, "span": [s, s + len(w)]})
         assert len(cps) == len(text)
         nodes_a = [{"pos": k + 1, "person": mm["person"], "mid": mm["mid"]} for k, mm in enumerate(mentions)]
-        nodes_a.append({"pos": len(nodes_a) + 1, "person": 903, "mid": None})
+        if u["seq"] == units[0]["seq"]:   # birinchi yozuvda yo'l oxiri matnda: "faqat ismlar" kesishini sinash uchun
+            nodes_a = [{"pos": 1, "person": 903, "mid": None}] + [dict(x, pos=x["pos"] + 1) for x in nodes_a]
+        else:
+            nodes_a.append({"pos": len(nodes_a) + 1, "person": 903, "mid": None})
         routes = [{"route_id": f"{u['unit_id']}#r1", "label": "A", "page_isnads_id": 0, "of": len(nodes_a), "nodes": nodes_a},
                   {"route_id": f"{u['unit_id']}#r2", "label": "B", "page_isnads_id": 0, "of": 2,
                    "nodes": [{"pos": 1, "person": 904, "mid": None}, {"pos": 2, "person": 901, "mid": None}]}]

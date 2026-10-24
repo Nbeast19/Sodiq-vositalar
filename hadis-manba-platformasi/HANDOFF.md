@@ -37,6 +37,12 @@ Ochiq (27-bo‘lim):
 - **Muallaqot**: hadith-json Buxoriyda faqat 97 “kitob” sarlavhasi, bob tarjimalari/muallaqot yo‘q; manbada muallaq tasnifi maydoni yo‘q (raqamlar.sqlite’da `muallaq` 0 ta). UI’da “tasniflanmagan” deb ochiq ko‘rsatiladi; Abu Sa’id al-Mu’allo kabi ism tasnifga ishlatilmaydi.
 - Paket ichidagi `persons` yozuvlarida `name_ar` yo‘q (faqat o‘zbekcha ism + normallashtirilgan taxallus); Buxoriyda roviy holati: verified 5 131, conflict 2 146.
 
+## V8 (2026-10-24) — qisqacha
+
+- Boblar 13 kitobga (`scripts/build_overlay.py --all`), sanad: Buxoriy + Termiziy. Kitob o‘rnatilganda qatlam avtomatik (mahalliy katalog `overlay` maydoni).
+- Hadis sahifasida chap daraxt (sticky), «Faqat ismlar», roviy darajalari, roviy sahifasida o‘rin bo‘yicha saralash, Rasululloh ﷺ so‘zlari belgisi, kitob rangi dizayni. Service worker `hadis-manba-qobiq-v6`.
+- Hisobot: `docs/V8-HISOBOT.md`; qarorlar #42–46. O‘zbekcha tarjima — keyingi versiya.
+
 ## 1. Asosiy talablar (o‘zgarmaydi)
 
 - Har **asosiy kitob alohida**, har **sharh alohida** paket; “faqat kitob”, “faqat sharh”, “kitob + tanlangan sharhlar”. Birga o‘rnatilsa hadis ↔ sharh **ikki tomonlama** bog‘lanadi (faqat mos nashr va versiyada; raqam bir xilligi yetarli emas).

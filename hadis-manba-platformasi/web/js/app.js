@@ -129,6 +129,7 @@
     try { if (v === 'auto') localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY, v); } catch (e) { /* xususiy rejim */ }
     if (v === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', v);
     renderThemeBtn();
+    if (curBook) pageBook(curBook);
   }
   function renderThemeBtn() {
     var b = $('tema'), v = theme();
@@ -390,6 +391,7 @@
     if (!g) { main.appendChild(emptyState(t('notFound'), t('books.none'), '#/books', t('home.browse'))); return; }
     var base = g.bases[0] || null, inst = data.installed;
     var bi = base ? inst[base.package_id] : null;
+    pageBook(workId);
     var tt = titleOf(base || g.comms[0]), au = authorOf(base || g.comms[0]);
     var tocData = bi ? await Lib.toc(bi.active_pkgv) : null;
     var pos = await Notes.get('position:w:' + workId);
@@ -405,6 +407,12 @@
       actions.appendChild(link(t('bk.searchIn'), '#/search?book=' + encodeURIComponent(workId), 'search-in', 'ghost lg', 'search'));
       if (base.package_version && bi.version !== base.package_version && !base.local_only)
         actions.appendChild(btn(t('bk.update', { v: base.package_version }), 'install', function () { installMany([base]); }, 'soft lg', 'download'));
+      // kitob avval o'rnatilgan, shu qurilmadagi katalogda uning boblar qatlami bor, lekin hali o'rnatilmagan
+      if (base.overlay) {
+        var ovi = await Lib.getPackage(base.overlay.package_id);
+        if (!ovi || ovi.sha256 !== base.overlay.package_sha256)
+          actions.appendChild(btn(t('bk.installLayer', { size: sizeOf(base.overlay) }), 'install-layer', function () { installMany([base.overlay]); }, 'soft lg', 'layers'));
+      }
     } else if (base && !base.local_only) {
       actions.appendChild(btn(t('bk.install', { size: sizeOf(base) }), 'install', function () { installMany([base]); }, 'primary lg', 'download'));
       if (base.download_url) actions.appendChild(el('a', { cls: 'btn ghost lg', href: base.download_url, rel: 'noopener', 'data-act': 'download-file' }, [icon('download'), t('bk.download')]));
@@ -554,7 +562,7 @@
   }
   async function installFromCatalog(c) {
     var inst = await Lib.getPackage(c.package_id);
-    if (inst && inst.sha256 === c.package_sha256) return;
+    if (inst && inst.sha256 === c.package_sha256) { if (c.overlay) await installFromCatalog(c.overlay); return; }
     var tt = titleOf(c);
     var st = progressBox(tt.ar || tt.other || c.package_id);
     try {
@@ -566,6 +574,8 @@
       await Lib.install(buf, st.set);
       st.ok();
     } catch (e) { st.fail(e.message, c.download_url); throw e; }
+    // shu qurilmadagi katalogda kitobning mahalliy qatlami (boblar, sanad) bo'lsa — birga o'rnatiladi
+    if (c.overlay) await installFromCatalog(c.overlay);
   }
   async function doInstall(buf, name) {
     var st = progressBox(name);
@@ -709,6 +719,8 @@
     var bd = pk && pk.kind === 'base_book' ? await bookData(pk.package_id) : null;
     var place = bd ? placeOf(bd, u.unit_id) : null;
     var rec = bd && bd.ov ? await Lib.ovEnt('ov_isnad', u.unit_id, bd.edition) : null;
+    if (rec) await attachNames([rec], bd.edition);
+    if (bd) pageBook(bd.work);
     var trRec = bd && bd.ov && I18N.lang() === 'uz' ? await Lib.ovEnt('ov_tr', u.unit_id, bd.edition) : null;
     var title = await workTitle(u.work_id);
     var pn = primaryNum(u.numbers);
@@ -738,7 +750,20 @@
     var wrap = el('div', { cls: 'read-wrap' });
     var col = el('article', { cls: 'read-col', 'aria-label': heading });
     var insp = el('aside', { cls: 'inspector', id: 'sharh-panel', 'aria-label': t('cm.title') });
-    wrap.appendChild(col); wrap.appendChild(insp); main.appendChild(wrap);
+    wrap.appendChild(col); wrap.appendChild(insp);
+    // Chap tomonda Kitob → Bob daraxti (joyida turadi, shu hadisning bobi belgilanadi); telefonda — menyu
+    var tvU = bd ? tree(bd, chIdx, 'r') : null, mmU = bd ? mobileMenu(bd, chIdx, 'r') : null, menuBtnU = null;
+    if (tvU) {
+      main.appendChild(el('div', { cls: 'cv-layout unit-layout' }, [el('aside', { cls: 'cv-side' }, [tvU.node]), el('div', { cls: 'cv-col' }, [wrap])]));
+      main.appendChild(mmU.scrim); main.appendChild(mmU.panel);
+      menuBtnU = el('button', { type: 'button', cls: 'btn sm menu-btn', 'data-act': 'open-tree', 'aria-label': t('cv.tree') }, [icon('books'), el('span', { cls: 'lbl', text: t('cv.tree') })]);
+      menuBtnU.addEventListener('click', function () { mmU.open(menuBtnU); });
+      afterRender = function () {
+        if (!restoring) window.scrollTo(0, 0);
+        tvU.scrollToCurrent();
+        if (place && place.bab) { tvU.setActive(place.bab.id); mmU.tree.setActive(place.bab.id); }
+      };
+    } else main.appendChild(wrap);
     if (bd) tint(col, bd.work);
 
     // Roviy ro'yxatidan kelgan bo'lsa — qaytish (ayni sahifa/guruh/scroll: Back bilan, aks holda saqlangan manzil)
@@ -753,9 +778,10 @@
     var srcSlot = el('div', { cls: 'tslot' });
     var narPanel = el('div', { id: 'roviy-panel' });
     var setBtn = settingsButton(function (p2, k) { pr = p2; if (k !== 'fs' && k !== 'wide' && k !== 'theme') renderSrc(); });
+    var recOk0 = !!(rec && rec.text_sha256 === u.current_text_sha256 && (rec.routes || []).length);
     col.appendChild(el('div', { cls: 'read-top' }, [
-      el('div', { cls: 'toolbar' }, [link(t('h.contents'), contentsHref, 'contents', 'sm ghost', 'list'), readerHref ? link(t('rdv.inBook'), readerHref, 'in-book', 'sm ghost', 'books') : null]),
-      el('div', { cls: 'toolbar' }, [setBtn,
+      el('div', { cls: 'toolbar' }, [menuBtnU, link(t('h.contents'), contentsHref, 'contents', 'sm ghost', 'list'), readerHref ? link(t('rdv.inBook'), readerHref, 'in-book', 'sm ghost', 'books') : null]),
+      el('div', { cls: 'toolbar' }, [recOk0 ? chainToggle(function (p2) { pr = p2; renderSrc(); }) : null, setBtn,
         (function () {
           var b = btn(bm ? t('h.bookmarked') : t('h.bookmark'), 'bookmark', async function () {
             if (bm) { await Notes.del('bookmark:' + id); bm = null; }
@@ -795,13 +821,13 @@
     function renderSrc() {
       srcSlot.textContent = '';
       if (recOk) { srcSlot.appendChild(markedText(u, rec, pr, { highlight: params.p, onNarrator: function (m, rs) { narratorPanel(bd, u, rec, m, rs, narPanel); } })); return; }
+      if (!span) { srcSlot.appendChild(markedText(u, null, pr, {})); return; }   // sanad qatlami yo'q: matn + Nabiy ﷺ so'zlari belgisi
       var srcP = el('p', { lang: 'ar', dir: 'rtl', cls: 'src' });
-      if (!span) { srcP.textContent = displayText(u.text_ar, pr.marks); srcSlot.appendChild(srcP); return; }
-      var chars = Array.from(u.text_ar);
-      srcP.appendChild(document.createTextNode(displayText(chars.slice(0, span.start).join(''), pr.marks)));
+      var chars = Array.from(u.text_ar), nab = pr.nab !== false ? nabawiRanges(chars) : [];
+      appendNab(srcP, chars, 0, span.start, nab, pr);
       srcP.appendChild(el('button', { type: 'button', cls: 'nm-inline', 'data-act': 'narrator-inline', 'aria-controls': 'roviy-panel', 'aria-expanded': 'false',
         on: { click: function () { toggleNarrator(nar.terminal_person_id); } } }, [displayText(span.text, pr.marks)]));
-      srcP.appendChild(document.createTextNode(displayText(chars.slice(span.end).join(''), pr.marks)));
+      appendNab(srcP, chars, span.end, chars.length, nab, pr);
       srcSlot.appendChild(srcP);
     }
     renderSrc();
@@ -912,7 +938,8 @@
     box.appendChild(el('p', { cls: 'small' }, [st]));
     if ((rec.reasons || []).length) box.appendChild(el('ul', { cls: 'tiny faint' }, rec.reasons.map(function (r) { return el('li', { text: t('chr.' + r.replace(/_([a-z])/g, function (_, c) { return c.toUpperCase(); })) }); })));
     box.appendChild(el('p', { cls: 'tiny faint', text: t('ch.convention') }));
-    box.appendChild(el('p', { cls: 'tiny faint', text: t('cv.scope') }));
+    var ovs = await Lib.overlayState(edition), sm = ovs.overlay && ovs.overlay.manifest.source_metadata, isn = sm && sm.isnad;
+    if (isn) box.appendChild(el('p', { cls: 'tiny faint', 'data-act': 'isnad-source', text: t('ch.src', { s: isn.book_id }) + (isn.join === 'number_text' ? t('ch.srcOther') : '') }));
     return box;
   }
 
@@ -1082,6 +1109,7 @@
     var ed = await Lib.ent('editions', o.edition_id);
     var links = await Lib.linksOfOccurrence(id);
     var baseWork = (links[0] && links[0].link.target_work_id) || o.work_id;
+    pageBook(baseWork);
     var data = await Lib.occToc(o.pkgv);
     var idx = data.index[o.occurrence_id], prev = data.units[idx - 1], next = data.units[idx + 1];
     main.appendChild(crumbs([{ text: t('bk.books'), href: '#/books' }, { text: await workTitle(baseWork), ar: true, href: '#/w/' + encodeURIComponent(baseWork) + '?tab=comms' }, { text: work.title_ar || o.work_id, ar: true }]));
@@ -1149,7 +1177,7 @@
   // (Lib.overlayState === 'active' bo'lsagina). Qatlam yo'q bo'lsa faqat Kitob darajasi ko'rsatiladi, hech narsa taxmin qilinmaydi.
   var RP_KEY = 'hadith-library.reading';
   function rprefs() {
-    var p = { fs: 26, wide: false, marks: true, full: true, ord: true, tropen: false, saw: false, cmode: 'text' };
+    var p = { fs: 26, wide: false, marks: true, full: true, ord: true, tropen: false, saw: false, cmode: 'text', nab: true, chain: 'full' };
     try { Object.assign(p, JSON.parse(localStorage.getItem(RP_KEY) || '{}')); } catch (e) { /* standart */ }
     p.fs = Math.max(10, Math.min(36, Number(p.fs) || 26));
     return p;
@@ -1168,6 +1196,14 @@
     return Registry.color(workId, dark);
   }
   function tint(node, workId) { node.style.setProperty('--bk', bookColor(workId)); return node; }
+  // Butun sahifa kitob rangida (sharh sahifasi — o'z asos kitobi rangida): sarlavha lentasi, belgilar, faol bob
+  var curBook = null;
+  function pageBook(workId) {
+    curBook = workId || null;
+    var r = document.documentElement;
+    if (!workId) { r.style.removeProperty('--bk'); r.removeAttribute('data-book'); return; }
+    r.style.setProperty('--bk', bookColor(workId)); r.setAttribute('data-book', workId);
+  }
 
   // Kitob/sahifa ma'lumotlari: toc (har doim) + qatlam (bo'lsa)
   async function bookData(pkgId) {
@@ -1253,6 +1289,63 @@
     return ro.nodes[ro.nodes.length - 1].mid;
   }
   function ordText(x, multi) { return (multi ? x.label : '') + x.pos; }
+  function lvCls(pos) { return pos ? ' lv' + Math.min(pos, 9) : ''; }
+  // Nabiy ﷺ so'zlari: manbadagi qo'shtirnoq ichidagi gap, bevosita oldida Nabiy ﷺga nisbat ("qola/yaqulu" + "Rasululloh/Nabiy ﷺ")
+  // bo'lsa. Avtomatik belgi — matn o'zgarmaydi; nisbati topilmagan qo'shtirnoq (boshqa so'zlovchi) belgilanmaydi.
+  var Q_PAIR = { '"': '"', '«': '»', '“': '”' };
+  var NAB_REF = '(?:رسول الله|النبي|نبي الله)', NAB_V = '(?:قال|يقول|فقال|وقال|ويقول|فيقول)';
+  var NAB_BEFORE = new RegExp('(?:' + NAB_V + '(?:\\s+(?:له|لها|لهم|لنا|لي))?\\s+' + NAB_REF + '(?:\\s*ﷺ|\\s*صلى الله عليه وسلم)?' +
+    '|(?:' + NAB_REF + '|ﷺ|صلى الله عليه وسلم)[^"«“»”]{0,40}?' + NAB_V + ')[\\s:،,؛\\-ـ]*$');
+  // suhbat davomi: oldingi qo'shtirnoq Nabiy ﷺ so'zi bo'lsa va oradagi gap egasiz «qola» bilan tugasa — so'zlovchi o'sha
+  var NAB_CONT = /(?:^|[\s.،,؛])(?:ف|و|ثم\s+)?قال[\s:،,]*$/;
+  function nabawiRanges(chars) {
+    var out = [], i = 0, n = chars.length, lastEnd = -1;
+    function norm(s) { return s.replace(/[ً-ٰٟـ‎‏]/g, '').replace(/[إأآ]/g, 'ا'); }
+    while (i < n) {
+      var close = Q_PAIR[chars[i]];
+      if (!close) { i++; continue; }
+      var j = i + 1;
+      while (j < n && chars[j] !== close) j++;
+      if (j >= n) break;
+      var before = norm(chars.slice(Math.max(0, i - 90), i).join(''));
+      var gap = lastEnd >= 0 && i - lastEnd <= 120 ? norm(chars.slice(lastEnd, i).join('')) : null;
+      if (NAB_BEFORE.test(before) || (gap != null && NAB_CONT.test(gap))) { out.push([i, j + 1]); lastEnd = j + 1; }
+      else lastEnd = -1;
+      i = j + 1;
+    }
+    return out;
+  }
+  // matn bo'lagini [a, b) qo'shadi; Nabiy ﷺ so'zlari oraliqlari .nabawi ichida (matn aynan o'sha)
+  function appendNab(box, chars, a, b, nab, pr) {
+    var cuts = [a, b];
+    nab.forEach(function (r) { if (r[0] > a && r[0] < b) cuts.push(r[0]); if (r[1] > a && r[1] < b) cuts.push(r[1]); });
+    cuts.sort(function (x, y) { return x - y; });
+    for (var k = 0; k < cuts.length - 1; k++) {
+      if (cuts[k] === cuts[k + 1]) continue;
+      var x = cuts[k], txt = document.createTextNode(displayText(chars.slice(x, cuts[k + 1]).join(''), pr.marks));
+      box.appendChild(nab.some(function (r) { return x >= r[0] && x < r[1]; }) ? el('span', { cls: 'nabawi', title: t('nab.title') }, [txt]) : txt);
+    }
+  }
+  // "Faqat ismlar": sanad yo'li ism → ism ko'rinishida (manbadagi yo'l tartibi, muallifning shayxidan), keyin matn.
+  function chainLine(u, rec, info, multi, opts, pr) {
+    var ro = rec.routes[0], byMid = {};
+    (rec.mentions || []).forEach(function (m) { byMid[m.mid] = m; });
+    var line = el('span', { cls: 'chainline', 'data-act': 'chain-names' });
+    ro.nodes.forEach(function (n, k) {
+      if (k) line.appendChild(el('span', { cls: 'arr', 'aria-hidden': 'true', text: ' ← ' }));
+      var m = n.mid ? byMid[n.mid] : null;
+      var name = m ? m.as_written : ((rec._names || {})[String(n.person)] || ('man-' + n.person));
+      var mm = m || { mid: 'node:' + ro.route_id + ':' + n.pos, person: n.person, as_written: name };
+      var cls = 'nm' + lvCls(n.pos) + (k === ro.nodes.length - 1 ? ' term' : '') + (opts.highlight != null && String(n.person) === String(opts.highlight) ? ' sel' : '');
+      var b = el('button', { type: 'button', cls: cls, 'data-act': 'narrator', 'data-person': String(n.person), 'data-mid': mm.mid, 'aria-label': name + ' — ' + t('np.position', { p: n.pos, n: ro.of }) }, [displayText(name, pr.marks)]);
+      if (opts.onNarrator) b.addEventListener('click', function () { opts.onNarrator(mm, m ? (info[m.mid] || []) : [{ label: ro.label, pos: n.pos, of: ro.of, route_id: ro.route_id }], b); });
+      line.appendChild(b);
+      if (pr.ord) line.appendChild(el('sup', { cls: 'ord' + lvCls(n.pos), 'aria-hidden': 'true', text: (multi ? ro.label : '') + n.pos }));
+    });
+    if (u.attribution_kind === 'marfu') { line.appendChild(el('span', { cls: 'arr', 'aria-hidden': 'true', text: ' ← ' })); line.appendChild(el('span', { cls: 'nabi', text: 'النَّبِيُّ ﷺ' })); }
+    if (multi) line.appendChild(el('span', { cls: 'more-routes tiny', lang: I18N.lang(), dir: 'auto', text: ' ' + t('rdv.moreRoutes', { n: rec.routes.length - 1 }) }));
+    return line;
+  }
   function markedText(u, rec, pr, opts) {
     opts = opts || {};
     var p = el('p', { lang: 'ar', dir: 'rtl', cls: 'src' });
@@ -1262,26 +1355,54 @@
     var info = ok ? routeInfo(rec) : {};
     var multi = ok && (rec.routes || []).length > 1;
     var term = ok ? terminalMid(rec) : null;
+    var nab = pr.nab !== false ? nabawiRanges(chars) : [];
     var start = 0;
-    if (!pr.full && term) {
-      var tm = mentions.find(function (m) { return m.mid === term; });
-      if (tm) { start = tm.span[0]; p.appendChild(el('span', { cls: 'cut', lang: I18N.lang(), dir: 'auto', text: '… ' + t('rdv.shortened') + ' … ' })); }
+    var tm = term ? mentions.find(function (m) { return m.mid === term; }) : null;
+    if (ok && pr.chain === 'names' && !opts.plain && (rec.routes || []).length && tm) {
+      p.classList.add('compact');
+      p.appendChild(chainLine(u, rec, info, multi, opts, pr));
+      p.appendChild(el('br'));
+      start = tm.span[1];
+      while (start < chars.length && /[\s،,:؛‎‏]/.test(chars[start])) start++;
+    } else if (ok && pr.chain === 'names' && !opts.plain && (rec.routes || []).length && rec.routes[0].nodes.length) {
+      // oxirgi roviy matnda belgilanmagan: ismlar qatori ko'rsatiladi, matn kesilmaydi (qayerdan kesish noma'lum)
+      p.classList.add('compact', 'partial');
+      p.appendChild(chainLine(u, rec, info, multi, opts, pr));
+      p.appendChild(el('br'));
+    } else if (!pr.full && tm) {
+      start = tm.span[0];
+      p.appendChild(el('span', { cls: 'cut', lang: I18N.lang(), dir: 'auto', text: '… ' + t('rdv.shortened') + ' … ' }));
     }
-    var cur = start;
-    mentions.forEach(function (m) {
-      if (m.span[0] < cur) return;
-      if (m.span[0] > cur) p.appendChild(document.createTextNode(displayText(chars.slice(cur, m.span[0]).join(''), pr.marks)));
-      var rs = info[m.mid] || [];
-      var cls = 'nm' + (m.mid === term ? ' term' : '') + (opts.highlight != null && String(m.person) === String(opts.highlight) ? ' sel' : '') + (rs.length ? '' : ' off');
-      var lbl = m.as_written + (rs.length ? ' — ' + rs.map(function (x) { return t('np.position', { p: x.pos, n: x.of }) + (multi ? ' (' + t('np.route', { r: x.label }) + ')' : ''); }).join('; ') : '');
-      var b = opts.plain ? el('span', { cls: cls, 'data-person': String(m.person), title: lbl }, [displayText(chars.slice(m.span[0], m.span[1]).join(''), pr.marks)])
-        : el('button', { type: 'button', cls: cls, 'data-act': 'narrator', 'data-person': String(m.person), 'data-mid': m.mid, 'aria-label': lbl, title: lbl }, [displayText(chars.slice(m.span[0], m.span[1]).join(''), pr.marks)]);
-      if (opts.onNarrator) b.addEventListener('click', function () { opts.onNarrator(m, rs, b); });
-      p.appendChild(b);
-      if (pr.ord && rs.length) p.appendChild(el('sup', { cls: 'ord', 'aria-hidden': 'true', text: rs.map(function (x) { return ordText(x, multi); }).join(',') }));
-      cur = m.span[1];
-    });
-    p.appendChild(document.createTextNode(displayText(chars.slice(cur).join(''), pr.marks)));
+    // kesish nuqtalari: roviy oraliqlari va Nabiy ﷺ so'zlari chegaralari (matn bo'laklari aynan manbadagidek qo'shiladi)
+    var cuts = {}; cuts[start] = 1; cuts[chars.length] = 1;
+    var mAt = {}, curEnd = start;
+    mentions.forEach(function (m) { if (m.span[0] >= curEnd) { mAt[m.span[0]] = m; cuts[m.span[0]] = 1; cuts[m.span[1]] = 1; curEnd = m.span[1]; } });
+    nab.forEach(function (r) { if (r[1] > start) { cuts[Math.max(r[0], start)] = 1; cuts[r[1]] = 1; } });
+    var pts = Object.keys(cuts).map(Number).filter(function (x) { return x >= start && x <= chars.length; }).sort(function (a, b) { return a - b; });
+    function inNab(x) { return nab.some(function (r) { return x >= r[0] && x < r[1]; }); }
+    var nabEl = null, i = 0;
+    while (i < pts.length - 1) {
+      var a = pts[i], isNab = inNab(a);
+      if (isNab && !nabEl) { nabEl = el('span', { cls: 'nabawi', title: t('nab.title') }); p.appendChild(nabEl); }
+      if (!isNab) nabEl = null;
+      var box = nabEl || p, m = mAt[a];
+      if (m) {
+        var rs = info[m.mid] || [];
+        var cls = 'nm' + lvCls(rs[0] && rs[0].pos) + (m.mid === term ? ' term' : '') + (opts.highlight != null && String(m.person) === String(opts.highlight) ? ' sel' : '') + (rs.length ? '' : ' off');
+        var lbl = m.as_written + (rs.length ? ' — ' + rs.map(function (x) { return t('np.position', { p: x.pos, n: x.of }) + (multi ? ' (' + t('np.route', { r: x.label }) + ')' : ''); }).join('; ') : '');
+        var txt = displayText(chars.slice(m.span[0], m.span[1]).join(''), pr.marks);
+        var b = opts.plain ? el('span', { cls: cls, 'data-person': String(m.person), title: lbl }, [txt])
+          : el('button', { type: 'button', cls: cls, 'data-act': 'narrator', 'data-person': String(m.person), 'data-mid': m.mid, 'aria-label': lbl, title: lbl }, [txt]);
+        (function (m, rs, b) { if (opts.onNarrator) b.addEventListener('click', function () { opts.onNarrator(m, rs, b); }); })(m, rs, b);
+        box.appendChild(b);
+        if (pr.ord && rs.length) box.appendChild(el('sup', { cls: 'ord' + lvCls(rs[0].pos), 'aria-hidden': 'true', text: rs.map(function (x) { return ordText(x, multi); }).join(',') }));
+        var j = pts.indexOf(m.span[1]);
+        i = j > i ? j : i + 1;
+        continue;
+      }
+      box.appendChild(document.createTextNode(displayText(chars.slice(a, pts[i + 1]).join(''), pr.marks)));
+      i++;
+    }
     return p;
   }
   function excerptAfterTerminal(u, rec) {
@@ -1346,6 +1467,9 @@
       check('tropen', t('set2.translations')),
       check('marks', t('set.marks'), t('set.marksNote')),
       check('saw', t('set2.saw'), t('set2.sawNote')),
+      check('nab', t('set2.nab'), t('set2.nabNote')),
+      el('div', { cls: 'set-row' }, [el('span', { text: t('set2.chain') }), seg([['full', t('set2.chainFull')], ['names', t('set2.chainNames')]], pr.chain, function (v) {
+        upd('chain', v); document.querySelectorAll('[data-act=chain-toggle]').forEach(function (x) { x.setAttribute('aria-pressed', String(v === 'names')); }); })]),
       el('div', { cls: 'set-row' }, [el('span', { text: t('set2.size') }), el('div', { cls: 'fs' }, [
         el('button', { type: 'button', cls: 'icon-btn', 'aria-label': 'A−', 'data-act': 'fs-minus', text: 'A−', on: { click: function () { setFs(pr.fs - 1); } } }),
         range, el('button', { type: 'button', cls: 'icon-btn', 'aria-label': 'A+', 'data-act': 'fs-plus', text: 'A+', on: { click: function () { setFs(pr.fs + 1); } } }), out])]),
@@ -1371,35 +1495,43 @@
     var items = [];
     bd.toc.chapters.forEach(function (ch, i) {
       var kit = kitabOf(bd, i);
-      var open = !!st[i] && !!kit.babs;
-      var li = el('li', { cls: 'tk-item' + (i === activeK ? ' cur' : ''), 'data-k': String(i) });
-      var head = el('a', { cls: 'tk', href: '#/' + mode + '/' + encodeURIComponent(bd.pkg.package_id) + '?k=' + i, 'data-act': 'tree-kitab',
-        'aria-current': i === activeK ? 'page' : null, 'aria-expanded': kit.babs ? String(open) : null }, [
+      var hasBabs = !!(kit.babs && kit.babs.length);
+      var open = !!st[i] && hasBabs;
+      var li = el('li', { cls: 'tk-item' + (i === activeK ? ' cur' : '') + (hasBabs ? ' has-babs' : ''), 'data-k': String(i) });
+      var base = '#/' + mode + '/' + encodeURIComponent(bd.pkg.package_id) + '?k=' + i;
+      var head = el('a', { cls: 'tk', href: base, 'data-act': 'tree-kitab', 'aria-current': i === activeK ? 'page' : null, 'aria-expanded': hasBabs ? String(open) : null }, [
         el('span', { cls: 'no', text: String(i + 1) }),
-        el('span', { cls: 'tt', lang: 'ar', dir: 'rtl', text: kit.title || t('rd.all') }),
-        el('span', { cls: 'cnt', text: String(kit.count) }), kit.babs ? icon('chevR', 'chev') : null]);
-      head.addEventListener('click', function (e) {
-        if (i !== activeK) { st[i] = true; return; }   // boshqa Kitob: o'z mundarijasiga o'tadi (ochiq holda)
-        e.preventDefault();
-        st[i] = !st[i];
-        var o = !!st[i];
-        head.setAttribute('aria-expanded', String(o));
-        sub.hidden = !o;
-      });
-      li.appendChild(head);
+        el('span', { cls: 'tt', lang: 'ar', dir: 'rtl' }, [kit.title || t('rd.all'), kit.name ? el('span', { cls: 'tn', lang: I18N.lang(), dir: 'auto', text: kit.name }) : null]),
+        el('span', { cls: 'cnt', text: String(kit.count) })]);
+      var tog = hasBabs ? el('button', { type: 'button', cls: 'tk-tog', 'data-act': 'tree-toggle', 'aria-expanded': String(open), 'aria-label': t('cv.toggleBabs', { n: kit.babs.length }), title: t('col.babs', { n: kit.babs.length }) }, [icon('chevR', 'chev')]) : null;
       var sub = el('ol', { cls: 'tb-list' });
       sub.hidden = !open;
-      if (kit.babs && i === activeK) {
+      var filled = false;
+      function fill() {
+        if (filled || !hasBabs) return;
+        filled = true;
         kit.babs.forEach(function (b) {
-          var a = el('a', { cls: 'tb', href: '#/' + mode + '/' + encodeURIComponent(bd.pkg.package_id) + '?k=' + i + '&b=' + b.id, 'data-act': 'tree-bab', 'data-bab': b.id }, [
+          var a = el('a', { cls: 'tb', href: base + '&b=' + b.id, 'data-act': 'tree-bab', 'data-bab': b.id }, [
             el('span', { cls: 'no', text: String(b.order) }), el('span', { cls: 'tt', lang: 'ar', dir: 'rtl', text: b.title_ar }),
             el('span', { cls: 'cnt', text: String(b.unit_ids.length) })]);
-          a.addEventListener('click', function (e) { if (onBab) { e.preventDefault(); onBab(b.id); } });
+          if (i === activeK) a.addEventListener('click', function (e) { if (onBab) { e.preventDefault(); onBab(b.id); } });
           sub.appendChild(el('li', {}, [a]));
         });
-      } else if (kit.babs) {
-        sub.appendChild(el('li', { cls: 'tiny faint', text: t('col.babs', { n: kit.babs.length }) }));
       }
+      function setOpen(o) {
+        st[i] = o; if (o) fill(); sub.hidden = !o;
+        head.setAttribute('aria-expanded', String(o)); if (tog) tog.setAttribute('aria-expanded', String(o));
+      }
+      if (open) fill();
+      head.addEventListener('click', function (e) {
+        if (i !== activeK) { st[i] = true; return; }   // boshqa Kitob: o'z sahifasiga o'tadi (ochiq holda)
+        if (!hasBabs) return;
+        e.preventDefault();
+        setOpen(!st[i]);
+      });
+      if (tog) tog.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); setOpen(!st[i]); });
+      li.appendChild(head);
+      if (tog) li.appendChild(tog);
       li.appendChild(sub);
       items.push({ li: li, text: fold(kit.title + ' ' + (kit.name || '')) });
       list.appendChild(li);
@@ -1484,7 +1616,8 @@
   }
   function babLabel(b) { return t('cv.bab') + ' · ' + t('cv.order', { o: b.order }); }
   // Bob sarlavhasining manbadagi joyi: bosma nashr juz/bet (Shamela 1681 sahifasi bo'yicha); raqam emas, joy
-  function babSrc(b) { var s = b.source || {}; return s.part && s.page_num ? el('span', { cls: 'faint', title: 'Shamela 1681 · ' + s.page, text: t('cv.srcPage', { v: s.part, p: s.page_num }) }) : null; }
+  function babSrc(b) { var s = b.source || {}; return s.part && s.page_num ? el('span', { cls: 'faint', title: 'Shamela · ' + s.page, text: t('cv.srcPage', { v: s.part, p: s.page_num }) }) : null; }
+  function shamelaOf(bd) { var m = bd && bd.ovs && bd.ovs.overlay && bd.ovs.overlay.manifest; return (m && m.source_metadata && m.source_metadata.shamela_book) || '—'; }
 
   // -------------------------------------------------------------- Kitob mundarijasi: chap daraxt + o'ngda ixcham bob guruhlari
   async function viewContents(pkgId, params) {
@@ -1493,6 +1626,7 @@
     if (!bd) { main.appendChild(emptyState(t('notFound'), t('notInstalled'), '#/books', t('home.browse'))); return; }
     var ki = Math.max(0, Math.min(bd.toc.chapters.length - 1, parseInt(params.k || '0', 10) || 0));
     var kit = kitabOf(bd, ki);
+    pageBook(bd.work);
     var groupsK = kitabGroups(bd, kit);
     var ids = groupsK.reduce(function (a, g) { return a.concat(g.rows.map(function (r) { return r.id; })); }, []);
     var units = await Lib.unitsByIds(bd.pkg.active_pkgv, ids), ub = {};
@@ -1526,7 +1660,7 @@
         kit.first ? ' · ' + t('col.first', { n: kit.first }) : '']),
       el('div', { cls: 'btns' }, [link(t('cv.read'), readBase, 'read-kitab', 'primary sm', 'books'), link(t('cv.overview'), '#/w/' + encodeURIComponent(bd.work), 'overview', 'ghost sm', 'list')])]));
     var note = overlayNote(bd); if (note) body.appendChild(note);
-    if (kit.babs) body.appendChild(el('p', { cls: 'tiny faint', text: t('cv.scope') }));
+    if (kit.babs) body.appendChild(el('p', { cls: 'tiny faint', text: t('cv.scope', { s: shamelaOf(bd) }) }));
     // Ko'rinish rejimi (A01): ixcham / roviy va matn / to'liq manba va sanad — tanlov eslab qolinadi
     var cpr = rprefs();
     var modeSeg = el('div', { cls: 'seg', role: 'group', 'aria-label': t('cv.mode') }, [['compact', t('cv.mCompact')], ['text', t('cv.mText')], ['full', t('cv.mFull')]].map(function (o) {
@@ -1625,11 +1759,13 @@
     if (isNaN(ki) && params.u && bd.toc.index[params.u] != null) ki = bd.toc.units[bd.toc.index[params.u]].c;
     ki = Math.max(0, Math.min(bd.toc.chapters.length - 1, ki || 0));
     var kit = kitabOf(bd, ki);
+    pageBook(bd.work);
     var groupsK = kitabGroups(bd, kit);
     var ids = groupsK.reduce(function (a, g) { return a.concat(g.rows.map(function (r) { return r.id; })); }, []);
     var units = await Lib.unitsByIds(bd.pkg.active_pkgv, ids), ub = {};
     units.forEach(function (u) { if (u) ub[u.unit_id] = u; });
     var recs = bd.ov ? await Lib.ovMany('ov_isnad', ids, bd.edition) : {};
+    if (bd.ov) await attachNames(Object.keys(recs).map(function (k) { return recs[k]; }), bd.edition);
     var trs = bd.ov && I18N.lang() === 'uz' ? await Lib.ovMany('ov_tr', ids.concat((kit.babs || []).map(function (b) { return b.id; })), bd.edition) : {};
     var pr = rprefs(); applyRprefs(pr);
     var contentsHref = '#/c/' + encodeURIComponent(pkgId) + '?k=' + ki;
@@ -1687,7 +1823,7 @@
         sec.appendChild(el('div', { cls: 'bmeta warn-t' }, [el('span', { text: t('cv.unplaced') })]));
         sec.appendChild(el('p', { cls: 'tiny faint', text: t('cv.unplacedNote') }));
       }
-      g.rows.forEach(function (r) { var u = ub[r.id]; if (u) sec.appendChild(hadithBlock(bd, u, recs[r.id] || null, trs[r.id] || null, function () { return pr; }, blocks, { openers: openers })); });
+      g.rows.forEach(function (r) { var u = ub[r.id]; if (u) sec.appendChild(hadithBlock(bd, u, recs[r.id] || null, trs[r.id] || null, rprefs, blocks, { openers: openers })); });
       body.appendChild(sec);
     });
     var aside = el('aside', { cls: 'cv-side' }, [tv.node]);
@@ -1717,6 +1853,25 @@
     if (params.u) { await Notes.put({ key: 'position:last', type: 'position', target: params.u }); await Notes.put({ key: 'position:w:' + bd.work, type: 'position', target: params.u }); }
   }
 
+  // "Faqat ismlar" ↔ to'liq sanad (tanlov eslab qolinadi; sahifadagi barcha tugmalar birga yangilanadi)
+  function chainToggle(onChange) {
+    var on = rprefs().chain === 'names';
+    var b = el('button', { type: 'button', cls: 'btn sm ghost chain-tog', 'data-act': 'chain-toggle', 'aria-pressed': String(on), title: t('rdv.namesHelp') }, [icon('chain'), el('span', { cls: 'lbl', text: t('rdv.namesOnly') })]);
+    b.addEventListener('click', function () {
+      var p2 = rprefs(); p2.chain = p2.chain === 'names' ? 'full' : 'names'; saveRprefs(p2);
+      document.querySelectorAll('[data-act=chain-toggle]').forEach(function (x) { x.setAttribute('aria-pressed', String(p2.chain === 'names')); });
+      onChange(p2);
+    });
+    return b;
+  }
+  // Yo'l tugunlari matnda belgilanmagan bo'lsa — ismi roviylar ro'yxatidan (manba qisqa ismi)
+  async function attachNames(recs, edition) {
+    var need = {};
+    recs.forEach(function (r) { (r && r.routes || []).forEach(function (ro) { ro.nodes.forEach(function (n) { if (!n.mid) need[String(n.person)] = 1; }); }); });
+    var ids = Object.keys(need), map = {};
+    if (ids.length) { var got = await Lib.ovMany('ov_person', ids, edition); ids.forEach(function (k) { if (got[k]) map[k] = got[k].short_name; }); }
+    recs.forEach(function (r) { if (r) r._names = map; });
+  }
   // Bitta hadis bloki (reader ichida): sarlavha, belgilangan matn, tarjima, roviy paneli, sharhlar.
   function hadithBlock(bd, u, rec, tr, getPr, blocks, opts) {
     var pn = primaryNum(u.numbers);
@@ -1735,6 +1890,8 @@
       var m = rec && (rec.mentions || []).find(function (x) { return x.mid === mid; });
       if (m) return narratorPanel(bd, u, rec, m, routeInfo(rec)[mid] || [], panelSlot);
     };
+    var okRec = rec && rec.text_sha256 === u.current_text_sha256 && (rec.routes || []).length;
+    var chainBtn = okRec ? chainToggle(function () { blocks.forEach(function (f) { f(); }); }) : null;
     var commBtn = btn(t('rdv.comms'), 'comms', async function () {
       if (commSlot.firstChild) { commSlot.textContent = ''; commBtn.setAttribute('aria-expanded', 'false'); return; }
       commBtn.setAttribute('aria-expanded', 'true');
@@ -1744,7 +1901,7 @@
     art.appendChild(el('header', { cls: 'h-head' }, [
       el('a', { cls: 'h-num', href: '#/h/' + encodeURIComponent(u.unit_id), 'data-act': 'open-single', title: t('rdv.single') }, [heading]),
       en('attribution', u.attribution_kind) ? pill(en('attribution', u.attribution_kind)) : null,
-      el('span', { cls: 'h-tools' }, [commBtn, link(t('rdv.single'), '#/h/' + encodeURIComponent(u.unit_id), 'open-single-page', 'sm ghost', 'arrow')])]));
+      el('span', { cls: 'h-tools' }, [chainBtn, commBtn, link(t('rdv.single'), '#/h/' + encodeURIComponent(u.unit_id), 'open-single-page', 'sm ghost', 'arrow')])]));
     art.appendChild(textSlot);
     var trb = trBlock(tr, getPr(), 'unit'); if (trb) art.appendChild(trb);
     art.appendChild(panelSlot);
@@ -1761,24 +1918,48 @@
     var person = await Lib.ovEnt('ov_person', m.person, bd.edition);
     var c = (person && person.counts) || { units: 0, routes: 0, mentions: 0 };
     var stats = await coverageOf(bd);
+    var lv = levelStats(await Lib.ovOccAll(m.person, bd.edition));
     var multi = (rec.routes || []).length > 1;
+    var listHref = '#/n/' + encodeURIComponent(m.person) + '?e=' + encodeURIComponent(bd.edition) + '&from=' + encodeURIComponent(u.unit_id);
     var box = el('section', { cls: 'npanel', 'data-act': 'narrator-panel', 'aria-live': 'polite' });
+    tint(box, bd.work);
     box.appendChild(el('div', { cls: 'np-head' }, [
       el('div', {}, [el('div', { cls: 'np-name', lang: 'ar', dir: 'rtl', text: m.as_written }),
         person && person.short_name ? el('div', { cls: 'small', lang: 'ar', dir: 'rtl', text: person.short_name }) : null,
         el('div', { cls: 'tiny faint' }, [t('np.id') + ': ', idTxt('man-' + m.person)])]),
       el('button', { type: 'button', cls: 'icon-btn', 'aria-label': t('np.close'), 'data-act': 'narrator-close', on: { click: function () { slot.textContent = ''; slot.removeAttribute('data-mid'); rememberPanel(null); } } }, [icon('x')])]));
-    box.appendChild(el('p', { cls: 'np-pos' }, rs.length ? rs.map(function (x) { return el('span', { cls: 'pill accent' }, [t('np.position', { p: x.pos, n: x.of }) + (multi ? ' · ' + t('np.route', { r: x.label }) : '')]); }) : [el('span', { cls: 'small faint', text: t('np.noRoute') })]));
-    box.appendChild(el('div', { cls: 'np-counts' }, [
-      el('div', {}, [el('b', { text: String(c.units) }), el('span', { text: t('np.units') })]),
-      el('div', {}, [el('b', { text: String(c.routes) }), el('span', { text: t('np.routes') })]),
-      el('div', {}, [el('b', { text: String(c.mentions) }), el('span', { text: t('np.mentions') })])]));
-    box.appendChild(el('p', { cls: 'tiny faint', text: t('np.scope', { book: bd.title, m: stats.mapped, t: stats.total }) }));
-    var listHref = '#/n/' + encodeURIComponent(m.person) + '?e=' + encodeURIComponent(bd.edition) + '&from=' + encodeURIComponent(u.unit_id);
-    box.appendChild(el('div', { cls: 'btns' }, [link(t('np.list', { n: c.units }), listHref, 'narrator-hadiths', 'primary sm', 'list')]));
-    if (person) box.appendChild(bioBlock(person));
-    else box.appendChild(el('p', { cls: 'small faint', text: t('np.noBio') }));
+    box.appendChild(el('p', { cls: 'np-pos' }, rs.length ? rs.map(function (x) { return el('span', { cls: 'pill lvp' + lvCls(x.pos) }, [t('np.position', { p: x.pos, n: x.of }) + (multi ? ' · ' + t('np.route', { r: x.label }) : '')]); }) : [el('span', { cls: 'small faint', text: t('np.noRoute') })]));
+    box.appendChild(el('p', { cls: 'np-big' }, [el('b', { text: String(c.units) }), ' ', el('span', { text: t('np.inHadiths') })]));
+    box.appendChild(levelBars(lv, null));
+    box.appendChild(el('p', { cls: 'tiny faint', text: t('np.scope', { book: bd.title, m: stats.mapped, t: stats.total }) + ' ' + t('ni.levelNote') }));
+    box.appendChild(el('div', { cls: 'btns' }, [link(t('np.details'), listHref, 'narrator-hadiths', 'primary sm', 'list')]));
     slot.appendChild(box);
+  }
+  // Roviy darajalari: har o'rin (sanadda muallifning shayxidan nechanchi) uchun nechta hadis; o'rni noma'lum alohida.
+  function levelStats(rows) {
+    var by = {}, none = {}, units = {};
+    rows.forEach(function (r) {
+      units[r.unit_id] = 1;
+      if (!r.routes.length) { none[r.unit_id] = 1; return; }
+      r.routes.forEach(function (x) { (by[x.pos] = by[x.pos] || {})[r.unit_id] = 1; });
+    });
+    var lv = Object.keys(by).map(Number).sort(function (a, b) { return a - b; }).map(function (p) { return { pos: p, n: Object.keys(by[p]).length }; });
+    return { levels: lv, none: Object.keys(none).length, units: Object.keys(units).length };
+  }
+  function levelBars(st, onPick, cur) {
+    var max = Math.max.apply(null, st.levels.map(function (x) { return x.n; }).concat([st.none, 1]));
+    var wrap = el('div', { cls: 'lvbars', role: onPick ? 'group' : null, 'aria-label': t('np.levels') });
+    function bar(key, label, n, cls) {
+      var fill = el('span', { cls: 'fill' }); fill.style.setProperty('--w', Math.max(4, Math.round(n / max * 100)) + '%');
+      var inner = [el('span', { cls: 'lbl', text: label }), el('span', { cls: 'track' }, [fill]), el('b', { cls: 'n', text: String(n) })];
+      var node = onPick ? el('button', { type: 'button', cls: 'lvbar' + cls, 'data-act': 'ni-level', 'data-level': key, 'aria-pressed': String(String(cur) === String(key)) }, inner)
+        : el('div', { cls: 'lvbar' + cls }, inner);
+      if (onPick) node.addEventListener('click', function () { onPick(String(cur) === String(key) ? null : key); });
+      wrap.appendChild(node);
+    }
+    st.levels.forEach(function (x) { bar(x.pos, t('np.levelN', { p: x.pos }), x.n, lvCls(x.pos)); });
+    if (st.none) bar('0', t('np.levelNone'), st.none, ' lv0');
+    return wrap;
   }
   function bioBlock(person) {
     var wrap = el('div', { cls: 'np-bio' });
@@ -1821,15 +2002,24 @@
     if (!pk) { main.appendChild(emptyState(t('notFound'), t('notInstalled'), '#/books', t('home.browse'))); return; }
     var bd = await bookData(pk.package_id);
     if (!bd.ov) { main.appendChild(el('div', { cls: 'card note' }, [el('p', { text: t('ni.unavailable') }), overlayNote(bd)])); return; }
+    pageBook(bd.work);
     var person = await Lib.ovEnt('ov_person', personId, ed);
-    var total = await Lib.ovOccCount(personId, ed);
+    var all = await Lib.ovOccAll(personId, ed);
+    var lv = levelStats(all);
+    var level = params.lv != null && params.lv !== '' ? params.lv : null;
+    // daraja bo'yicha saralash: shu o'rindagi zikrlar (0 — yo'lda o'rni noma'lum)
+    var picked = level == null ? all : all.filter(function (r) { return level === '0' ? !r.routes.length : r.routes.some(function (x) { return String(x.pos) === level; }); });
+    var total = picked.length;
     var pages = Math.max(1, Math.ceil(total / NI_PAGE));
     var pg = Math.max(1, Math.min(pages, parseInt(params.p || '1', 10) || 1));
     var grouped = params.g === '1';
-    var rows = await Lib.ovOccPage(personId, ed, (pg - 1) * NI_PAGE, NI_PAGE);
+    var rows = picked.slice((pg - 1) * NI_PAGE, pg * NI_PAGE);
     var stats = await coverageOf(bd);
     var c = (person && person.counts) || { units: 0, routes: 0, mentions: 0 };
-    var self = function (p, g) { return '#/n/' + encodeURIComponent(personId) + '?e=' + encodeURIComponent(ed) + (params.from ? '&from=' + encodeURIComponent(params.from) : '') + '&p=' + p + (g ? '&g=1' : ''); };
+    var self = function (p, g, l) {
+      l = l === undefined ? level : l;
+      return '#/n/' + encodeURIComponent(personId) + '?e=' + encodeURIComponent(ed) + (params.from ? '&from=' + encodeURIComponent(params.from) : '') + '&p=' + p + (g ? '&g=1' : '') + (l != null ? '&lv=' + l : '');
+    };
     var name = person ? person.short_name : ('man-' + personId);
     main.appendChild(crumbs([{ text: t('bk.books'), href: '#/books' }, { text: bd.title, ar: true, href: '#/w/' + encodeURIComponent(bd.work) }, { text: t('ni.title') }]));
     var wrap = el('section', { cls: 'nidx', 'data-act': 'narrator-index' });
@@ -1840,18 +2030,23 @@
     } } }, [icon('chevL'), t('ni.back')]) : null;
     wrap.appendChild(el('div', { cls: 'btns' }, [back]));
     wrap.appendChild(el('header', { cls: 'ni-head' }, [
+      el('div', { cls: 'eyebrow' }, [el('span', { cls: 'bk-dot', 'aria-hidden': 'true' }), arSpan(bd.title)]),
       el('h1', { lang: 'ar', dir: 'rtl', text: name }),
       person && person.long_name && person.long_name !== name ? el('p', { cls: 'small muted', lang: 'ar', dir: 'rtl', text: person.long_name }) : null,
-      el('p', { cls: 'tiny faint' }, [t('np.id') + ': ', idTxt('man-' + personId), ' · ', arSpan(bd.title), ' · ', idTxt(ed)])]));
+      el('p', { cls: 'tiny faint' }, [t('np.id') + ': ', idTxt('man-' + personId), ' · ', idTxt(ed)])]));
     wrap.appendChild(el('div', { cls: 'np-counts' }, [
       el('div', {}, [el('b', { text: String(c.units) }), el('span', { text: t('np.units') })]),
       el('div', {}, [el('b', { text: String(c.routes) }), el('span', { text: t('np.routes') })]),
       el('div', {}, [el('b', { text: String(c.mentions) }), el('span', { text: t('np.mentions') })])]));
     wrap.appendChild(el('p', { cls: 'tiny faint', text: t('ni.scope', { book: bd.title, m: stats.mapped, t: stats.total }) }));
+    // darajalar: bosilsa ro'yxat shu o'ringa saralanadi (son va doira ko'rsatiladi)
+    wrap.appendChild(el('div', { cls: 'lv-card' }, [el('h2', { cls: 'h3', text: t('np.levels') }), el('p', { cls: 'tiny faint', text: t('ni.levelNote') }),
+      levelBars(lv, function (k) { replaceRoute(self(1, grouped, k == null ? null : String(k)), false); }, level)]));
     var tog = el('div', { cls: 'seg', role: 'group', 'aria-label': t('ni.group') }, [
       el('a', { href: self(pg, false), 'aria-pressed': String(!grouped), 'data-act': 'ni-flat', text: t('ni.flat'), on: { click: function (e) { e.preventDefault(); replaceRoute(self(pg, false), true); } } }),
       el('a', { href: self(pg, true), 'aria-pressed': String(grouped), 'data-act': 'ni-group', text: t('ni.group'), on: { click: function (e) { e.preventDefault(); replaceRoute(self(pg, true), true); } } })]);
-    wrap.appendChild(el('div', { cls: 'section-head' }, [el('span', { cls: 'small', 'data-act': 'ni-total', text: t('ni.total', { n: total }) }), tog]));
+    wrap.appendChild(el('div', { cls: 'section-head' }, [el('span', { cls: 'small', 'data-act': 'ni-total' }, [t('ni.total', { n: total }),
+      level != null ? el('span', { cls: 'pill lvp' + lvCls(Number(level)) }, [level === '0' ? t('np.levelNone') : t('np.levelN', { p: level })]) : null]), tog]));
     function plink(label, p2, act, cls, ic) {
       var a = link(label, self(p2, grouped), act, cls, ic);
       a.addEventListener('click', function (e) { e.preventDefault(); replaceRoute(self(p2, grouped)); });
@@ -1869,22 +2064,26 @@
       var list = el('ol', { cls: 'nlist', start: String((pg - 1) * NI_PAGE + 1) });
       var lastK = null, lastB = null;
       rows.forEach(function (r) {
+        var kit = bd.ov.kit[r.kitab_id], bab = r.bab_id ? bd.ov.bab[r.bab_id] : null;
+        var noBab = (bd.ov.place[r.unit_id] || {}).opening ? t('ni.opening') : t('oc.unknownBab');   // Kitob boshidagi (bobsiz) yozuv yoki aniqlanmagan
         if (grouped) {
-          var kit = bd.ov.kit[r.kitab_id], bab = r.bab_id ? bd.ov.bab[r.bab_id] : null;
           if (r.kitab_id !== lastK) { var kn = kitName(kit); list.appendChild(el('li', { cls: 'ng-k' }, [el('span', { lang: 'ar', dir: 'rtl', text: kit ? kit.title_ar : '—' }), kn ? el('span', { cls: 'ng-kn', text: kn }) : null])); lastK = r.kitab_id; lastB = null; }
-          if ((r.bab_id || 'x') !== lastB) { list.appendChild(el('li', { cls: 'ng-b' }, [el('span', { cls: 'ng-l tiny', text: bab ? babLabel(bab) : t('oc.unknownBab') }), bab ? el('span', { cls: 'ng-t', lang: 'ar', dir: 'rtl', text: bab.title_ar }) : null])); lastB = r.bab_id || 'x'; }
+          if ((r.bab_id || 'x') !== lastB) { list.appendChild(el('li', { cls: 'ng-b' }, [el('span', { cls: 'ng-l tiny', text: bab ? babLabel(bab) : noBab }), bab ? el('span', { cls: 'ng-t', lang: 'ar', dir: 'rtl', text: bab.title_ar }) : null])); lastB = r.bab_id || 'x'; }
         }
         var pos = r.routes.length ? r.routes.map(function (x) { return (r.routes.length > 1 || x.label !== 'A' ? t('ni.route', { r: x.label }) + ' · ' : '') + t('ni.pos', { p: x.pos, n: x.of }); }).join('; ') : t('ni.noPos');
+        var p0 = r.routes.length ? r.routes[0].pos : 0;
         var listHash = self(pg, grouped);
-        list.appendChild(el('li', { cls: 'nrow' }, [el('a', { href: '#/h/' + encodeURIComponent(r.unit_id) + '?p=' + encodeURIComponent(personId) + '&list=' + encodeURIComponent(listHash), 'data-act': 'ni-row', 'data-unit': r.unit_id }, [
+        list.appendChild(el('li', { cls: 'nrow' + (p0 ? lvCls(p0) : ' lv0') }, [el('a', { href: '#/h/' + encodeURIComponent(r.unit_id) + '?p=' + encodeURIComponent(personId) + '&list=' + encodeURIComponent(listHash), 'data-act': 'ni-row', 'data-unit': r.unit_id }, [
           el('span', { cls: 'num', text: r.number != null ? String(r.number) : '—' }),
           el('span', { cls: 'nm-as', lang: 'ar', dir: 'rtl', text: r.as_written || (person ? person.short_name : '') }),
-          el('span', { cls: 'rp small' }, [pos, r.span ? null : el('span', { cls: 'tiny faint', text: ' · ' + t('ni.noSpan') })]),
+          el('span', { cls: 'rp small' }, [el('span', { cls: 'lvdot' + (p0 ? lvCls(p0) : ' lv0'), 'aria-hidden': 'true' }), pos, r.span ? null : el('span', { cls: 'tiny faint', text: ' · ' + t('ni.noSpan') })]),
+          grouped ? null : el('span', { cls: 'where tiny' }, [el('span', { lang: 'ar', dir: 'rtl', text: kit ? kit.title_ar : '—' }), ' › ', bab ? el('span', { lang: 'ar', dir: 'rtl', text: bab.title_ar }) : el('span', { text: noBab })]),
           el('span', { cls: 'go small' }, [t('ni.open'), icon('chevR')])])]));
       });
       wrap.appendChild(list);
       wrap.appendChild(pager());
     }
+    if (person) wrap.appendChild(el('section', { cls: 'card ni-bio' }, [el('h2', { cls: 'h3', text: t('ni.bio') }), bioBlock(person)]));
     main.appendChild(wrap);
   }
 
@@ -1897,6 +2096,7 @@
     if (!g) { main.appendChild(emptyState(t('notFound'), t('books.none'), '#/books', t('home.browse'))); return; }
     var base = g.bases[0] || null, bi = base ? data.installed[base.package_id] : null;
     var title = await workTitle(workId);
+    pageBook(workId);
     main.appendChild(crumbs([{ text: t('bk.books'), href: '#/books' }, { text: title, ar: true, href: '#/w/' + encodeURIComponent(workId) }, { text: t('dk.title') }]));
     var wrap = tint(el('section', { cls: 'desk', 'data-act': 'desk' }), workId);
     wrap.appendChild(el('h1', { text: t('dk.title') }));
@@ -2242,6 +2442,7 @@
   async function routeOnce() {
     var my = ++routeSeq;
     root.removeAttribute('data-tayyor');
+    pageBook(null);
     if (lastKey && !skipSave) saveScroll(lastKey, window.scrollY);
     skipSave = false;
     if (spyOff) spyOff();
@@ -2293,6 +2494,7 @@
     while (main.firstChild) root.appendChild(main.firstChild);
     main = root;
     root.setAttribute('data-route', parts[0] || 'home');
+    root.classList.remove('enter'); void root.offsetWidth; root.classList.add('enter');
     if (restoring) window.scrollTo(0, scrollMem()[key] || 0);
     else if (!afterRender) window.scrollTo(0, 0);
     if (afterRender) { try { afterRender(); } catch (e) { /* ko'rinish ishlayveradi */ } }

@@ -168,3 +168,29 @@ def test_source_opening_split_from_edition_front_matter_and_bismillah_to_kitab(t
     assert text.count("﷽") == 2                                          # muqaddima va Vahiy boshi; Imon ﷽ i bu yerda emas
     kh = k2["shamela_headings"][0]
     assert kh["intro"][0]["text_ar"] == "﷽" and kh["intro"][0]["placement"] == "bismillah_before_kitab_heading"
+
+
+def test_paragraph_number_forms_and_numbered_headings():
+    pages = [{"shamela_page_id": 1, "part": "1", "page_num": 1, "body": "\r".join([
+        "<span data-type='title' id=toc-1>(١) كِتَابُ الْإِيمَانِ</span>",
+        "<span data-type='title' id=toc-2>(٤٦) بَاب بَيَانِ غِلَظِ تَحْرِيمِ</span>",
+        "١٧١ - (١٠٦) حَدَّثَنَا أَبُو بَكْرٍ",       # Muslim: umumiy raqam va (Abdulboqiy raqami)
+        "٢١٠ -[١٣] (صَحِيح)",                      # Mishkot
+        "٣/٨٨٠- وَعَنْ أَبِي مُوسَى",              # Riyozus-solihin
+        "١٤٢- بَابُ اسْتِحْبَابِ تَشْمِيتِ الْعَاطِسِ",   # raqamli bob satri — paragraf emas
+    ])}]
+    ev = bo.scan(pages, alt=True)
+    paras = [e["numbers"] for e in ev if e["t"] == "para"]
+    assert paras == [[171, 106], [210, 13], [880, 3]]
+    heads = [e for e in ev if e["t"] == "head"]
+    assert [bo.KITAB_WORD.match(bo.bare_head(h["text"])) is not None for h in heads] == [True, False, False]
+    assert heads[-1]["text"].startswith("١٤٢- بَابُ")          # sarlavha matni manbadagidek (raqami bilan) qoladi
+    assert [e["numbers"] for e in bo.scan(pages[:1] and [{**pages[0], "body": "٥٤ - حَدَّثَنَا"}]) if e["t"] == "para"] == [[54]]
+
+
+def test_other_edition_isnad_join_needs_number_and_text_or_names():
+    assert bo.text_overlap("حَدَّثَنَا قُتَيْبَةُ عَنْ مَالِكٍ عَنْ نَافِعٍ", "حدثنا قتيبة عن مالك عن نافع عن ابن عمر") >= 0.6
+    assert bo.text_overlap("حَدَّثَنَا قُتَيْبَةُ عَنْ مَالِكٍ", "كلام آخر تماما لا صلة له") < 0.4
+    assert all(cfg["overlay_id"].startswith("hm-overlay-") for cfg in bo.BOOKS.values())
+    assert bo.BOOKS["bukhari"]["overlay_id"] == "hm-overlay-bukhari-structure-isnad"      # eski o'rnatishlar bilan mos
+    assert bo.BOOKS["tirmidhi"]["isnad"]["join"] == "number_text" and bo.BOOKS["ibnmajah"]["isnad"] is None

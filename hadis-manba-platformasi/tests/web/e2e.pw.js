@@ -402,6 +402,68 @@ function count(p) { return fetchLog.filter(x => x.endsWith(p)).length; }
       assert.ok(/p=2&g=1/.test(await E.page.evaluate(() => location.hash)));
       await noHorizontalScroll(E.page);
     });
+    await step(label + ' 17: single hadith -> fixed Kitob/Bab tree, names-only chain with arrows, narrator levels, level filter', async () => {
+      await go(E.page, '#/h/' + A1);
+      assert.strictEqual(await E.page.locator('.unit-layout .cv-side .tk-item.cur > a.tk').count(), 1);
+      assert.strictEqual(await E.page.locator('.unit-layout .cv-side a.tb[aria-current="location"]').count(), 1);   // shu hadisning bobi
+      if (viewport.width < 961) assert.strictEqual(await E.page.locator('[data-act=open-tree]').count(), 1);
+      else {
+        const tog = E.page.locator('.cv-side .tk-item.cur > [data-act=tree-toggle]');
+        assert.strictEqual(await tog.getAttribute('aria-expanded'), 'true');
+        await tog.click();
+        assert.strictEqual(await tog.getAttribute('aria-expanded'), 'false');
+        assert.strictEqual(await E.page.evaluate(() => document.querySelector('.cv-side .tk-item.cur .tb-list').hidden), true);
+        await tog.click();
+        // daraxt sahifa bilan siljimaydi (sticky)
+        await E.page.evaluate(() => window.scrollTo(0, 400));
+        const top = await E.page.evaluate(() => document.querySelector('.unit-layout .cv-side .tree').getBoundingClientRect().top);
+        assert.ok(top >= 0 && top < 200, 'daraxt joyida emas: ' + top);
+        await E.page.evaluate(() => window.scrollTo(0, 0));
+      }
+      const full = await E.page.evaluate(() => document.querySelector('.tslot p.src').textContent);
+      await E.page.click('[data-act=chain-toggle]');
+      assert.strictEqual(await E.page.getAttribute('[data-act=chain-toggle]', 'aria-pressed'), 'true');
+      await E.page.waitForSelector('.tslot p.src.compact .chainline');
+      const ch = await E.page.evaluate(() => {
+        const p = document.querySelector('.tslot p.src.compact'), line = p.querySelector('.chainline');
+        const names = [...line.querySelectorAll('.nm')].map(b => b.getAttribute('data-person'));
+        const rest = [...p.childNodes].filter(n => n !== line && n.nodeName !== 'BR').map(n => n.textContent).join('');
+        return { names, arrows: line.querySelectorAll('.arr').length, rest, partial: p.classList.contains('partial') };
+      });
+      assert.deepStrictEqual(ch.names, ['903', '902', '901']);   // yo'l tartibida, barcha roviylar
+      assert.ok(ch.arrows >= 2);
+      assert.strictEqual(ch.partial, false);
+      assert.ok(!/نَصٌّ/.test(ch.rest) && /^أَوَّلُ/.test(ch.rest.replace(/[0-9A-Z,]/g, '')), 'sanad qismi qoldi: ' + ch.rest);
+      await E.page.click('.tslot .chainline .nm[data-person="901"]');
+      await E.page.waitForSelector('[data-act=narrator-panel] .lvbars .lvbar');
+      const big = Number(await E.page.locator('[data-act=narrator-panel] .np-big b').textContent());
+      const lvn = await E.page.$$eval('[data-act=narrator-panel] .lvbar .n', xs => xs.map(x => Number(x.textContent)));
+      assert.strictEqual(big, 12);   // namunada 12 yozuv, hammasida shu roviy
+      assert.ok(lvn.length >= 2 && Math.max.apply(null, lvn) <= big && lvn.reduce((a, b) => a + b, 0) >= big, lvn.join(','));
+      await E.page.click('[data-act=chain-toggle]');
+      assert.strictEqual(await E.page.locator('.tslot p.src.compact').count(), 0);
+      assert.strictEqual(await E.page.evaluate(() => document.querySelector('.tslot p.src').textContent), full);   // asl matn aynan qaytdi
+      // boshqa yozuvda yo'l oxiri matnda yo'q -> ismlar qatori, matn kesilmaydi
+      await go(E.page, '#/h/' + A1.replace('u0001', 'u0002'));
+      const full2 = await E.page.evaluate(() => document.querySelector('.tslot p.src').textContent);
+      await E.page.click('[data-act=chain-toggle]');
+      await E.page.waitForSelector('.tslot p.src.compact.partial .chainline');
+      assert.ok(await E.page.evaluate(f => document.querySelector('.tslot p.src').textContent.indexOf(f.replace(/^\s+/, '').slice(0, 8)) >= 0, full2));
+      await E.page.click('[data-act=chain-toggle]');
+      // roviy sahifasi: daraja bo'yicha saralash
+      await go(E.page, '#/n/901?e=ed-namuna-a');
+      const bars = E.page.locator('[data-act=ni-level]');
+      assert.ok((await bars.count()) >= 2);
+      const lv = await bars.last().getAttribute('data-level'), n = Number(await bars.last().locator('.n').textContent());
+      await bars.last().click();
+      await E.page.waitForFunction(l => new RegExp('lv=' + l).test(location.hash) && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1', lv);
+      assert.strictEqual(await E.page.locator('.nrow').count(), Math.min(n, 20));
+      assert.ok((await E.page.locator('.nrow .where').count()) >= 1);   // Kitob › Bob
+      await E.page.locator('[data-act=ni-level][aria-pressed="true"]').click();
+      await E.page.waitForFunction(() => !/lv=/.test(location.hash) && document.querySelector('#asosiy').getAttribute('data-tayyor') === '1');
+      assert.strictEqual(await E.page.locator('.nrow').count(), 20);
+      await noHorizontalScroll(E.page);
+    });
     await step(label + ' 16: base book updated -> layer quarantined (not applied), no chain marks', async () => {
       await importFile(E.page, V110);
       await poll(E.page, () => Lib.overlayState('ed-namuna-a').then(s => s.state === 'mismatch'));

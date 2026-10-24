@@ -179,7 +179,7 @@
         await done(t3);
       }
     }
-    tocCache = {}; ovCache = {};
+    tocCache = {}; ovCache = {}; occAllCache = {};
     onState('tayyorlik', 'Mahalliy qidiruv tayyorligi tekshirilmoqda');
     var ok = await verifyReady(rec, pkg);
     rec.offline_ready = ok;
@@ -222,7 +222,7 @@
     });
     await done(tx);
     await deleteRows(p.active_pkgv);
-    tocCache = {}; ovCache = {};
+    tocCache = {}; ovCache = {}; occAllCache = {};
     return { package_id: id, action: 'removed' };
   }
 
@@ -410,7 +410,7 @@
           if (n.mid) (routeOf[n.mid] = routeOf[n.mid] || []).push(x);
           else {   // yo'l a'zosi, lekin sahifadagi havolasi yo'q: indeksda bor, matnda oralig'i yo'q
             var p0 = String(n.person);
-            rows.push(['ents', { pkgv: pkgv, kind: 'ov_occ', id: p0 + '|' + pad(r.seq, 6) + '|' + pad(900 + (k++), 3), data: { person: n.person, unit_id: r.unit_id, seq: r.seq,
+            rows.push(['ents', { pkgv: pkgv, kind: 'ov_occ', id: m.target.edition_id + '|' + p0 + '|' + pad(r.seq, 6) + '|' + pad(900 + (k++), 3), data: { person: n.person, unit_id: r.unit_id, seq: r.seq,
               mid: null, as_written: null, span: false, routes: [x], kitab_id: kitOf[r.unit_id] || null, bab_id: (st.unit_bab || {})[r.unit_id] || null,
               number: r.evidence.printed_number, status: r.status } }]);
             var c0 = cnt(p0); c0.units[r.unit_id] = 1; c0.routes[ro.route_id] = 1; c0.members++;
@@ -419,7 +419,7 @@
       });
       (r.mentions || []).forEach(function (mn, i) {
         var p = String(mn.person), rts = routeOf[mn.mid] || [];
-        rows.push(['ents', { pkgv: pkgv, kind: 'ov_occ', id: p + '|' + pad(r.seq, 6) + '|' + pad(i, 3), data: { person: mn.person, unit_id: r.unit_id, seq: r.seq,
+        rows.push(['ents', { pkgv: pkgv, kind: 'ov_occ', id: m.target.edition_id + '|' + p + '|' + pad(r.seq, 6) + '|' + pad(i, 3), data: { person: mn.person, unit_id: r.unit_id, seq: r.seq,
           mid: mn.mid, as_written: mn.as_written, span: !!mn.span, routes: rts, kitab_id: kitOf[r.unit_id] || null, bab_id: (st.unit_bab || {})[r.unit_id] || null,
           number: r.evidence.printed_number, status: r.status } }]);
         var c = cnt(p); c.units[r.unit_id] = 1; c.mentions++; rts.forEach(function (x) { c.routes[x.route_id] = 1; }); if (rts.length) c.members++;
@@ -470,12 +470,13 @@
     ovCache[key] = { kitabs: st.kitabs, babs: st.babs, kit: kit, bab: bab, place: unitPlace, pkgv: key };
     return ovCache[key];
   }
-  function occRange(person) { return IDBKeyRange.bound(['ov_occ', String(person) + '|'], ['ov_occ', String(person) + '|￿']); }
+  // Kalit: nashr|roviy|tartib|indeks — bir nechta kitob qatlami o'rnatilganda ham har nashrning roviy ro'yxati alohida
+  function occRange(person, editionId) { var k = editionId + '|' + String(person) + '|'; return IDBKeyRange.bound(['ov_occ', k], ['ov_occ', k + '￿']); }
   async function ovOccCount(person, editionId) {
     var s = await overlayState(editionId);
     if (s.state !== 'active') return 0;
     var db = await openDb();
-    return req(db.transaction('ents').objectStore('ents').index('kind_id').count(occRange(person)));
+    return req(db.transaction('ents').objectStore('ents').index('kind_id').count(occRange(person, editionId)));
   }
   // Sahifalangan o'qish: offset dan limit tagacha (kursor.advance) — butun natija xotiraga yuklanmaydi.
   async function ovOccPage(person, editionId, offset, limit) {
@@ -484,7 +485,7 @@
     var db = await openDb();
     return new Promise(function (res, rej) {
       var out = [], skipped = !offset;
-      var r = db.transaction('ents').objectStore('ents').index('kind_id').openCursor(occRange(person));
+      var r = db.transaction('ents').objectStore('ents').index('kind_id').openCursor(occRange(person, editionId));
       r.onsuccess = function () {
         var c = r.result;
         if (!c) return res(out);
@@ -495,6 +496,15 @@
       };
       r.onerror = function () { rej(r.error); };
     });
+  }
+  // Roviyning shu nashrdagi barcha zikrlari (daraja bo'yicha sanash va saralash uchun; bir roviyda bir necha ming qatorgacha)
+  var occAllCache = {};
+  async function ovOccAll(person, editionId) {
+    var s = await overlayState(editionId);
+    if (s.state !== 'active') return [];
+    var k = s.overlay.active_pkgv + '|' + person;
+    if (!occAllCache[k]) occAllCache[k] = await ovOccPage(person, editionId, 0, 1e7);
+    return occAllCache[k];
   }
 
   function fmtBytes(n) {
@@ -510,5 +520,5 @@
     unit: unit, occurrence: occurrence, unitsOf: unitsOf, occOf: occOf, ent: ent, ents: ents,
     commentariesFor: commentariesFor, toc: toc, occToc: occToc, dropToc: dropToc, linksOfOccurrence: linksOfOccurrence, linkActivation: linkActivation,
     resolve: resolve, versionOk: versionOk, fmtBytes: fmtBytes, DB_NAME: DB_NAME,
-    unitsByIds: unitsByIds, ovMany: ovMany, overlayState: overlayState, ovStructure: ovStructure, ovEnt: ovEnt, ovOccCount: ovOccCount, ovOccPage: ovOccPage };
+    unitsByIds: unitsByIds, ovMany: ovMany, overlayState: overlayState, ovStructure: ovStructure, ovEnt: ovEnt, ovOccCount: ovOccCount, ovOccPage: ovOccPage, ovOccAll: ovOccAll };
 })(self);
